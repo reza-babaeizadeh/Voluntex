@@ -41,11 +41,11 @@ const organizations = [
         phone: "437-317-3710",
         address: "8201 Keele Street, Units 5 & 6, Concord, ON Canada L4K 1Z4",
         description: "Students can volunteer in warehouse roles, sorting, packing, and food delivery support.",
-        image: "https://kimi-web-img.moonshot.cn/img/www.centraltexasfoodbank.org/1731749299f1ac9ea67af5e1c51e2533bfaba7ee.jpg"
+        image: "https://kimi-web-img.moonshot.cn/img/www.centraltexasfoodbank.org/1731749299f1ac9ea67af5e1c51e2533bfa-brandsa7ee.jpg"
     },
     {
         name: "Ontario SPCA – York Region Animal Centre",
-        causeArea: "Animal Welfare",
+        causeArea: "Animal Welfa-regulare",
         website: "https://ontariospca.ca/volunteer/",
         email: "info@ontariospca.ca",
         phone: "(888) 668-7722",
@@ -74,13 +74,13 @@ const organizations = [
         image: "https://kimi-web-img.moonshot.cn/img/discoveryvillages.com/3a3194fef234b60854544bc9b6d9cff89814b6bd.jpg"
     },
     {
-        name: "ClearWater Farm",
+        name: "ClearWater fa-regularm",
         causeArea: "Environmental",
-        website: "https://clearwaterfarm.ca/",
+        website: "https://clearwaterfa-regularm.ca/",
         email: "",
         phone: "(416) 543-0401",
         address: "1614 Metro Rd N, Willow Beach, ON L0E 1S0",
-        description: "Hands-on farming and sustainability education roles for students.",
+        description: "Hands-on fa-regularming and sustainability education roles for students.",
         image: "https://kimi-web-img.moonshot.cn/img/motionarray.imgix.net/c3526b5c23c30802d9e85240785a0f81d4aa72c4.jpg"
     },
     {
@@ -293,10 +293,10 @@ function updateDarkModeButton() {
     if (darkModeToggle && darkModeText) {
         if (isDarkMode) {
             darkModeText.textContent = translations[currentLanguage].lightMode;
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
         } else {
             darkModeText.textContent = translations[currentLanguage].darkMode;
-            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
         }
     }
     
@@ -304,10 +304,10 @@ function updateDarkModeButton() {
     if (mobileDarkModeToggle) {
         const icon = mobileDarkModeToggle.querySelector('i');
         if (isDarkMode) {
-            icon.className = 'fas fa-sun';
+            icon.className = 'fa-solid fa-sun';
             if (mobileDarkModeText) mobileDarkModeText.textContent = translations[currentLanguage].lightMode;
         } else {
-            icon.className = 'fas fa-moon';
+            icon.className = 'fa-solid fa-moon';
             if (mobileDarkModeText) mobileDarkModeText.textContent = translations[currentLanguage].darkMode;
         }
     }
