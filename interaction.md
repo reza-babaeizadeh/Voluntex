@@ -11,7 +11,7 @@ The website's primary interaction revolves around connecting students with meani
 - **Process**: Multi-step form that captures:
   - Student's first and last name
   - Current grade level (dropdown: Grade 9-12)
-  - Field of interest (dropdown with 8+ categories: Youth Services, Food Security, Animal Welfa-regulare, Mental Health, Senior Support, Environmental, Healthcare, Women's Services)
+  - Field of interest (dropdown with 8+ categories: Youth Services, Food Security, Animal Welfare, Mental Health, Senior Support, Environmental, Healthcare, Women's Services)
   - Personal "About Me" paragraph (textarea)
 - **Result**: Dynamic display of matching organizations based on selected field
 - **Follow-up**: Each matched organization shows as a card with quick details and "Learn More" button
@@ -72,10 +72,10 @@ The website's primary interaction revolves around connecting students with meani
 
 ## User Flow Examples
 
-### Student Seeking Animal Welfa-regulare Opportunities:
+### Student Seeking Animal Welfare Opportunities:
 1. Lands on homepage, sees "Are you ready to make real change?"
 2. Clicks CTA button, begins questionnaire
-3. Enters name, selects Grade 11, chooses "Animal Welfa-regulare"
+3. Enters name, selects Grade 11, chooses "Animal Welfare"
 4. Writes brief about me paragraph
 5. System displays 6 matching organizations (Ontario SPCA, Etobicoke Humane Society, etc.)
 6. Clicks on Ontario SPCA card to view detailed page

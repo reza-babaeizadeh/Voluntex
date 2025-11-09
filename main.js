@@ -45,7 +45,7 @@ const organizations = [
     },
     {
         name: "Ontario SPCA – York Region Animal Centre",
-        causeArea: "Animal Welfa-regulare",
+        causeArea: "Animal Welfare",
         website: "https://ontariospca.ca/volunteer/",
         email: "info@ontariospca.ca",
         phone: "(888) 668-7722",
