@@ -33,16 +33,16 @@ const organizations = [
         description: "After-school program helpers and recreational activity support for youth.",
         image: "https://kimi-web-img.moonshot.cn/img/jcpportraits.com/839deb1b64843e369330496136d57438cf093969.jpg"
     },
-    {
-        name: "Food Bank of York Region",
-        causeArea: "Food Security",
-        website: "https://www.fbyr.ca/",
-        email: "volunteer@fbyr.ca",
-        phone: "437-317-3710",
-        address: "8201 Keele Street, Units 5 & 6, Concord, ON Canada L4K 1Z4",
-        description: "Students can volunteer in warehouse roles, sorting, packing, and food delivery support.",
-        image: "https://kimi-web-img.moonshot.cn/img/www.centraltexasfoodbank.org/1731749299f1ac9ea67af5e1c51e2533bfa-brandsa7ee.jpg"
-    },
+{
+  name: "Food Bank of York Region",
+  causeArea: "Food Security",
+  website: "https://www.fbyr.ca/",
+  email: "volunteer@fbyr.ca",
+  phone: "437-317-3710",
+  address: "8201 Keele Street, Units 5 & 6, Concord, ON Canada L4K 1Z4",
+  description: "Students can volunteer in warehouse roles, sorting, packing, and food delivery support.",
+  image: "https://kimi-web-img.moonshot.cn/img/www.centraltexasfoodbank.org/1731749299f1ac9ea67af5e1c51e2533bfaba7ee.jpg"
+},
     {
         name: "Ontario SPCA – York Region Animal Centre",
         causeArea: "Animal Welfare",
@@ -74,15 +74,16 @@ const organizations = [
         image: "https://kimi-web-img.moonshot.cn/img/discoveryvillages.com/3a3194fef234b60854544bc9b6d9cff89814b6bd.jpg"
     },
     {
-        name: "ClearWater fa-regularm",
-        causeArea: "Environmental",
-        website: "https://clearwaterfa-regularm.ca/",
-        email: "",
-        phone: "(416) 543-0401",
-        address: "1614 Metro Rd N, Willow Beach, ON L0E 1S0",
-        description: "Hands-on fa-regularming and sustainability education roles for students.",
-        image: "https://kimi-web-img.moonshot.cn/img/motionarray.imgix.net/c3526b5c23c30802d9e85240785a0f81d4aa72c4.jpg"
-    },
+  name: "ClearWater Farm",
+  causeArea: "Environmental",
+  website: "https://clearwaterfarm.ca/",
+  email: "",
+  phone: "(416) 543-0401",
+  address: "1614 Metro Rd N, Willow Beach, ON L0E 1S0",
+  description: "Hands-on farming and sustainability education roles for students.",
+  image: "https://kimi-web-img.moonshot.cn/img/motionarray.imgix.net/c3526b5c23c30802d9e85240785a0f81d4aa72c4.jpg"
+}
+,
     {
         name: "Yellow Brick House",
         causeArea: "Women & Children's Shelter",
