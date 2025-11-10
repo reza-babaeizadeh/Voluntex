@@ -96,7 +96,7 @@ nav .backdrop-blur-md {
 }
 
 /* Cards and containers */
-.bg-white {
+.bg-blue-600 {
     background-color: var(--bg-card) !important;
     transition: background-color 0.3s ease;
 }
