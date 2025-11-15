@@ -714,5 +714,18 @@ html.dark #particle-canvas {
     background: #0f172a !important;
 }
 </style>
+
+<style>
+/* Light mode only (when <html> does NOT have .dark) */
+html:not(.dark) nav {
+  color: #000 !important;
+  background: transparent !important;
+}
+/* Dark mode (when <html> HAS .dark) */
+html.dark nav {
+  color: #ffff !important;
+  background: transparent !important; /* or remove if you want a bar */
+}
+</style>
     
 </html>
