@@ -605,5 +605,15 @@ html.dark h3 {
   background: transparent !important; /* or remove if you want a bar */
 }
 </style>
+
+<style>
+/* Default: show light-mode logo, hide dark-mode logo */
+.logo-light { display: block; }
+.logo-dark { display: none; }
+
+/* When dark mode is enabled (html.dark), reverse them */
+html.dark .logo-light { display: none; }
+html.dark .logo-dark { display: block; }
     
+</style>
 </html>
