@@ -462,11 +462,30 @@
                     
                     <div>
                         <div class="relative w-48 h-48 mx-auto">
-                            <svg class="w-48 h-48 transform -rotate-90" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" stroke="#e5e7eb" stroke-width="8" fill="none"/>
-                                <circle id="progressCircle" cx="50" cy="50" r="40" stroke="#3b82f6" stroke-width="8" fill="none" 
-                                        stroke-dasharray="251.2" stroke-dashoffset="251.2" stroke-linecap="round"/>
-                            </svg>
+                           <svg class="w-48 h-48 transform -rotate-90" viewBox="0 0 100 100">
+
+    <!-- Light grey background circle (always full) -->
+    <circle 
+        cx="50" cy="50" r="40" 
+        stroke="#d1d5db" 
+        stroke-width="8" 
+        fill="none"
+    />
+
+    <!-- Blue progress circle (fills over grey) -->
+    <circle 
+        id="progressCircle" 
+        cx="50" cy="50" r="40" 
+        stroke="#3b82f6" 
+        stroke-width="8" 
+        fill="none"
+        stroke-dasharray="251.2"
+        stroke-dashoffset="251.2"
+        stroke-linecap="round"
+    />
+
+</svg>
+
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="text-center">
                                     <div class="text-2xl font-bold text-black
@@ -554,13 +573,13 @@
     hoursRemainingSpan.textContent = remainingHours;
     percentageCompleteSpan.textContent = Math.round(percentage) + '%';
 
-    // Make sure the circle uses the right circumference
     progressCircle.style.strokeDasharray = circumference;
     const offset = circumference - (percentage / 100) * circumference;
     progressCircle.style.strokeDashoffset = offset;
 
     if (currentHours >= totalHours) {
-      graduationStatusSpan.textContent = "🎉 Congratulations! You've met the graduation requirement!";
+      graduationStatusSpan.textContent =
+        "🎉 Congratulations! You've met the graduation requirement!";
       graduationStatusSpan.parentElement.className =
         'inline-flex items-center px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg';
     } else if (currentHours >= 30) {
@@ -568,7 +587,8 @@
       graduationStatusSpan.parentElement.className =
         'inline-flex items-center px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-lg';
     } else {
-      graduationStatusSpan.textContent = "Keep going! You're on track for graduation.";
+      graduationStatusSpan.textContent =
+        "Keep going! You're on track for graduation.";
       graduationStatusSpan.parentElement.className =
         'inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg';
     }
@@ -577,7 +597,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     const currentHoursInput = document.getElementById('currentHours');
     currentHoursInput.addEventListener('input', updateProgressTracker);
-    updateProgressTracker(); // initial state at 0 hours
+    updateProgressTracker();
   });
 </script>
 
