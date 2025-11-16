@@ -379,4 +379,27 @@ html.dark h2 {
   background: transparent !important; /* or remove if you want a bar */
 }
 </style>
+
+<style>
+/* Light mode only (when <html> does NOT have .dark) */
+html:not(.dark) nav {
+  color: #000 !important;
+  background: transparent !important;
+}
+/* Dark mode (when <html> HAS .dark) */
+html.dark nav {
+  color: #ffff !important;
+  background: transparent !important; /* or remove if you want a bar */
+}
+</style>
+
+<style>
+/* Default: show light-mode logo, hide dark-mode logo */
+.logo-light { display: block; }
+.logo-dark { display: none; }
+
+/* When dark mode is enabled (html.dark), reverse them */
+html.dark .logo-light { display: none; }
+html.dark .logo-dark { display: block; }
+</style>
 </html>
