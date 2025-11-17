@@ -250,7 +250,7 @@
                 <div class="space-y-6">
                     
                     <!-- General Contact -->
-                    <div class="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6">
+                    <div class="general-inquiries bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6">
                         <h3 class="text-lg font-semibold text-black
  
  dark:text-white
@@ -709,6 +709,18 @@ html:not(.dark) h4 {
 html.dark h4 {
   color: #ffff !important;
   background: transparent !important; /* or remove if you want a bar */
+}
+</style>
+
+<style>
+/* Force General Inquiries section text to be black in light mode */
+html:not(.dark) .general-inquiries * {
+    color: #000 !important;
+}
+
+/* Keep normal white in dark mode */
+html.dark .general-inquiries * {
+    color: #fff !important;
 }
 </style>
 
