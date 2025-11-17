@@ -507,7 +507,7 @@
                 </div>
                 
                <div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                   <h4 class="pro-tips-heading font-semibold mb-2">💡 
+                   <h4 class="pro-tips-heading font-semibold mb-2"> 
 💡 Pro Tips:</h4>
                     <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
                         <li>• Aim to complete your hours gradually rather than all at once</li>
@@ -733,5 +733,18 @@ html.dark .partnership-card * {
     color: #fff !important;
 }
 </style>
+
+<style>
+/* Light mode: make "Pro Tips" dark-ish yellow */
+html:not(.dark) .pro-tips-heading {
+    color: #ca8a04 !important; /* yellow-600 */
+}
+
+/* Dark mode: keep it white */
+html.dark .pro-tips-heading {
+    color: #fff !important;
+}
+</style>
+
 
 </html>
