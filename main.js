@@ -523,7 +523,7 @@ function displayMatchedOrganizations(matchedOrgs, studentData) {
         <h3 class="text-2xl font-semibold text-gray-600 
  dark:text-white
  mb-4">
-            Great news, ${studentData.name}! We found ${matchedOrgs.length} organizations that match your interests.
+            Great news! We found ${matchedOrgs.length} organizations that match your interests.
         </h3>
         <p class="text-gray-600 dark:text-gray-300">
             Click on any organization below to learn more and get in touch.
