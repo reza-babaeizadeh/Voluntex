@@ -710,42 +710,20 @@ function initializeContactPage() {
 function initializeContactForm() {
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', handleContactSubmit);
+      
     }
     
     // Pre-fill form if coming from organization contact
     const urlParams = new URLSearchParams(window.location.search);
     const orgEmail = urlParams.get('org');
     if (orgEmail) {
-        const subjectField = document.getElementById('subject');
+        const subjectField = document.getElementById('inquiry_type');
         if (subjectField) {
             subjectField.value = `Volunteer Opportunity - ${decodeURIComponent(orgEmail)}`;
         }
     }
 }
 
-function handleContactSubmit(e) {
-    e.preventDefault();
-    
-    // Simulate form submission
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-    
-    setTimeout(() => {
-        submitBtn.textContent = 'Message Sent!';
-        submitBtn.classList.add('bg-green-600');
-        
-        setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('bg-green-600');
-            e.target.reset();
-        }, 2000);
-    }, 1500);
-}
 
 function initializeFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
