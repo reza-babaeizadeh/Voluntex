@@ -1,7 +1,7 @@
 /* Load the correct font file */
 @font-face {
   font-family: "Chillax"; /* or "Switzer" if that’s the correct name */
-  src: url("./fonts/Switzer-Regular.ttf") format("opentype"); /* make sure this file exists */
+  src: url("./fonts/NotoNastaliqUrdu-VariableFont_wght") format("opentype"); /* make sure this file exists */
   font-weight: 250;
   font-style: normal;
   font-display: swap;
