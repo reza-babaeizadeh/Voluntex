@@ -676,16 +676,18 @@ html.dark span {
 </style>
 
 <style>
-/* Light mode only (when <html> does NOT have .dark) */
-html:not(.dark) div class=stat-counter text-4xl font-bold text-black {
+/* Light mode */
+html:not(.dark) .stat-counter {
   color: #000 !important;
-  background: transparent !important;
 }
 
-/* Dark mode (when <html> HAS .dark) */
-html.dark div class=stat-counter text-4xl font-bold text-black {
-  color: #ffff !important;
-  background: transparent !important; /* or remove if you want a bar */
+/* Dark mode */
+html.dark .stat-counter {
+  color: #ffffff !important;
+}
+
+html.dark .stat-counter + p {
+  color: #ffffff !important;
 }
 </style>
 
