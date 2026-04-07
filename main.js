@@ -537,9 +537,24 @@ function displayMatchedOrganizations(matchedOrgs, studentData) {
 }
 
 function createOrganizationCard(org, index) {
+    // Cause-area badge colour map
+    const causeBadgeColors = {
+        'Youth Services':             'linear-gradient(135deg,#3b82f6,#2563eb)',
+        'Youth Mentorship':           'linear-gradient(135deg,#06b6d4,#0891b2)',
+        'Youth Programs':             'linear-gradient(135deg,#60a5fa,#3b82f6)',
+        'Food Security':              'linear-gradient(135deg,#22c55e,#16a34a)',
+        'Animal Welfare':             'linear-gradient(135deg,#f97316,#ea580c)',
+        'Mental Health':              'linear-gradient(135deg,#a855f7,#7c3aed)',
+        'Senior Support':             'linear-gradient(135deg,#f59e0b,#d97706)',
+        'Environmental':              'linear-gradient(135deg,#10b981,#059669)',
+        'Healthcare':                 'linear-gradient(135deg,#ef4444,#dc2626)',
+        "Women & Children's Shelter": 'linear-gradient(135deg,#ec4899,#db2777)',
+    };
+    const badgeBg = causeBadgeColors[org.causeArea] || 'linear-gradient(135deg,#3b82f6,#6366f1)';
+
     const card = document.createElement('div');
     card.style.cssText = 'opacity:0;transform:translateY(30px);transition:opacity 0.5s ease,transform 0.5s ease;';
-    card.className = 'organization-card rounded-2xl overflow-hidden flex flex-col';
+    card.className = 'organization-card vx-charity-card rounded-2xl overflow-hidden flex flex-col';
     card.style.background = 'rgba(255,255,255,0.05)';
     card.style.border = '1px solid rgba(255,255,255,0.1)';
     card.style.backdropFilter = 'blur(12px)';
@@ -548,7 +563,7 @@ function createOrganizationCard(org, index) {
         <div class="relative overflow-hidden" style="height:200px;">
             <img src="${org.image}" alt="${org.name}" class="w-full h-full object-cover" style="transition:transform 0.5s ease;">
             <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(15,23,42,0.85) 0%,transparent 60%);"></div>
-            <span style="position:absolute;top:14px;right:14px;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;font-size:0.72rem;font-weight:600;padding:4px 12px;border-radius:999px;letter-spacing:0.05em;text-transform:uppercase;">
+            <span style="position:absolute;top:14px;right:14px;background:${badgeBg};color:#fff;font-size:0.72rem;font-weight:600;padding:4px 12px;border-radius:999px;letter-spacing:0.05em;text-transform:uppercase;">
                 ${org.causeArea}
             </span>
         </div>
@@ -573,9 +588,8 @@ function createOrganizationCard(org, index) {
                     ${translations[currentLanguage].viewDetails}
                 </button>
                 <button onclick="contactOrganization('${org.name}', '${org.email}')"
-                    style="flex:1;padding:10px 0;border-radius:10px;border:none;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-weight:600;font-size:0.9rem;cursor:pointer;transition:opacity 0.2s,transform 0.2s;"
-                    onmouseover="this.style.opacity='0.85';this.style.transform='scale(1.03)';"
-                    onmouseout="this.style.opacity='1';this.style.transform='scale(1)';">
+                    class="vx-contact-reveal"
+                    style="flex:1;padding:10px 0;border-radius:10px;border:none;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-weight:600;font-size:0.9rem;cursor:pointer;">
                     ${translations[currentLanguage].contactNow}
                 </button>
             </div>
@@ -692,27 +706,68 @@ function filterOrganizations() {
 function displayOrganizations(orgs) {
     const container = document.getElementById('organizationsContainer');
     if (!container) return;
-    
-    container.innerHTML = '';
-    
-    orgs.forEach((org, index) => {
-        const card = createOrganizationCard(org, index);
-        container.appendChild(card);
-    });
-    
-    if (orgs.length === 0) {
-        container.innerHTML = `
-            <div class="col-span-full text-center py-12">
-                <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-600 mb-4">
-                    No organizations found matching your criteria.
-                </h3>
-                <p class="text-gray-500 dark:text-gray-500">
-                    Try adjusting your search or filters.
-                </p>
-            </div>
-        `;
+
+    // Fade existing cards out first, then rebuild
+    const existingCards = container.querySelectorAll('.organization-card');
+    if (existingCards.length > 0) {
+        existingCards.forEach(c => {
+            c.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            c.style.opacity = '0';
+            c.style.transform = 'translateY(-8px)';
+        });
     }
+
+    const rebuildDelay = existingCards.length > 0 ? 220 : 0;
+    setTimeout(() => {
+        container.innerHTML = '';
+
+        if (orgs.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full vx-empty-state">
+                    <div class="vx-empty-state-icon">
+                        <svg width="32" height="32" fill="none" stroke="#6366f1" stroke-width="1.5" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                    </div>
+                    <h3>No organizations found</h3>
+                    <p>No results match your current filters. Try a different search or cause area.</p>
+                    <button class="vx-empty-state-btn" onclick="clearAllFilters()">Clear Filters</button>
+                </div>
+            `;
+        } else {
+            orgs.forEach((org, index) => {
+                const card = createOrganizationCard(org, index);
+                container.appendChild(card);
+            });
+        }
+
+        updateResultsCount(orgs.length);
+    }, rebuildDelay);
 }
+
+function updateResultsCount(count) {
+    const el = document.getElementById('resultsCount');
+    if (!el) return;
+    el.style.opacity = '0';
+    setTimeout(() => {
+        el.textContent = count === organizations.length
+            ? `Showing all ${count} organizations`
+            : `Showing ${count} of ${organizations.length} organizations`;
+        el.style.opacity = '1';
+    }, 200);
+}
+
+function clearAllFilters() {
+    const searchInput = document.getElementById('searchInput');
+    const causeFilter = document.getElementById('causeFilter');
+    const locationFilter = document.getElementById('locationFilter');
+    if (searchInput) searchInput.value = '';
+    if (causeFilter) causeFilter.value = '';
+    if (locationFilter) locationFilter.value = '';
+    document.querySelectorAll('.quick-filter-btn').forEach(p => p.classList.remove('active'));
+    displayOrganizations(organizations);
+}
+window.clearAllFilters = clearAllFilters;
 
 // Contact page functions
 function initializeContactPage() {

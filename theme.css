@@ -478,6 +478,132 @@ footer {
 }
 
 /* ============================================================
+   CHARITIES PAGE — HERO
+   ============================================================ */
+.vx-charities-hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+html.dark .vx-charities-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    background-size: 400% 400%;
+    animation: heroGradientShift 10s ease infinite;
+}
+@keyframes heroGradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* floating glow orbs behind hero in dark mode */
+html.dark .vx-charities-hero::before,
+html.dark .vx-charities-hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    pointer-events: none;
+}
+html.dark .vx-charities-hero::before {
+    width: 400px; height: 400px;
+    background: #6366f1;
+    top: -100px; left: -80px;
+}
+html.dark .vx-charities-hero::after {
+    width: 300px; height: 300px;
+    background: #3b82f6;
+    bottom: -80px; right: -60px;
+}
+
+/* ============================================================
+   CHARITIES PAGE — QUICK FILTER ACTIVE PILL
+   ============================================================ */
+.quick-filter-btn {
+    transition: all 0.2s ease !important;
+    cursor: pointer;
+}
+.quick-filter-btn.active {
+    background: linear-gradient(135deg, #3b82f6, #6366f1) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow: 0 0 14px rgba(99, 102, 241, 0.45) !important;
+    transform: scale(1.05);
+}
+
+/* ============================================================
+   CHARITIES PAGE — CARD HOVER CONTACT BUTTON REVEAL
+   ============================================================ */
+.vx-charity-card .vx-contact-reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+    pointer-events: none;
+}
+.vx-charity-card:hover .vx-contact-reveal {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ============================================================
+   CHARITIES PAGE — EMPTY STATE
+   ============================================================ */
+.vx-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+.vx-empty-state-icon {
+    width: 72px; height: 72px;
+    margin: 0 auto 1.5rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+.vx-empty-state h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 0.5rem;
+}
+.vx-empty-state p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+.vx-empty-state-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: #fff !important;
+    border-radius: 99px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.vx-empty-state-btn:hover {
+    opacity: 0.85;
+    transform: scale(1.03);
+}
+html:not(.dark) .vx-empty-state h3 { color: #1e293b; }
+html:not(.dark) .vx-empty-state-icon {
+    background: rgba(99,102,241,0.08);
+}
+
+/* ============================================================
+   CHARITIES PAGE — RESULT COUNT FADE
+   ============================================================ */
+#resultsCount {
+    transition: opacity 0.25s ease;
+    display: inline-block;
+}
+
+/* ============================================================
    VX-FOOTER — redesigned footer component
    ============================================================ */
 .vx-footer {
