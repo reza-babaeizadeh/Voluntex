@@ -476,3 +476,52 @@ footer {
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #2563eb, #4f46e5);
 }
+
+/* ============================================================
+   VX-FOOTER — redesigned footer component
+   ============================================================ */
+.vx-footer {
+    background: linear-gradient(to bottom, #0c1120, #060c18) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    color: #94a3b8;
+}
+
+.vx-footer-logo {
+    height: 64px;
+    width: auto;
+    margin: 0 auto 1.5rem;
+    display: block;
+    filter: brightness(1.1);
+}
+
+.vx-footer-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #6366f1);
+    border-radius: 99px;
+    margin: 0 auto 1.5rem;
+}
+
+.vx-footer-tagline {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.vx-footer-copy {
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+/* Light mode footer */
+html:not(.dark) .vx-footer {
+    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+    color: #475569;
+}
+html:not(.dark) .vx-footer-tagline { color: #64748b; }
+html:not(.dark) .vx-footer-copy    { color: #94a3b8; }
