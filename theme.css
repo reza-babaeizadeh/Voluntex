@@ -490,14 +490,16 @@ footer {
     display: flex;
     align-items: center;
     gap: 2rem;
+    padding-left: 0;
 }
 
 .vx-footer-logo {
-    height: 72px !important;
+    height: 96px !important;
     width: auto !important;
     flex-shrink: 0;
     display: block !important;
     filter: brightness(1.1);
+    margin-left: -0.5rem;
 }
 
 .vx-footer-text {
