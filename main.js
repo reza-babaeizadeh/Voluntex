@@ -672,34 +672,40 @@ function initializeOrganizationFilters() {
     const searchInput = document.getElementById('searchInput');
     const causeFilter = document.getElementById('causeFilter');
     const locationFilter = document.getElementById('locationFilter');
-    
-    if (searchInput) {
-        searchInput.addEventListener('input', filterOrganizations);
-    }
-    
-    if (causeFilter) {
-        causeFilter.addEventListener('change', filterOrganizations);
-    }
-    
-    if (locationFilter) {
-        locationFilter.addEventListener('change', filterOrganizations);
-    }
+    const sortBy = document.getElementById('sortBy');
+
+    if (searchInput)  searchInput.addEventListener('input', filterOrganizations);
+    if (causeFilter)  causeFilter.addEventListener('change', filterOrganizations);
+    if (locationFilter) locationFilter.addEventListener('change', filterOrganizations);
+    if (sortBy)       sortBy.addEventListener('change', filterOrganizations);
 }
 
 function filterOrganizations() {
     const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
     const selectedCause = document.getElementById('causeFilter')?.value || '';
     const selectedLocation = document.getElementById('locationFilter')?.value || '';
-    
-    const filteredOrgs = organizations.filter(org => {
-        const matchesSearch = org.name.toLowerCase().includes(searchTerm) || 
-                             org.description.toLowerCase().includes(searchTerm);
+    const sortBy = document.getElementById('sortBy')?.value || 'name';
+
+    let filteredOrgs = organizations.filter(org => {
+        const matchesSearch = org.name.toLowerCase().includes(searchTerm) ||
+                              org.description.toLowerCase().includes(searchTerm);
         const matchesCause = !selectedCause || org.causeArea === selectedCause;
         const matchesLocation = !selectedLocation || org.address.toLowerCase().includes(selectedLocation.toLowerCase());
-        
         return matchesSearch && matchesCause && matchesLocation;
     });
-    
+
+    // Sort the results
+    filteredOrgs.sort((a, b) => {
+        if (sortBy === 'name')     return a.name.localeCompare(b.name);
+        if (sortBy === 'cause')    return a.causeArea.localeCompare(b.causeArea);
+        if (sortBy === 'location') {
+            const cityA = a.address.split(',')[1]?.trim() || a.address;
+            const cityB = b.address.split(',')[1]?.trim() || b.address;
+            return cityA.localeCompare(cityB);
+        }
+        return 0;
+    });
+
     displayOrganizations(filteredOrgs);
 }
 
