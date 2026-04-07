@@ -171,6 +171,20 @@ html.dark textarea::placeholder {
 }
 
 /* ============================================================
+   SELECT DROPDOWN OPTIONS — dark background + readable text
+   ============================================================ */
+html.dark select option,
+select option {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+html.dark select option:hover,
+html.dark select option:checked {
+    background: #334155 !important;
+    color: #ffffff !important;
+}
+
+/* ============================================================
    QUICK FILTER PILLS — dark mode
    ============================================================ */
 html.dark button[onclick^="quickFilter"] {
