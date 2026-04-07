@@ -796,3 +796,12 @@ function showNotification(message, type = 'info') {
 window.viewOrganizationDetails = viewOrganizationDetails;
 window.contactOrganization = contactOrganization;
 window.showNotification = showNotification;
+
+// Navbar scroll glow
+(function() {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+})();

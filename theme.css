@@ -211,12 +211,24 @@ html.dark .vx-impact-card:hover {
 }
 
 /* ============================================================
-   NAVIGATION — light mode frosted glass
+   NAVIGATION — frosted glass + scroll glow
    ============================================================ */
 html:not(.dark) nav {
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.85) !important;
     border-bottom: 1px solid rgba(99, 102, 241, 0.12) !important;
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease !important;
+}
+html:not(.dark) nav.scrolled {
+    border-bottom: 1px solid rgba(99, 102, 241, 0.4) !important;
+    box-shadow: 0 1px 24px rgba(99, 102, 241, 0.15), 0 0 0 1px rgba(99,102,241,0.08) !important;
+}
+html.dark nav {
+    transition: border-color 0.4s ease, box-shadow 0.4s ease !important;
+}
+html.dark nav.scrolled {
+    border-bottom: 1px solid rgba(99, 102, 241, 0.35) !important;
+    box-shadow: 0 1px 32px rgba(99, 102, 241, 0.2), 0 0 0 1px rgba(99,102,241,0.1) !important;
 }
 
 /* ============================================================
@@ -230,6 +242,141 @@ html:not(.dark) footer {
    SCROLLBAR — light mode
    ============================================================ */
 html:not(.dark) ::-webkit-scrollbar-track { background: #f1f5f9; }
+
+/* ============================================================
+   #6 GRADIENT HEADINGS — h1 and h2 across whole site
+   ============================================================ */
+h1, h2 {
+    background: linear-gradient(135deg, #1d4ed8 0%, #6366f1 60%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+/* Keep white/forced-color headings where already explicitly set */
+html.dark h1, html.dark h2 {
+    background: linear-gradient(135deg, #60a5fa 0%, #818cf8 55%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+/* Preserve footer white text — footer has bg so no gradient needed */
+footer h1, footer h2, footer h3 {
+    background: none !important;
+    -webkit-text-fill-color: #e2e8f0 !important;
+}
+/* CTA section keeps white */
+section.bg-blue-600 h2,
+.bg-blue-600 h2 {
+    background: none !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+/* vx-heading class on about page */
+.vx-heading {
+    background: linear-gradient(135deg, #1d4ed8 0%, #6366f1 60%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+html.dark .vx-heading {
+    background: linear-gradient(135deg, #60a5fa 0%, #818cf8 55%, #a78bfa 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+/* ============================================================
+   #4 BUTTON SHIMMER — primary buttons
+   ============================================================ */
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+.bg-blue-600 {
+    position: relative;
+    overflow: hidden;
+}
+.bg-blue-600::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.28) 50%,
+        transparent 60%
+    );
+    background-size: 200% 100%;
+    background-position: -200% center;
+    transition: background-position 0s;
+    pointer-events: none;
+    border-radius: inherit;
+}
+.bg-blue-600:hover::after {
+    animation: shimmer 0.55s ease forwards;
+}
+
+/* ============================================================
+   #3 CHARITY CARDS — hover reveal panel
+   ============================================================ */
+.organization-card {
+    position: relative;
+    overflow: hidden;
+}
+
+/* The always-visible image area */
+.organization-card > div:first-child img {
+    transition: transform 0.5s ease !important;
+}
+.organization-card:hover > div:first-child img {
+    transform: scale(1.08) !important;
+}
+
+/* Slide-up reveal panel — wraps the content below the image */
+.organization-card > div:last-child {
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* On cards page (charities.html) — start hidden, reveal on hover */
+#organizationsContainer .organization-card > div:last-child,
+#matchedOrganizations .organization-card > div:last-child {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    transform: translateY(100%);
+    opacity: 0;
+    border-radius: 0 0 1rem 1rem;
+    max-height: 260px;
+    overflow: hidden;
+}
+html:not(.dark) #organizationsContainer .organization-card > div:last-child,
+html:not(.dark) #matchedOrganizations .organization-card > div:last-child {
+    background: rgba(255, 255, 255, 0.97);
+    border-top: 1px solid rgba(99, 102, 241, 0.15);
+}
+html.dark #organizationsContainer .organization-card > div:last-child,
+html.dark #matchedOrganizations .organization-card > div:last-child {
+    background: rgba(15, 23, 42, 0.96);
+    border-top: 1px solid rgba(99, 102, 241, 0.2);
+}
+#organizationsContainer .organization-card:hover > div:last-child,
+#matchedOrganizations .organization-card:hover > div:last-child {
+    transform: translateY(0);
+    opacity: 1;
+}
+/* Make cards taller so the reveal has room */
+#organizationsContainer .organization-card,
+#matchedOrganizations .organization-card {
+    min-height: 320px;
+}
+
+/* ============================================================
+   #2 NAVBAR SCROLL GLOW — injected via JS in main.js
+   (The .scrolled class is toggled by a scroll listener)
+   ============================================================ */
 
 
 
