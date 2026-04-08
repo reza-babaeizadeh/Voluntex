@@ -520,6 +520,12 @@ html:not(.dark) .vx-contact-form-card {
     border-color: #6366f1 !important;
     box-shadow: 0 0 0 3px rgba(99,102,241,0.25) !important;
 }
+/* Ensure select arrow is never clipped */
+.vx-contact-form-card select {
+    padding-right: 2.5rem !important;
+    background-position: right 0.75rem center !important;
+    overflow: visible;
+}
 
 /* ============================================================
    CONTACT PAGE — SIDEBAR INFO CARDS
@@ -564,12 +570,12 @@ html:not(.dark) .vx-info-card h3 { color: #1e293b; }
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.3s ease;
-    padding-top: 0 !important;
+    margin-top: 0 !important;
+    transition: max-height 0.4s ease, margin-top 0.3s ease;
 }
 .faq-answer.faq-open {
     max-height: 400px;
-    padding-top: 1rem !important;
+    margin-top: 1rem !important;
 }
 
 /* ============================================================
@@ -588,14 +594,17 @@ html:not(.dark) .vx-hours-tracker-card {
     border: 1px solid rgba(0,0,0,0.06);
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
 }
+/* SVG must overflow visible so glow doesn't get clipped to a square */
+.vx-hours-tracker-card svg {
+    overflow: visible;
+}
 #progressCircle {
     filter: drop-shadow(0 0 6px rgba(59,130,246,0.65));
-    transition: stroke-dashoffset 0.6s ease;
+    transition: stroke-dashoffset 0.6s ease, stroke 0.4s ease, filter 0.4s ease;
 }
 .vx-ring-complete #progressCircle {
     animation: ringPulse 1.5s ease-in-out infinite;
     stroke: #10b981;
-    filter: drop-shadow(0 0 10px rgba(16,185,129,0.7));
 }
 @keyframes ringPulse {
     0%,100% { filter: drop-shadow(0 0 6px rgba(16,185,129,0.6)); }
