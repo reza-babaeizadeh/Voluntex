@@ -610,10 +610,10 @@ html:not(.dark) .vx-contact-form-card {
     border-color: #6366f1 !important;
     box-shadow: 0 0 0 3px rgba(99,102,241,0.25) !important;
 }
-/* Ensure select arrow is never clipped */
+/* Ensure select arrow has breathing room */
 .vx-contact-form-card select {
-    padding-right: 2.5rem !important;
-    background-position: right 0.75rem center !important;
+    padding-right: 3rem !important;
+    background-position: right 1rem center !important;
     overflow: visible;
 }
 
