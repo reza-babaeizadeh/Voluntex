@@ -484,27 +484,59 @@ footer {
 }
 
 /* ============================================================
-   LIGHT MODE — ORG CARDS (charities page + matched results)
+   ORG CARDS — dark mode base (default)
+   ============================================================ */
+.vx-org-card-theme {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+}
+.vx-card-img-overlay {
+    background: linear-gradient(to top, rgba(15,23,42,0.85) 0%, transparent 60%);
+}
+.vx-card-title  { color: #ffffff; }
+.vx-card-desc   { color: #e2e8f0; }
+.vx-card-pill   {
+    background: rgba(255,255,255,0.07);
+    color: #e2e8f0;
+}
+.vx-card-view-btn {
+    border: 1px solid rgba(99,102,241,0.5);
+    background: rgba(99,102,241,0.15);
+    color: #a5b4fc;
+    transition: background 0.2s, color 0.2s;
+}
+.vx-card-view-btn:hover {
+    background: rgba(99,102,241,0.35);
+    color: #ffffff;
+}
+
+/* ============================================================
+   ORG CARDS — light mode overrides
    ============================================================ */
 html:not(.dark) .vx-org-card-theme {
-    background: #ffffff !important;
-    border: 1px solid rgba(0,0,0,0.09) !important;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.09) !important;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.09);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    backdrop-filter: none;
 }
-html:not(.dark) .vx-card-title {
-    color: #1e293b !important;
+html:not(.dark) .vx-card-img-overlay {
+    background: linear-gradient(to top, rgba(15,23,42,0.7) 0%, transparent 55%);
 }
-html:not(.dark) .vx-card-desc {
-    color: #475569 !important;
-}
-html:not(.dark) .vx-card-pill {
-    background: rgba(0,0,0,0.05) !important;
-    color: #374151 !important;
+html:not(.dark) .vx-card-title  { color: #1e293b; }
+html:not(.dark) .vx-card-desc   { color: #475569; }
+html:not(.dark) .vx-card-pill   {
+    background: rgba(0,0,0,0.05);
+    color: #374151;
 }
 html:not(.dark) .vx-card-view-btn {
-    border-color: rgba(79,70,229,0.35) !important;
-    background: rgba(79,70,229,0.07) !important;
-    color: #4f46e5 !important;
+    border: 1px solid rgba(79,70,229,0.35);
+    background: rgba(79,70,229,0.07);
+    color: #4f46e5;
+}
+html:not(.dark) .vx-card-view-btn:hover {
+    background: rgba(79,70,229,0.18);
+    color: #3730a3;
 }
 
 /* ============================================================

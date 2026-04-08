@@ -590,18 +590,21 @@
             }
 
             /* Light mode overrides for carousel */
+            /* Light mode carousel fixes */
             html:not(.dark) #featuredOrganizations .splide__arrow {
-                background: rgba(0,0,0,0.08);
-                border: 1px solid rgba(0,0,0,0.15);
+                background: rgba(255,255,255,0.85);
+                border: 1px solid rgba(0,0,0,0.12);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             }
             html:not(.dark) #featuredOrganizations .splide__arrow:hover {
-                background: rgba(99,102,241,0.2);
+                background: rgba(99,102,241,0.15);
+                border-color: rgba(99,102,241,0.4);
             }
             html:not(.dark) #featuredOrganizations .splide__arrow svg {
                 fill: #1e293b;
             }
             html:not(.dark) #featuredOrganizations .splide__pagination__page {
-                background: rgba(0,0,0,0.2);
+                background: rgba(0,0,0,0.25);
             }
             html:not(.dark) #featuredOrganizations .splide__pagination__page.is-active {
                 background: #6366f1;
