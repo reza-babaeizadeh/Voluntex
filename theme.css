@@ -488,6 +488,151 @@ html.dark #startMatching {
 }
 
 /* ============================================================
+   CONTACT PAGE — GLASSMORPHISM FORM CARD
+   ============================================================ */
+.vx-contact-form-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+}
+html:not(.dark) .vx-contact-form-card {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* ============================================================
+   CONTACT PAGE — INPUT FOCUS GLOW
+   ============================================================ */
+.vx-contact-form-card input:focus,
+.vx-contact-form-card select:focus,
+.vx-contact-form-card textarea:focus {
+    outline: none !important;
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.25) !important;
+}
+
+/* ============================================================
+   CONTACT PAGE — SIDEBAR INFO CARDS
+   ============================================================ */
+.vx-info-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.vx-info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+}
+html:not(.dark) .vx-info-card {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(0,0,0,0.07);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+.vx-info-card-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+.vx-info-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
+html.dark .vx-info-card h3 { color: #f1f5f9; }
+html:not(.dark) .vx-info-card h3 { color: #1e293b; }
+.vx-info-card a, .vx-info-card span.detail {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    transition: color 0.2s;
+}
+.vx-info-card a:hover { color: #3b82f6; }
+
+/* ============================================================
+   CONTACT PAGE — SMOOTH FAQ ACCORDION
+   ============================================================ */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding-top: 0 !important;
+}
+.faq-answer.faq-open {
+    max-height: 400px;
+    padding-top: 1rem !important;
+}
+
+/* ============================================================
+   CONTACT PAGE — HOURS TRACKER GLOW
+   ============================================================ */
+.vx-hours-tracker-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+html:not(.dark) .vx-hours-tracker-card {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+#progressCircle {
+    filter: drop-shadow(0 0 6px rgba(59,130,246,0.65));
+    transition: stroke-dashoffset 0.6s ease;
+}
+.vx-ring-complete #progressCircle {
+    animation: ringPulse 1.5s ease-in-out infinite;
+    stroke: #10b981;
+    filter: drop-shadow(0 0 10px rgba(16,185,129,0.7));
+}
+@keyframes ringPulse {
+    0%,100% { filter: drop-shadow(0 0 6px rgba(16,185,129,0.6)); }
+    50%      { filter: drop-shadow(0 0 16px rgba(16,185,129,0.95)); }
+}
+
+/* ============================================================
+   CONTACT PAGE — SCROLL REVEAL
+   ============================================================ */
+.vx-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.vx-reveal.revealed { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   CONTACT PAGE — SEND MESSAGE BUTTON
+   ============================================================ */
+.vx-send-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 18px rgba(99,102,241,0.4);
+}
+.vx-send-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+    box-shadow: 0 6px 24px rgba(99,102,241,0.6);
+}
+
+/* ============================================================
    CONTACT PAGE — HERO
    ============================================================ */
 .vx-contact-hero {

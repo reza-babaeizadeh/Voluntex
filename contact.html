@@ -173,8 +173,8 @@
             <div class="grid lg:grid-cols-3 gap-8">
                 
                 <!-- Contact Form -->
-                <div class="lg:col-span-2">
-                    <div class="bg-gray-50 dark:bg-slate-800 rounded-2xl p-8 shadow-lg">
+                <div class="lg:col-span-2 vx-reveal">
+                    <div class="vx-contact-form-card">
                         <h2 class="text-2xl font-bold text-black
  
  dark:text-white
@@ -286,9 +286,8 @@
 
                             <div data-netlify-recaptcha="true"></div>
                             
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-black
- dark:text-white
- font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                            <button type="submit" class="vx-send-btn">
+                                <i class="fa-solid fa-paper-plane"></i>
                                 Send Message
                             </button>
                         </form>
@@ -296,87 +295,83 @@
                 </div>
                 
                 <!-- Contact Information -->
-                <div class="space-y-6">
-                    
+                <div class="space-y-5">
+
                     <!-- General Contact -->
-                    <div class="general-inquiries bg-blue-300 dark:bg-blue-900/20 rounded-2xl p-6">
-                        <h3 class="text-lg font-semibold text-black
- 
- dark:text-white
- mb-4">General Inquiries</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-envelope text-gray-600 dark:text-blue-400 mr-3"></i>
-                                <a href="mailto:hello@voluntex.org" class="text-gray-700 dark:text-gray-300 hover:text-gray-600 dark:hover:text-blue-400">hello@voluntex.org</a>
+                    <div class="vx-info-card vx-reveal" style="transition-delay:0.1s;">
+                        <div class="vx-info-card-icon" style="background:rgba(59,130,246,0.15);">
+                            <i class="fa-solid fa-envelope" style="color:#3b82f6;"></i>
+                        </div>
+                        <h3>General Inquiries</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-xs" style="color:#3b82f6;"></i>
+                                <a href="mailto:hello@voluntex.org" class="detail">hello@voluntex.org</a>
                             </div>
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-phone text-gray-600 dark:text-blue-400 mr-3"></i>
-                                <a href="tel:+1(437) 973-9770"class="text-gray-700 dark:text-gray-300 hover:text-gray-600 dark:hover:text-blue-400">(905) 555-1234</a>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fa-solid fa-map-marker-alt text-gray-600 dark:text-blue-400 mr-3 mt-1"></i>
-                                <span class="text-gray-700 dark:text-gray-300">York Region, Ontario, Canada</span>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-map-marker-alt text-xs" style="color:#3b82f6;"></i>
+                                <span class="detail">York Region, Ontario, Canada</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Student Support -->
-                    <div class="bg-green-50 dark:bg-green-900/20 rounded-2xl p-6">
-                        <h3 class="text-lg font-semibold text-black
- 
- dark:text-white
- mb-4">Student Support</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-envelope text-green-600 dark:text-green-400 mr-3"></i>
-                                <a href="mailto:students@voluntex.org" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">students@voluntex.org</a>
+                    <div class="vx-info-card vx-reveal" style="transition-delay:0.2s;">
+                        <div class="vx-info-card-icon" style="background:rgba(16,185,129,0.15);">
+                            <i class="fa-solid fa-graduation-cap" style="color:#10b981;"></i>
+                        </div>
+                        <h3>Student Support</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-xs" style="color:#10b981;"></i>
+                                <a href="mailto:students@voluntex.org" class="detail">students@voluntex.org</a>
                             </div>
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-clock text-green-600 dark:text-green-400 mr-3"></i>
-                                <span class="text-gray-700 dark:text-gray-300">Response within 24 hours</span>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-clock text-xs" style="color:#10b981;"></i>
+                                <span class="detail">Response within 24 hours</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Organization Partnerships -->
-                   <div class="partnership-card bg-purple-150 dark:bg-purple-900/20 rounded-2xl p-6">
-                        <h3 class="text-lg font-semibold text-black
- 
- dark:text-white
- mb-4">Organization Partnerships</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-envelope text-purple-600 dark:text-purple-400 mr-3"></i>
-                                <a href="mailto:partnerships@voluntex.org" class="text-black dark:text-gray-300 hover:text-black dark:hover:text-purple-400">partnerships@voluntex.org</a>
+                    <div class="vx-info-card vx-reveal" style="transition-delay:0.3s;">
+                        <div class="vx-info-card-icon" style="background:rgba(168,85,247,0.15);">
+                            <i class="fa-solid fa-handshake" style="color:#a855f7;"></i>
+                        </div>
+                        <h3>Organization Partnerships</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-xs" style="color:#a855f7;"></i>
+                                <a href="mailto:partnerships@voluntex.org" class="detail">partnerships@voluntex.org</a>
                             </div>
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-handshake text-purple-600 dark:text-purple-400 mr-3"></i>
-                                <span class="text-gray-700 dark:text-gray-300">Join our network of 25+ organizations</span>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-building text-xs" style="color:#a855f7;"></i>
+                                <span class="detail">Join our network of 25+ organizations</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Response Times -->
-                    <div class="bg-gray-50 dark:bg-slate-800 rounded-2xl p-6">
-                        <h3 class="text-lg font-semibold text-black
- 
- dark:text-white
- mb-4">Response Times</h3>
-                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                            <li>• General inquiries: Within 24 hours</li>
-                            <li>• Student support: Within 12 hours</li>
-                            <li>• Technical issues: Within 6 hours</li>
-                            <li>• Partnership requests: Within 48 hours</li>
+                    <div class="vx-info-card vx-reveal" style="transition-delay:0.4s;">
+                        <div class="vx-info-card-icon" style="background:rgba(245,158,11,0.15);">
+                            <i class="fa-solid fa-clock" style="color:#f59e0b;"></i>
+                        </div>
+                        <h3>Response Times</h3>
+                        <ul class="space-y-1">
+                            <li class="detail text-sm">• General inquiries: Within 24 hours</li>
+                            <li class="detail text-sm">• Student support: Within 12 hours</li>
+                            <li class="detail text-sm">• Technical issues: Within 6 hours</li>
+                            <li class="detail text-sm">• Partnership requests: Within 48 hours</li>
                         </ul>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-20 bg-gray-50 dark:bg-slate-800">
+    <section class="py-20 bg-gray-50 dark:bg-slate-800 vx-reveal">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-black
@@ -399,7 +394,7 @@
 ">How do I start finding volunteer opportunities?</h3>
                         <i class="faq-icon fa-solid fa-chevron-down text-gray-600 transition-transform"></i>
                     </div>
-                    <div class="faq-answer hidden mt-4 text-gray-600 dark:text-gray-300">
+                    <div class="faq-answer mt-4 text-gray-600 dark:text-gray-300">
                         <p>Getting started is easy! Click the "Get Started" button on our homepage and fill out our simple matching form. Tell us about your interests, grade level, and what causes you're passionate about. We'll then show you organizations that align with your preferences.</p>
                     </div>
                 </div>
@@ -412,7 +407,7 @@
 ">Is VoluntEx free to use?</h3>
                         <i class="faq-icon fa-solid fa-chevron-down text-gray-600 transition-transform"></i>
                     </div>
-                    <div class="faq-answer hidden mt-4 text-gray-600 dark:text-gray-300">
+                    <div class="faq-answer mt-4 text-gray-600 dark:text-gray-300">
                         <p>Yes! VoluntEx is completely free for students and volunteers. We believe that finding meaningful volunteer opportunities should never come with a cost barrier. Our mission is to connect students with organizations that need their help.</p>
                     </div>
                 </div>
@@ -425,7 +420,7 @@
 ">What if I don't see any organizations in my area?</h3>
                         <i class="faq-icon fa-solid fa-chevron-down text-gray-600 transition-transform"></i>
                     </div>
-                    <div class="faq-answer hidden mt-4 text-gray-600 dark:text-gray-300">
+                    <div class="faq-answer mt-4 text-gray-600 dark:text-gray-300">
                         <p>We're constantly expanding our network of partner organizations. If you don't see opportunities in your specific area of York Region, contact us at students@voluntex.org. We may know of additional opportunities or can help you find organizations that aren't yet in our system.</p>
                     </div>
                 </div>
@@ -438,7 +433,7 @@
 ">Can I volunteer if I'm not in high school yet?</h3>
                         <i class="faq-icon fa-solid fa-chevron-down text-gray-600 transition-transform"></i>
                     </div>
-                    <div class="faq-answer hidden mt-4 text-gray-600 dark:text-gray-300">
+                    <div class="faq-answer mt-4 text-gray-600 dark:text-gray-300">
                         <p>Absolutely! While our platform is designed with Ontario's 40-hour graduation requirement in mind, we welcome students of all ages who want to make a difference. Many organizations have opportunities for middle school students and even younger volunteers with parental supervision.</p>
                     </div>
                 </div>
@@ -451,7 +446,7 @@
 ">How do I track my volunteer hours?</h3>
                         <i class="faq-icon fa-solid fa-chevron-down text-gray-600 transition-transform"></i>
                     </div>
-                    <div class="faq-answer hidden mt-4 text-gray-600 dark:text-gray-300">
+                    <div class="faq-answer mt-4 text-gray-600 dark:text-gray-300">
                         <p>Each organization you volunteer with will provide you with documentation of your hours. We also recommend keeping your own log. Many schools provide volunteer hour tracking sheets, or you can create your own simple spreadsheet. Make sure to get signatures from supervisors at the organizations where you volunteer.</p>
                     </div>
                 </div>
@@ -464,7 +459,7 @@
 ">What if I want to volunteer with multiple organizations?</h3>
                         <i class="faq-icon fa-solid fa-chevron-down text-gray-600 transition-transform"></i>
                     </div>
-                    <div class="faq-answer hidden mt-4 text-gray-600 dark:text-gray-300">
+                    <div class="faq-answer mt-4 text-gray-600 dark:text-gray-300">
                         <p>That's wonderful! We encourage exploring different causes and organizations. You can absolutely volunteer with multiple organizations simultaneously or try different ones to find what resonates most with you. Each experience contributes to your growth and community impact.</p>
                     </div>
                 </div>
@@ -487,7 +482,7 @@
                 </p>
             </div>
             
-            <div class="bg-gray-50 dark:bg-slate-800 rounded-2xl p-8 shadow-lg">
+            <div class="vx-hours-tracker-card" id="hoursTrackerCard">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div>
                         <h3 class="text-xl font-semibold text-black
@@ -636,6 +631,35 @@
 
     <!-- Main JavaScript -->
     <script src="main.js"></script>
+
+    <!-- Scroll Reveal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+            document.querySelectorAll('.vx-reveal').forEach(el => revealObserver.observe(el));
+
+            // Hours tracker ring pulse on complete
+            const hoursInput = document.getElementById('currentHours');
+            if (hoursInput) {
+                hoursInput.addEventListener('input', function() {
+                    const card = document.getElementById('hoursTrackerCard');
+                    if (parseFloat(this.value) >= 40) {
+                        card?.classList.add('vx-ring-complete');
+                    } else {
+                        card?.classList.remove('vx-ring-complete');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 

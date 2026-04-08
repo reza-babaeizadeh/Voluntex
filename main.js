@@ -862,10 +862,18 @@ function initializeFAQ() {
             question.addEventListener('click', () => {
                 const answer = item.querySelector('.faq-answer');
                 const icon = question.querySelector('.faq-icon');
-                
-                if (answer && icon) {
-                    answer.classList.toggle('hidden');
-                    icon.classList.toggle('rotate-180');
+                const isOpen = answer.classList.contains('faq-open');
+
+                // Close all other open items
+                faqItems.forEach(other => {
+                    other.querySelector('.faq-answer')?.classList.remove('faq-open');
+                    other.querySelector('.faq-icon')?.classList.remove('rotate-180');
+                });
+
+                // Toggle clicked item
+                if (!isOpen) {
+                    answer.classList.add('faq-open');
+                    icon?.classList.add('rotate-180');
                 }
             });
         }
