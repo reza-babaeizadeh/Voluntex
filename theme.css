@@ -488,6 +488,39 @@ html.dark #startMatching {
 }
 
 /* ============================================================
+   CONTACT PAGE — HERO
+   ============================================================ */
+.vx-contact-hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+html.dark .vx-contact-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    background-size: 400% 400%;
+    animation: heroGradientShift 10s ease infinite;
+}
+html.dark .vx-contact-hero::before,
+html.dark .vx-contact-hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    pointer-events: none;
+}
+html.dark .vx-contact-hero::before {
+    width: 350px; height: 350px;
+    background: #6366f1;
+    top: -80px; right: -60px;
+}
+html.dark .vx-contact-hero::after {
+    width: 280px; height: 280px;
+    background: #3b82f6;
+    bottom: -60px; left: -40px;
+}
+
+/* ============================================================
    CHARITIES PAGE — HERO
    ============================================================ */
 .vx-charities-hero {
