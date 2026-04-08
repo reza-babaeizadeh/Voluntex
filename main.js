@@ -153,6 +153,7 @@ const translations = {
         carouselSpcaDesc: "Caring for animals in need",
         carouselCmhaDesc: "Supporting mental health and wellness",
         carouselChatsDesc: "Supporting seniors in our community",
+        contactMessagePrefix: "I am interested in volunteering with",
         footerTagline: "Connecting students with meaningful volunteer opportunities across York Region, Ontario",
         footerCopy: "© 2024 VoluntEx. All rights reserved. | Empowering the next generation of volunteers.",
         charitiesHeroTitle: "Find Your Perfect Match",
@@ -319,6 +320,7 @@ const translations = {
         carouselSpcaDesc: "Prendre soin des animaux dans le besoin",
         carouselCmhaDesc: "Soutenir la santé mentale et le bien-être",
         carouselChatsDesc: "Soutenir les aînés dans notre communauté",
+        contactMessagePrefix: "Je suis intéressé(e) à faire du bénévolat avec",
         footerTagline: "Connecter les étudiants avec des opportunités de bénévolat significatives à travers la région de York, Ontario",
         footerCopy: "© 2024 VoluntEx. Tous droits réservés. | Donnons pouvoir à la prochaine génération de bénévoles.",
         charitiesHeroTitle: "Trouvez votre correspondance parfaite",
@@ -674,6 +676,16 @@ function applyLanguage() {
         } else {
             graduationStatusSpan.textContent = translations[currentLanguage].graduationKeepGoing;
         }
+    }
+
+    // Refresh contact form pre-fill prefix when language changes
+    const messageField = document.getElementById('student_message');
+    if (messageField && messageField.dataset.orgName) {
+        const orgName = messageField.dataset.orgName;
+        const prefixText = translations[currentLanguage].contactMessagePrefix;
+        const newPrefix = `${prefixText} ${orgName}. `;
+        const userText = messageField.dataset.userText || '';
+        messageField.value = newPrefix + userText;
     }
 }
 
@@ -1123,23 +1135,43 @@ function initializeContactForm() {
         if (orgName) {
             const messageField = document.getElementById('student_message');
             if (messageField) {
-                const prefix = `I am interested in volunteering with ${decodeURIComponent(orgName)}. `;
-                messageField.value = prefix;
-                messageField.placeholder = '';
+                const decodedOrg = decodeURIComponent(orgName);
+                // Store org name so applyLanguage() can re-build the prefix on language toggle
+                messageField.dataset.orgName = decodedOrg;
 
-                // Move cursor to end on load
-                setTimeout(() => messageField.setSelectionRange(prefix.length, prefix.length), 50);
+                function buildPrefix() {
+                    const lang = currentLanguage || 'en';
+                    const prefixText = translations[lang].contactMessagePrefix;
+                    return `${prefixText} ${decodedOrg}. `;
+                }
+
+                function applyPrefix() {
+                    const userText = messageField.value.replace(/^.*?\.\s*/, '');
+                    const prefix = buildPrefix();
+                    messageField.value = prefix + (messageField.dataset.userText || '');
+                    messageField.placeholder = '';
+                    setTimeout(() => messageField.setSelectionRange(prefix.length, prefix.length), 50);
+                }
+
+                applyPrefix();
 
                 // Restore prefix if user deletes into it (e.g. select-all + delete)
                 messageField.addEventListener('input', function() {
+                    const prefix = buildPrefix();
                     if (!this.value.startsWith(prefix)) {
-                        this.value = prefix;
+                        // Save whatever the user typed after the prefix
+                        const extra = this.value.slice(prefix.length);
+                        this.dataset.userText = extra;
+                        this.value = prefix + extra;
                         this.setSelectionRange(prefix.length, prefix.length);
+                    } else {
+                        this.dataset.userText = this.value.slice(prefix.length);
                     }
                 });
 
                 // Block backspace/delete at the prefix boundary
                 messageField.addEventListener('keydown', function(e) {
+                    const prefix = buildPrefix();
                     const s = this.selectionStart;
                     const e2 = this.selectionEnd;
                     if (e.key === 'Backspace' && s <= prefix.length && e2 <= prefix.length) {
@@ -1152,6 +1184,7 @@ function initializeContactForm() {
 
                 // Stop cursor being placed inside the prefix
                 messageField.addEventListener('click', function() {
+                    const prefix = buildPrefix();
                     if (this.selectionStart < prefix.length) {
                         this.setSelectionRange(prefix.length, prefix.length);
                     }
