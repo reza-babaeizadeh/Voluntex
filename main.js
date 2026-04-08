@@ -554,7 +554,7 @@ function createOrganizationCard(org, index) {
 
     const card = document.createElement('div');
     card.style.cssText = 'opacity:0;transform:translateY(30px);transition:opacity 0.5s ease,transform 0.5s ease;';
-    card.className = 'organization-card vx-charity-card rounded-2xl overflow-hidden flex flex-col';
+    card.className = 'organization-card vx-charity-card vx-org-card-theme rounded-2xl overflow-hidden flex flex-col';
     card.style.background = 'rgba(255,255,255,0.05)';
     card.style.border = '1px solid rgba(255,255,255,0.1)';
     card.style.backdropFilter = 'blur(12px)';
@@ -568,16 +568,17 @@ function createOrganizationCard(org, index) {
             </span>
         </div>
         <div style="padding:1.5rem;display:flex;flex-direction:column;flex:1;gap:0.75rem;">
-            <h3 style="font-size:1.2rem;font-weight:700;color:#fff;margin:0;">${org.name}</h3>
-            <p style="color:#ffffff;font-size:0.92rem;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${org.description}</p>
+            <h3 class="vx-card-title" style="font-size:1.2rem;font-weight:700;color:#fff;margin:0;">${org.name}</h3>
+            <p class="vx-card-desc" style="color:#ffffff;font-size:0.92rem;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${org.description}</p>
             <div style="display:flex;margin-top:auto;padding-top:0.5rem;">
-                <span style="background:rgba(255,255,255,0.07);color:#e2e8f0;font-size:1.05rem;font-weight:700;padding:6px 14px;border-radius:6px;display:flex;align-items:center;gap:7px;">
+                <span class="vx-card-pill" style="background:rgba(255,255,255,0.07);color:#e2e8f0;font-size:1.05rem;font-weight:700;padding:6px 14px;border-radius:6px;display:flex;align-items:center;gap:7px;">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     ${org.address.split(',')[1] ? org.address.split(',')[1].trim() : 'York Region'}
                 </span>
             </div>
             <div style="display:flex;gap:10px;margin-top:0.5rem;">
                 <button onclick="viewOrganizationDetails('${org.name}')"
+                    class="vx-card-view-btn"
                     style="flex:1;padding:10px 0;border-radius:10px;border:1px solid rgba(99,102,241,0.5);background:rgba(99,102,241,0.15);color:#a5b4fc;font-weight:600;font-size:0.9rem;cursor:pointer;transition:background 0.2s,color 0.2s;"
                     onmouseover="this.style.background='rgba(99,102,241,0.35)';this.style.color='#fff';"
                     onmouseout="this.style.background='rgba(99,102,241,0.15)';this.style.color='#a5b4fc';">

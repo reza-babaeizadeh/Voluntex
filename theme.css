@@ -484,6 +484,64 @@ footer {
 }
 
 /* ============================================================
+   LIGHT MODE — ORG CARDS (charities page + matched results)
+   ============================================================ */
+html:not(.dark) .vx-org-card-theme {
+    background: #ffffff !important;
+    border: 1px solid rgba(0,0,0,0.09) !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.09) !important;
+}
+html:not(.dark) .vx-card-title {
+    color: #1e293b !important;
+}
+html:not(.dark) .vx-card-desc {
+    color: #475569 !important;
+}
+html:not(.dark) .vx-card-pill {
+    background: rgba(0,0,0,0.05) !important;
+    color: #374151 !important;
+}
+html:not(.dark) .vx-card-view-btn {
+    border-color: rgba(79,70,229,0.35) !important;
+    background: rgba(79,70,229,0.07) !important;
+    color: #4f46e5 !important;
+}
+
+/* ============================================================
+   LIGHT MODE — MATCHING RESULTS SECTION
+   ============================================================ */
+.vx-matching-section {
+    background: linear-gradient(to bottom, #0f172a, #1e293b);
+}
+html:not(.dark) .vx-matching-section {
+    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+}
+.vx-match-badge {
+    background: rgba(59,130,246,0.2);
+    color: #3b82f6;
+}
+html:not(.dark) .vx-match-badge {
+    background: rgba(59,130,246,0.12);
+    color: #1d4ed8;
+}
+.vx-match-heading {
+    color: #ffffff;
+}
+html:not(.dark) .vx-match-heading {
+    color: #0f172a;
+}
+
+/* ============================================================
+   LIGHT MODE — CONTACT SIDEBAR INFO CARDS
+   ============================================================ */
+html:not(.dark) .vx-info-card a,
+html:not(.dark) .vx-info-card span.detail,
+html:not(.dark) .vx-info-card li.detail {
+    color: #475569 !important;
+}
+html:not(.dark) .vx-info-card a:hover { color: #2563eb !important; }
+
+/* ============================================================
    GET STARTED BUTTON — text colour per mode
    ============================================================ */
 #startMatching {
@@ -787,9 +845,11 @@ html.dark .vx-charities-hero::after {
     opacity: 0.85;
     transform: scale(1.03);
 }
-html:not(.dark) .vx-empty-state h3 { color: #1e293b; }
+html:not(.dark) .vx-empty-state h3 { color: #1e293b !important; }
+html:not(.dark) .vx-empty-state p   { color: #64748b !important; }
 html:not(.dark) .vx-empty-state-icon {
     background: rgba(99,102,241,0.08);
+    border-color: rgba(99,102,241,0.15);
 }
 
 /* ============================================================
