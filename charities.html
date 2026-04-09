@@ -298,10 +298,15 @@
         <div class="vx-cta-orb vx-cta-orb-2"></div>
         <div class="vx-cta-orb vx-cta-orb-3"></div>
 
-        <!-- Floating stat chips -->
+        <!-- Floating stat chip -->
         <div class="vx-cta-chip vx-cta-chip-left vx-reveal-chip">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-            <span>500+ Students</span>
+            <div class="vx-chip-icon-wrap">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="vx-chip-text">
+                <span class="vx-chip-num">500+</span>
+                <span class="vx-chip-label">Students</span>
+            </div>
         </div>
 
         <div class="vx-cta-inner">
@@ -398,8 +403,18 @@
         animation: vxChipBob 6s ease-in-out infinite;
         pointer-events: none;
     }
-    .vx-cta-chip-left  { top: 22%; left: 5%; animation-delay: 0s; }
+    .vx-cta-chip-left  { top: 20px; left: 24px; animation-delay: 0s; gap: 10px; padding: 8px 16px 8px 8px; }
     .vx-cta-chip-right { bottom: 22%; right: 5%; animation-delay: 3s; }
+    .vx-chip-icon-wrap {
+        width: 32px; height: 32px;
+        background: rgba(255,255,255,0.18);
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+    .vx-chip-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .vx-chip-num  { font-size: 0.95rem; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+    .vx-chip-label{ font-size: 0.68rem; font-weight: 500; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.06em; }
     @media (max-width: 640px) { .vx-cta-chip { display: none; } }
     @keyframes vxChipBob {
         0%, 100% { transform: translateY(0); }
