@@ -17,8 +17,6 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
-    
     <!-- Font Awesome -->
    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -878,101 +876,183 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=16"></script>
+    <script src="main.js?v=17"></script>
 
-    <!-- Hero particle system (p5.js) -->
+    <!-- Hero: Interactive Network Canvas -->
     <script>
-    (function() {
-        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (function () {
+        'use strict';
 
-        function isDark() {
-            return document.documentElement.classList.contains('dark');
+        var canvas, ctx, W, H;
+        var mouse = { x: -9999, y: -9999 };
+        var nodes = [], ripples = [];
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        var NODE_COUNT   = 75;
+        var CONNECT_DIST = 155;
+        var REPEL_R      = 125;
+        var COLORS       = ['#3b82f6','#6366f1','#8b5cf6','#60a5fa','#a78bfa'];
+
+        function isDark() { return document.documentElement.classList.contains('dark'); }
+
+        function hex(h) {
+            return { r: parseInt(h.slice(1,3),16), g: parseInt(h.slice(3,5),16), b: parseInt(h.slice(5,7),16) };
         }
 
-        var sketch = function(p) {
-            var particles = [];
-            var COUNT = 55;
-            var CONNECT_DIST = 130;
-            var canvas;
-
-            p.setup = function() {
-                var el = document.getElementById('particle-canvas');
-                if (!el) return;
-                canvas = p.createCanvas(el.offsetWidth, el.offsetHeight);
-                canvas.parent('particle-canvas');
-                canvas.style('display', 'block');
-                for (var i = 0; i < COUNT; i++) {
-                    particles.push({
-                        x: p.random(p.width),
-                        y: p.random(p.height),
-                        vx: p.random(-0.3, 0.3),
-                        vy: p.random(-0.5, -0.1),
-                        r: p.random(1.5, 3)
-                    });
-                }
+        function mkNode() {
+            var hub = Math.random() < 0.14;
+            var br  = hub ? 2.8 + Math.random()*2.2 : 1 + Math.random()*1.8;
+            return {
+                x: Math.random()*W, y: Math.random()*H,
+                vx: (Math.random()-0.5)*0.55,
+                vy: (Math.random()-0.5)*0.55,
+                r: br, br: br,
+                c: COLORS[Math.floor(Math.random()*COLORS.length)],
+                ph: Math.random()*Math.PI*2,
+                hub: hub
             };
+        }
 
-            p.draw = function() {
-                p.clear();
-                if (!isDark()) return;
+        function init() {
+            var el = document.getElementById('particle-canvas');
+            if (!el) return;
+            canvas = document.createElement('canvas');
+            canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;display:block;';
+            el.innerHTML = '';
+            el.appendChild(canvas);
+            ctx = canvas.getContext('2d');
+            resize();
+            for (var i = 0; i < NODE_COUNT; i++) nodes.push(mkNode());
+            window.addEventListener('resize', resize);
+            canvas.addEventListener('mousemove', function(e) {
+                var r = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - r.left;
+                mouse.y = e.clientY - r.top;
+            });
+            canvas.addEventListener('mouseleave', function() { mouse.x = -9999; mouse.y = -9999; });
+            canvas.addEventListener('click', function(e) {
+                if (reduced) return;
+                var r = canvas.getBoundingClientRect();
+                ripples.push({ x: e.clientX-r.left, y: e.clientY-r.top, r: 0, a: 1 });
+            });
+            requestAnimationFrame(draw);
+        }
 
-                for (var i = 0; i < particles.length; i++) {
-                    var pt = particles[i];
+        function resize() {
+            var el = document.getElementById('particle-canvas');
+            if (!el || !canvas) return;
+            W = canvas.width  = el.offsetWidth;
+            H = canvas.height = el.offsetHeight;
+        }
 
-                    // Mouse repulsion
-                    if (!prefersReduced) {
-                        var dx = pt.x - p.mouseX;
-                        var dy = pt.y - p.mouseY;
-                        var dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 80) {
-                            pt.vx += dx / dist * 0.4;
-                            pt.vy += dy / dist * 0.4;
-                        }
-                        // Dampen velocity
-                        pt.vx *= 0.98;
-                        pt.vy *= 0.98;
+        function draw(ts) {
+            requestAnimationFrame(draw);
+            ctx.clearRect(0, 0, W, H);
+            if (!isDark()) return;
 
-                        pt.x += pt.vx;
-                        pt.y += pt.vy;
-                    }
+            var t = ts * 0.001;
+            var i, j, n, a, b, dx, dy, d, al, rgb, g, rip, k;
 
-                    // Wrap around edges
-                    if (pt.x < 0) pt.x = p.width;
-                    if (pt.x > p.width) pt.x = 0;
-                    if (pt.y < 0) pt.y = p.height;
-                    if (pt.y > p.height) pt.y = 0;
-
-                    // Draw dot
-                    p.noStroke();
-                    p.fill(96, 165, 250, 160);
-                    p.circle(pt.x, pt.y, pt.r * 2);
-
-                    // Draw connection lines
-                    for (var j = i + 1; j < particles.length; j++) {
-                        var pt2 = particles[j];
-                        var d = p.dist(pt.x, pt.y, pt2.x, pt2.y);
-                        if (d < CONNECT_DIST) {
-                            var alpha = p.map(d, 0, CONNECT_DIST, 60, 0);
-                            p.stroke(99, 102, 241, alpha);
-                            p.strokeWeight(0.6);
-                            p.line(pt.x, pt.y, pt2.x, pt2.y);
-                        }
-                    }
-                }
-            };
-
-            p.windowResized = function() {
-                var el = document.getElementById('particle-canvas');
-                if (el) p.resizeCanvas(el.offsetWidth, el.offsetHeight);
-            };
-        };
-
-        // Wait for DOM + libraries
-        window.addEventListener('load', function() {
-            if (typeof p5 !== 'undefined') {
-                new p5(sketch);
+            /* ── ripples ── */
+            for (i = ripples.length-1; i >= 0; i--) {
+                rip = ripples[i];
+                rip.r += 4.5;
+                rip.a = Math.max(0, 1 - rip.r/230);
+                if (rip.a <= 0) { ripples.splice(i,1); continue; }
+                ctx.beginPath();
+                ctx.arc(rip.x, rip.y, rip.r, 0, Math.PI*2);
+                ctx.strokeStyle = 'rgba(99,102,241,'+(rip.a*0.45)+')';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                /* outer glow ring */
+                ctx.beginPath();
+                ctx.arc(rip.x, rip.y, rip.r*0.7, 0, Math.PI*2);
+                ctx.strokeStyle = 'rgba(139,92,246,'+(rip.a*0.2)+')';
+                ctx.lineWidth = 3;
+                ctx.stroke();
             }
-        });
+
+            /* ── physics ── */
+            if (!reduced) {
+                for (i = 0; i < nodes.length; i++) {
+                    n = nodes[i];
+                    dx = n.x - mouse.x; dy = n.y - mouse.y;
+                    d  = Math.sqrt(dx*dx + dy*dy);
+                    if (d < REPEL_R && d > 0.5) {
+                        var f = Math.pow(1 - d/REPEL_R, 2) * 2.8;
+                        n.vx += (dx/d)*f; n.vy += (dy/d)*f;
+                    }
+                    for (k = 0; k < ripples.length; k++) {
+                        rip = ripples[k];
+                        dx = n.x-rip.x; dy = n.y-rip.y;
+                        d = Math.sqrt(dx*dx+dy*dy);
+                        var band = Math.abs(d - rip.r);
+                        if (band < 38 && d > 0.5) {
+                            var rf = (1-band/38)*2.8*rip.a;
+                            n.vx += (dx/d)*rf; n.vy += (dy/d)*rf;
+                        }
+                    }
+                    n.vx *= 0.95; n.vy *= 0.95;
+                    n.x  += n.vx;  n.y  += n.vy;
+                }
+            }
+
+            /* ── wrap + pulse ── */
+            for (i = 0; i < nodes.length; i++) {
+                n = nodes[i];
+                n.r = n.br + Math.sin(t*1.6 + n.ph) * 0.6;
+                if (n.x < -30) n.x = W+30; else if (n.x > W+30) n.x = -30;
+                if (n.y < -30) n.y = H+30; else if (n.y > H+30) n.y = -30;
+            }
+
+            /* ── connections ── */
+            ctx.lineWidth = 0.85;
+            for (i = 0; i < nodes.length; i++) {
+                a = nodes[i];
+                var ra = hex(a.c);
+                for (j = i+1; j < nodes.length; j++) {
+                    b = nodes[j];
+                    dx = a.x-b.x; dy = a.y-b.y;
+                    d  = Math.sqrt(dx*dx+dy*dy);
+                    if (d >= CONNECT_DIST) continue;
+                    al = (1 - d/CONNECT_DIST) * 0.28;
+                    /* brighten when near cursor */
+                    var mda = Math.hypot(a.x-mouse.x, a.y-mouse.y);
+                    var mdb = Math.hypot(b.x-mouse.x, b.y-mouse.y);
+                    if (mda < 130 || mdb < 130) al = Math.min(al*3.2, 0.75);
+                    var rb = hex(b.c);
+                    g = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+                    g.addColorStop(0,'rgba('+ra.r+','+ra.g+','+ra.b+','+al+')');
+                    g.addColorStop(1,'rgba('+rb.r+','+rb.g+','+rb.b+','+al+')');
+                    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+                    ctx.strokeStyle = g; ctx.stroke();
+                }
+            }
+
+            /* ── nodes ── */
+            for (i = 0; i < nodes.length; i++) {
+                n = nodes[i];
+                rgb = hex(n.c);
+                /* glow halo */
+                ctx.shadowBlur = n.hub ? 22 : 12;
+                ctx.shadowColor = n.c;
+                /* soft outer glow */
+                g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r*3);
+                g.addColorStop(0,'rgba('+rgb.r+','+rgb.g+','+rgb.b+',0.25)');
+                g.addColorStop(1,'rgba('+rgb.r+','+rgb.g+','+rgb.b+',0)');
+                ctx.beginPath(); ctx.arc(n.x, n.y, n.r*3, 0, Math.PI*2);
+                ctx.fillStyle = g; ctx.fill();
+                /* core */
+                ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+                ctx.fillStyle = n.c; ctx.fill();
+                /* specular highlight */
+                ctx.beginPath(); ctx.arc(n.x - n.r*0.3, n.y - n.r*0.3, n.r*0.45, 0, Math.PI*2);
+                ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        window.addEventListener('load', init);
     })();
     </script>
 </body>
@@ -1037,16 +1117,6 @@ html.dark .stat-counter + p {
 }
 </style>
 
-<style>
-/* Particle background colors */
-html:not(.dark) #particle-canvas {
-    background: white !important;
-}
-
-html.dark #particle-canvas {
-    background: #0f172a !important;
-}
-</style>
 
 <style>
 /* Light mode only (when <html> does NOT have .dark) */
