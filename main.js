@@ -5,6 +5,7 @@
 const organizations = [
     {
         name: "360°kids",
+        nameFr: "360°kids",
         causeArea: "Youth Services",
         causeAreaFr: "Services à la jeunesse",
         website: "https://www.360kids.ca/",
@@ -17,6 +18,7 @@ const organizations = [
     },
     {
         name: "Big Brothers Big Sisters of Peel York",
+        nameFr: "Grands Frères Grandes Sœurs de Peel York",
         causeArea: "Youth Mentorship",
         causeAreaFr: "Mentorat jeunesse",
         website: "https://peelyork.bigbrothersbigsisters.ca/",
@@ -29,6 +31,7 @@ const organizations = [
     },
     {
         name: "Jericho Youth Services",
+        nameFr: "Services Jeunesse Jericho",
         causeArea: "Youth Programs",
         causeAreaFr: "Programmes jeunesse",
         website: "https://jerichoyouthservices.org/",
@@ -41,6 +44,7 @@ const organizations = [
     },
     {
         name: "Food Bank of York Region",
+        nameFr: "Banque alimentaire de la région de York",
         causeArea: "Food Security",
         causeAreaFr: "Sécurité alimentaire",
         website: "https://www.fbyr.ca/",
@@ -53,6 +57,7 @@ const organizations = [
     },
     {
         name: "Ontario SPCA – York Region Animal Centre",
+        nameFr: "SPCA de l'Ontario – Centre animalier de la région de York",
         causeArea: "Animal Welfare",
         causeAreaFr: "Bien-être animal",
         website: "https://ontariospca.ca/volunteer/",
@@ -65,6 +70,7 @@ const organizations = [
     },
     {
         name: "CMHA York Region & South Simcoe",
+        nameFr: "ACSM Région de York et South Simcoe",
         causeArea: "Mental Health",
         causeAreaFr: "Santé mentale",
         website: "https://cmha-yr.on.ca/",
@@ -77,6 +83,7 @@ const organizations = [
     },
     {
         name: "CHATS",
+        nameFr: "CHATS",
         causeArea: "Senior Support",
         causeAreaFr: "Soutien aux aînés",
         website: "https://www.chats.on.ca/",
@@ -89,6 +96,7 @@ const organizations = [
     },
     {
         name: "ClearWater Farm",
+        nameFr: "Ferme ClearWater",
         causeArea: "Environmental",
         causeAreaFr: "Environnement",
         website: "https://clearwaterfarm.ca/",
@@ -101,6 +109,7 @@ const organizations = [
     },
     {
         name: "Yellow Brick House",
+        nameFr: "Maison Yellow Brick",
         causeArea: "Women & Children's Shelter",
         causeAreaFr: "Refuge femmes et enfants",
         website: "https://yellowbrickhouse.org/",
@@ -113,6 +122,7 @@ const organizations = [
     },
     {
         name: "Markham Stouffville Hospital",
+        nameFr: "Hôpital Markham Stouffville",
         causeArea: "Healthcare",
         causeAreaFr: "Soins de santé",
         website: "https://www.oakvalleyhealth.ca/",
@@ -933,6 +943,7 @@ function createOrganizationCard(org, index) {
         "Women & Children's Shelter": 'linear-gradient(135deg,#ec4899,#db2777)',
     };
     const badgeBg = causeBadgeColors[org.causeArea] || 'linear-gradient(135deg,#3b82f6,#6366f1)';
+    const displayName = (currentLanguage === 'fr' && org.nameFr) ? org.nameFr : org.name;
     const displayCauseArea = (currentLanguage === 'fr' && org.causeAreaFr) ? org.causeAreaFr : org.causeArea;
     const displayDescription = (currentLanguage === 'fr' && org.descriptionFr) ? org.descriptionFr : org.description;
 
@@ -950,7 +961,7 @@ function createOrganizationCard(org, index) {
             </span>
         </div>
         <div class="vx-card-body" style="padding:1.5rem;display:flex;flex-direction:column;flex:1;gap:0.75rem;">
-            <h3 class="vx-card-title" style="font-size:1.2rem;font-weight:700;margin:0;">${org.name}</h3>
+            <h3 class="vx-card-title" style="font-size:1.2rem;font-weight:700;margin:0;">${displayName}</h3>
             <p class="vx-card-desc" style="font-size:0.92rem;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${displayDescription}</p>
             <div style="display:flex;margin-top:auto;padding-top:0.5rem;">
                 <span class="vx-card-pill" style="font-size:1.05rem;font-weight:700;padding:6px 14px;border-radius:6px;display:flex;align-items:center;gap:7px;">
