@@ -132,9 +132,73 @@
             color: #1E3A8A;
             font-weight: 300;
         }
-        
         .dark .typed-cursor {
             color: #60A5FA;
+        }
+
+        /* ── Hero gradient orbs (dark mode only) ── */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+            animation: heroOrbFloat 14s ease-in-out infinite;
+        }
+        html.dark .hero-orb { opacity: 0.15; }
+        .hero-orb-1 { width: 560px; height: 560px; background: #3b82f6; top: -140px; left: -100px; animation-delay: 0s; }
+        .hero-orb-2 { width: 420px; height: 420px; background: #6366f1; bottom: -100px; right: -80px; animation-delay: 7s; }
+        @keyframes heroOrbFloat {
+            0%,100% { transform: translateY(0) scale(1); }
+            50%      { transform: translateY(-28px) scale(1.05); }
+        }
+
+        /* ── Gradient text highlight ── */
+        .hero-gradient-word {
+            background: linear-gradient(90deg, #60a5fa 0%, #818cf8 50%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Button glow pulse ── */
+        @keyframes vxBtnPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(59,130,246,0.6); }
+            65%  { box-shadow: 0 0 0 16px rgba(59,130,246,0); }
+            100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+        }
+        .hero-btn-pulse {
+            animation: vxBtnPulse 2.5s ease-out infinite;
+        }
+
+        /* ── Scroll pill indicator ── */
+        .hero-scroll-pill {
+            width: 26px; height: 42px;
+            border: 2px solid rgba(156,163,175,0.5);
+            border-radius: 999px;
+            display: flex;
+            justify-content: center;
+            padding-top: 6px;
+        }
+        html.dark .hero-scroll-pill {
+            border-color: rgba(255,255,255,0.3);
+        }
+        .hero-scroll-dot {
+            width: 4px; height: 8px;
+            background: rgba(107,114,128,0.8);
+            border-radius: 999px;
+            animation: heroScrollDot 1.8s ease-in-out infinite;
+        }
+        html.dark .hero-scroll-dot { background: rgba(255,255,255,0.6); }
+        @keyframes heroScrollDot {
+            0%,100% { transform: translateY(0); opacity: 1; }
+            60%      { transform: translateY(12px); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-orb, .hero-scroll-dot { animation: none; }
+            .hero-btn-pulse { animation: none; }
         }
         
         /* Ensure proper contrast in hero section */
@@ -222,39 +286,42 @@
 
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800">
+        <!-- Animated background orbs (dark mode only) -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+
         <div id="particle-canvas"></div>
-        
+
         <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="max-w-4xl mx-auto">
                 <!-- Main Motto -->
-                <h1 class="text-5xl md:text-7xl font-bold text-black
- 
- dark:text-white
- mb-6">
+                <h1 class="text-5xl md:text-7xl font-bold text-black dark:text-white mb-6" style="opacity:0;transform:translateY(40px);">
                     <span id="motto" data-translate="motto">Are you ready to make real change?</span>
                 </h1>
-                
+
                 <!-- Subtitle -->
                 <p id="subtitle" class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8" style="opacity: 0;" data-translate="subtitle">
                     Connecting students with meaningful volunteer opportunities that go beyond graduation requirements.
                 </p>
-                
+
                 <!-- CTA Button -->
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <button id="startMatching" class="bg-blue-600 hover:bg-blue-700 text-white dark:text-black font-semibold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg" data-translate="getStarted">
                         Get Started
                     </button>
-                    <div class="flex items-center text-gray-600 dark:text-gray-600">
+                    <div class="hero-stat-badge flex items-center text-gray-600 dark:text-gray-400" style="opacity:0;">
                         <i class="fa-solid fa-users mr-2"></i>
                         <span data-translate="studentsMatchedBadge">2,500+ students matched</span>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i class="fa-solid fa-chevron-down text-gray-600 dark:text-gray-600 text-2xl"></i>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div class="hero-scroll-pill">
+                <div class="hero-scroll-dot"></div>
+            </div>
         </div>
     </section>
 
@@ -767,7 +834,103 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=11"></script>
+    <script src="main.js?v=12"></script>
+
+    <!-- Hero particle system (p5.js) -->
+    <script>
+    (function() {
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function isDark() {
+            return document.documentElement.classList.contains('dark');
+        }
+
+        var sketch = function(p) {
+            var particles = [];
+            var COUNT = 55;
+            var CONNECT_DIST = 130;
+            var canvas;
+
+            p.setup = function() {
+                var el = document.getElementById('particle-canvas');
+                if (!el) return;
+                canvas = p.createCanvas(el.offsetWidth, el.offsetHeight);
+                canvas.parent('particle-canvas');
+                canvas.style('display', 'block');
+                for (var i = 0; i < COUNT; i++) {
+                    particles.push({
+                        x: p.random(p.width),
+                        y: p.random(p.height),
+                        vx: p.random(-0.3, 0.3),
+                        vy: p.random(-0.5, -0.1),
+                        r: p.random(1.5, 3)
+                    });
+                }
+            };
+
+            p.draw = function() {
+                p.clear();
+                if (!isDark()) return;
+
+                for (var i = 0; i < particles.length; i++) {
+                    var pt = particles[i];
+
+                    // Mouse repulsion
+                    if (!prefersReduced) {
+                        var dx = pt.x - p.mouseX;
+                        var dy = pt.y - p.mouseY;
+                        var dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 80) {
+                            pt.vx += dx / dist * 0.4;
+                            pt.vy += dy / dist * 0.4;
+                        }
+                        // Dampen velocity
+                        pt.vx *= 0.98;
+                        pt.vy *= 0.98;
+
+                        pt.x += pt.vx;
+                        pt.y += pt.vy;
+                    }
+
+                    // Wrap around edges
+                    if (pt.x < 0) pt.x = p.width;
+                    if (pt.x > p.width) pt.x = 0;
+                    if (pt.y < 0) pt.y = p.height;
+                    if (pt.y > p.height) pt.y = 0;
+
+                    // Draw dot
+                    p.noStroke();
+                    p.fill(96, 165, 250, 160);
+                    p.circle(pt.x, pt.y, pt.r * 2);
+
+                    // Draw connection lines
+                    for (var j = i + 1; j < particles.length; j++) {
+                        var pt2 = particles[j];
+                        var d = p.dist(pt.x, pt.y, pt2.x, pt2.y);
+                        if (d < CONNECT_DIST) {
+                            var alpha = p.map(d, 0, CONNECT_DIST, 60, 0);
+                            p.stroke(99, 102, 241, alpha);
+                            p.strokeWeight(0.6);
+                            p.line(pt.x, pt.y, pt2.x, pt2.y);
+                        }
+                    }
+                }
+            };
+
+            p.windowResized = function() {
+                var el = document.getElementById('particle-canvas');
+                if (el) p.resizeCanvas(el.offsetWidth, el.offsetHeight);
+            };
+        };
+
+        // Wait for DOM + libraries
+        window.addEventListener('load', function() {
+            if (typeof p5 !== 'undefined') {
+                new p5(sketch);
+            }
+        });
+    })();
+    </script>
 </body>
 
 <style>
