@@ -6,102 +6,121 @@ const organizations = [
     {
         name: "360°kids",
         causeArea: "Youth Services",
+        causeAreaFr: "Services à la jeunesse",
         website: "https://www.360kids.ca/",
         email: "info@360kids.ca",
         phone: "905-475-6694",
         address: "10415 Yonge St, Richmond Hill, ON L4C 0Z3",
         description: "Youth ambassador programs, shelter support, and school event volunteering.",
+        descriptionFr: "Programmes d'ambassadeurs jeunesse, soutien aux refuges et bénévolat lors d'événements scolaires.",
         image: "images/logo-360-1.webp"
     },
     {
         name: "Big Brothers Big Sisters of Peel York",
         causeArea: "Youth Mentorship",
+        causeAreaFr: "Mentorat jeunesse",
         website: "https://peelyork.bigbrothersbigsisters.ca/",
         email: "info.peelyork@bigbrothersbigsisters.ca",
         phone: "(905) 457-7288",
         address: "350 Industrial Parkway S. Aurora ON Canada L4G 3V7",
         description: "CALL FIRST: Offers in-school mentoring and event volunteering for high school students (16+).",
+        descriptionFr: "APPELER D'ABORD : Offre du mentorat en milieu scolaire et du bénévolat lors d'événements pour les élèves du secondaire (16 ans et plus).",
         image: "images/bigbrotherbigsistersyork.png"
     },
     {
         name: "Jericho Youth Services",
         causeArea: "Youth Programs",
+        causeAreaFr: "Programmes jeunesse",
         website: "https://jerichoyouthservices.org/",
         email: "info@jerichoys.org",
         phone: "905-722-5540",
         address: "20849 Dalton Rd, Keswick, ON L4P 3E9",
         description: "After-school program helpers and recreational activity support for youth.",
+        descriptionFr: "Aide aux programmes parascolaires et soutien aux activités récréatives pour les jeunes.",
         image: "images/jerichoyouth.jpg"
     },
-{
-  name: "Food Bank of York Region",
-  causeArea: "Food Security",
-  website: "https://www.fbyr.ca/",
-  email: "volunteer@fbyr.ca",
-  phone: "437-317-3710",
-  address: "8201 Keele Street, Units 5 & 6, Concord, ON Canada L4K 1Z4",
-  description: "Students can volunteer in warehouse roles, sorting, packing, and food delivery support.",
-  image: "https://kimi-web-img.moonshot.cn/img/www.centraltexasfoodbank.org/1731749299f1ac9ea67af5e1c51e2533bfaba7ee.jpg"
-},
+    {
+        name: "Food Bank of York Region",
+        causeArea: "Food Security",
+        causeAreaFr: "Sécurité alimentaire",
+        website: "https://www.fbyr.ca/",
+        email: "volunteer@fbyr.ca",
+        phone: "437-317-3710",
+        address: "8201 Keele Street, Units 5 & 6, Concord, ON Canada L4K 1Z4",
+        description: "Students can volunteer in warehouse roles, sorting, packing, and food delivery support.",
+        descriptionFr: "Les étudiants peuvent faire du bénévolat dans des rôles d'entrepôt, de tri, d'emballage et de livraison de nourriture.",
+        image: "https://kimi-web-img.moonshot.cn/img/www.centraltexasfoodbank.org/1731749299f1ac9ea67af5e1c51e2533bfaba7ee.jpg"
+    },
     {
         name: "Ontario SPCA – York Region Animal Centre",
         causeArea: "Animal Welfare",
+        causeAreaFr: "Bien-être animal",
         website: "https://ontariospca.ca/volunteer/",
         email: "info@ontariospca.ca",
         phone: "(888) 668-7722",
         address: "16586 Woodbine Ave, Stouffville, ON L4A 2W3",
         description: "Student roles in cat/dog care, adoption events, and fundraising drives.",
+        descriptionFr: "Rôles étudiants dans les soins aux chats et chiens, les événements d'adoption et les campagnes de collecte de fonds.",
         image: "https://kimi-web-img.moonshot.cn/img/cdn.sanity.io/22a7a4e5e1d9bc6cc500b4e671d428da6c8dd8fd.jpg"
     },
     {
         name: "CMHA York Region & South Simcoe",
         causeArea: "Mental Health",
+        causeAreaFr: "Santé mentale",
         website: "https://cmha-yr.on.ca/",
         email: "yorkregion@cmha-yr.on.ca",
         phone: "905-841-3977",
         address: "15150 Yonge St Suite 201, Aurora, ON L4G 1M2",
         description: "Supports youth engagement panels, community events, and peer support.",
+        descriptionFr: "Soutient les panels d'engagement jeunesse, les événements communautaires et l'entraide entre pairs.",
         image: "images/cmhalogo.jpg"
     },
     {
         name: "CHATS",
         causeArea: "Senior Support",
+        causeAreaFr: "Soutien aux aînés",
         website: "https://www.chats.on.ca/",
         email: "volunteer@chats.on.ca",
         phone: "905-713-3494",
         address: "10132 Yonge St, Richmond Hill, ON L4C 1T6",
         description: "Volunteers deliver meals, assist seniors, and help at adult day programs.",
+        descriptionFr: "Les bénévoles livrent des repas, aident les aînés et participent aux programmes de jour pour adultes.",
         image: "https://kimi-web-img.moonshot.cn/img/discoveryvillages.com/3a3194fef234b60854544bc9b6d9cff89814b6bd.jpg"
     },
     {
-  name: "ClearWater Farm",
-  causeArea: "Environmental",
-  website: "https://clearwaterfarm.ca/",
-  email: "",
-  phone: "(416) 543-0401",
-  address: "1614 Metro Rd N, Willow Beach, ON L0E 1S0",
-  description: "Hands-on farming and sustainability education roles for students.",
-  image: "https://kimi-web-img.moonshot.cn/img/motionarray.imgix.net/c3526b5c23c30802d9e85240785a0f81d4aa72c4.jpg"
-}
-,
+        name: "ClearWater Farm",
+        causeArea: "Environmental",
+        causeAreaFr: "Environnement",
+        website: "https://clearwaterfarm.ca/",
+        email: "",
+        phone: "(416) 543-0401",
+        address: "1614 Metro Rd N, Willow Beach, ON L0E 1S0",
+        description: "Hands-on farming and sustainability education roles for students.",
+        descriptionFr: "Rôles pratiques en agriculture et en éducation à la durabilité pour les étudiants.",
+        image: "https://kimi-web-img.moonshot.cn/img/motionarray.imgix.net/c3526b5c23c30802d9e85240785a0f81d4aa72c4.jpg"
+    },
     {
         name: "Yellow Brick House",
         causeArea: "Women & Children's Shelter",
+        causeAreaFr: "Refuge femmes et enfants",
         website: "https://yellowbrickhouse.org/",
         email: "info@yellowbrickhouse.org",
         phone: "905-709-0900",
         address: "52 West Beaver Creek Rd., Unit 4 Richmond Hill, ON L4B 1L9",
         description: "Youth Leadership Council, donation drives, and awareness campaigns for high school students.",
+        descriptionFr: "Conseil de leadership jeunesse, collectes de dons et campagnes de sensibilisation pour les élèves du secondaire.",
         image: "https://kimi-web-img.moonshot.cn/img/gray-kttc-prod.gtv-cdn.com/4b634a7258116ecf3fca6fad73002ecf6dafd750.png"
     },
     {
         name: "Markham Stouffville Hospital",
         causeArea: "Healthcare",
+        causeAreaFr: "Soins de santé",
         website: "https://www.oakvalleyhealth.ca/",
         email: "",
         phone: "905-472-7373",
         address: "381 Church St, Markham, ON L3P 7P3",
         description: "High school and college volunteer programs available for ages 16+ year-round and summer.",
+        descriptionFr: "Programmes de bénévolat pour lycéens et collégiens disponibles pour les 16 ans et plus, toute l'année et en été.",
         image: "images/markhamhospital.jpg"
     }
 ];
@@ -914,6 +933,8 @@ function createOrganizationCard(org, index) {
         "Women & Children's Shelter": 'linear-gradient(135deg,#ec4899,#db2777)',
     };
     const badgeBg = causeBadgeColors[org.causeArea] || 'linear-gradient(135deg,#3b82f6,#6366f1)';
+    const displayCauseArea = (currentLanguage === 'fr' && org.causeAreaFr) ? org.causeAreaFr : org.causeArea;
+    const displayDescription = (currentLanguage === 'fr' && org.descriptionFr) ? org.descriptionFr : org.description;
 
     const card = document.createElement('div');
     // Only animation state here — all colours handled by CSS classes
@@ -925,12 +946,12 @@ function createOrganizationCard(org, index) {
             <img src="${org.image}" alt="${org.name}" class="w-full h-full object-cover" style="transition:transform 0.5s ease;">
             <div class="vx-card-img-overlay absolute inset-0"></div>
             <span class="vx-card-badge" style="position:absolute;top:14px;right:14px;background:${badgeBg};font-size:0.72rem;font-weight:600;padding:4px 12px;border-radius:999px;letter-spacing:0.05em;text-transform:uppercase;color:#fff;">
-                ${org.causeArea}
+                ${displayCauseArea}
             </span>
         </div>
         <div class="vx-card-body" style="padding:1.5rem;display:flex;flex-direction:column;flex:1;gap:0.75rem;">
             <h3 class="vx-card-title" style="font-size:1.2rem;font-weight:700;margin:0;">${org.name}</h3>
-            <p class="vx-card-desc" style="font-size:0.92rem;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${org.description}</p>
+            <p class="vx-card-desc" style="font-size:0.92rem;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${displayDescription}</p>
             <div style="display:flex;margin-top:auto;padding-top:0.5rem;">
                 <span class="vx-card-pill" style="font-size:1.05rem;font-weight:700;padding:6px 14px;border-radius:6px;display:flex;align-items:center;gap:7px;">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
