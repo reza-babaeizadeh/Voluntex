@@ -876,7 +876,7 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=20"></script>
+    <script src="main.js?v=21"></script>
 
     <!-- Hero: Interactive Network Canvas -->
     <script>
@@ -915,19 +915,25 @@
             var el = document.getElementById('particle-canvas');
             if (!el) return;
             canvas = document.createElement('canvas');
-            canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;display:block;';
+            /* pointer-events:none — canvas must never block buttons/links */
+            canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;display:block;pointer-events:none;';
             el.innerHTML = '';
             el.appendChild(canvas);
             ctx = canvas.getContext('2d');
             resize();
             for (var i = 0; i < NODE_COUNT; i++) nodes.push(mkNode());
             window.addEventListener('resize', resize);
-            canvas.addEventListener('mousemove', function(e) {
+
+            /* Attach to the hero <section>, NOT the canvas.
+               Canvas is z-index:1, hero content is z-index:2 — mouse events
+               land on the content layer and never reach the canvas directly. */
+            var hero = el.closest('section') || el.parentElement;
+            hero.addEventListener('mousemove', function(e) {
                 var r = canvas.getBoundingClientRect();
                 mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
             });
-            canvas.addEventListener('mouseleave', function() { mouse.x = -9999; mouse.y = -9999; });
-            canvas.addEventListener('click', function(e) {
+            hero.addEventListener('mouseleave', function() { mouse.x = -9999; mouse.y = -9999; });
+            hero.addEventListener('click', function(e) {
                 if (reduced) return;
                 var r = canvas.getBoundingClientRect();
                 ripples.push({ x: e.clientX-r.left, y: e.clientY-r.top, r: 0, a: 1 });
