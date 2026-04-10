@@ -876,37 +876,42 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=21"></script>
+    <script src="main.js?v=22"></script>
 
-    <!-- Hero: Interactive Network Canvas -->
+    <!-- Hero: Interactive Network Canvas v2 -->
     <script>
     (function () {
         'use strict';
 
         var canvas, ctx, W, H;
         var mouse = { x: -9999, y: -9999 };
-        var nodes = [], ripples = [];
-        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var nodes = [], ripples = [], packets = [], trail = [];
+        var reduced   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var lastPulse = 0;
 
-        var NODE_COUNT   = 80;
-        var CONNECT_DIST = 160;
-        var REPEL_R      = 110;   // flee zone
-        var ATTRACT_R    = 240;   // drift-toward zone — creates visible wake
-        var WEB_R        = 170;   // cursor draws lines to nearby nodes
-        var COLORS       = ['#3b82f6','#6366f1','#8b5cf6','#60a5fa','#a78bfa'];
+        var NODE_COUNT  = 85;
+        var CONNECT_D   = 165;
+        var REPEL_R     = 112;
+        var ATTRACT_R   = 245;
+        var WEB_R       = 175;
+        var MAX_PACKETS = 30;
+        var TRAIL_LEN   = 24;
+        var COLORS      = ['#3b82f6','#6366f1','#8b5cf6','#60a5fa','#a78bfa'];
 
         function isDark() { return document.documentElement.classList.contains('dark'); }
-        function hex(h) {
-            return { r: parseInt(h.slice(1,3),16), g: parseInt(h.slice(3,5),16), b: parseInt(h.slice(5,7),16) };
-        }
+        function hex(h)   { return { r:parseInt(h.slice(1,3),16), g:parseInt(h.slice(3,5),16), b:parseInt(h.slice(5,7),16) }; }
+
         function mkNode() {
             var hub = Math.random() < 0.14;
-            var br  = hub ? 2.8 + Math.random()*2.2 : 1 + Math.random()*1.8;
+            var z   = Math.random();                          // 0 = far/dim, 1 = near/bright
+            var spd = 0.22 + z * 0.52;
+            var br  = hub ? (1.6 + z*2.4) : (0.6 + z*1.7);
             return {
                 x: Math.random()*W, y: Math.random()*H,
-                vx: (Math.random()-0.5)*0.6, vy: (Math.random()-0.5)*0.6,
-                r: br, br: br,
-                c: COLORS[Math.floor(Math.random()*COLORS.length)],
+                vx: (Math.random()-0.5)*spd, vy: (Math.random()-0.5)*spd,
+                r: br, br: br, z: z,
+                op: 0.30 + z*0.70,                           // opacity by depth
+                c:  COLORS[Math.floor(Math.random()*COLORS.length)],
                 ph: Math.random()*Math.PI*2, hub: hub
             };
         }
@@ -915,180 +920,206 @@
             var el = document.getElementById('particle-canvas');
             if (!el) return;
             canvas = document.createElement('canvas');
-            /* pointer-events:none — canvas must never block buttons/links */
             canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;display:block;pointer-events:none;';
-            el.innerHTML = '';
-            el.appendChild(canvas);
+            el.innerHTML = ''; el.appendChild(canvas);
             ctx = canvas.getContext('2d');
             resize();
             for (var i = 0; i < NODE_COUNT; i++) nodes.push(mkNode());
             window.addEventListener('resize', resize);
-
-            /* Attach to the hero <section>, NOT the canvas.
-               Canvas is z-index:1, hero content is z-index:2 — mouse events
-               land on the content layer and never reach the canvas directly. */
             var hero = el.closest('section') || el.parentElement;
             hero.addEventListener('mousemove', function(e) {
                 var r = canvas.getBoundingClientRect();
-                mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+                mouse.x = e.clientX-r.left; mouse.y = e.clientY-r.top;
             });
-            hero.addEventListener('mouseleave', function() { mouse.x = -9999; mouse.y = -9999; });
+            hero.addEventListener('mouseleave', function() { mouse.x=-9999; mouse.y=-9999; trail.length=0; });
             hero.addEventListener('click', function(e) {
                 if (reduced) return;
                 var r = canvas.getBoundingClientRect();
-                ripples.push({ x: e.clientX-r.left, y: e.clientY-r.top, r: 0, a: 1 });
+                ripples.push({ x:e.clientX-r.left, y:e.clientY-r.top, r:0, a:1 });
             });
             requestAnimationFrame(draw);
         }
 
         function resize() {
             var el = document.getElementById('particle-canvas');
-            if (!el || !canvas) return;
+            if (!el||!canvas) return;
             W = canvas.width = el.offsetWidth; H = canvas.height = el.offsetHeight;
         }
 
         function draw(ts) {
             requestAnimationFrame(draw);
-            ctx.clearRect(0, 0, W, H);
+            ctx.clearRect(0,0,W,H);
             if (!isDark()) return;
 
-            var t = ts * 0.001;
-            var i, j, n, a, b, dx, dy, d, al, rgb, g, rip, k;
+            var t  = ts * 0.001;
             var mx = mouse.x, my = mouse.y;
-            var hasMouse = mx > -100;
+            var hm = mx > -100;
+            var i, j, n, a, b, dx, dy, d, al, rgb, g, rip, k, pk;
 
-            /* ── 1. Cursor aura — large soft glow that follows the mouse ── */
-            if (hasMouse) {
-                var aura = ctx.createRadialGradient(mx, my, 0, mx, my, 260);
-                aura.addColorStop(0,   'rgba(99,102,241,0.13)');
-                aura.addColorStop(0.35,'rgba(59,130,246,0.07)');
-                aura.addColorStop(1,   'rgba(99,102,241,0)');
-                ctx.beginPath(); ctx.arc(mx, my, 260, 0, Math.PI*2);
-                ctx.fillStyle = aura; ctx.fill();
-
-                /* inner cursor dot */
-                ctx.shadowBlur = 16; ctx.shadowColor = '#8b5cf6';
-                ctx.beginPath(); ctx.arc(mx, my, 3.5, 0, Math.PI*2);
-                ctx.fillStyle = 'rgba(167,139,250,0.9)'; ctx.fill();
-                ctx.shadowBlur = 0;
+            /* ── AUTO-PULSE every 3s from cursor ── */
+            if (hm && !reduced && t - lastPulse > 3) {
+                ripples.push({ x:mx, y:my, r:0, a:0.5 });
+                lastPulse = t;
             }
 
-            /* ── 2. Click ripples ── */
-            for (i = ripples.length-1; i >= 0; i--) {
-                rip = ripples[i];
-                rip.r += 5; rip.a = Math.max(0, 1 - rip.r/240);
-                if (rip.a <= 0) { ripples.splice(i,1); continue; }
-                ctx.beginPath(); ctx.arc(rip.x, rip.y, rip.r, 0, Math.PI*2);
-                ctx.strokeStyle = 'rgba(99,102,241,'+(rip.a*0.5)+')';
-                ctx.lineWidth = 1.5; ctx.stroke();
-                ctx.beginPath(); ctx.arc(rip.x, rip.y, rip.r*0.6, 0, Math.PI*2);
-                ctx.strokeStyle = 'rgba(139,92,246,'+(rip.a*0.25)+')';
-                ctx.lineWidth = 3; ctx.stroke();
-            }
-
-            /* ── 3. Physics: repel + attract (wake effect) + ripple push ── */
-            if (!reduced) {
-                for (i = 0; i < nodes.length; i++) {
-                    n = nodes[i];
-                    if (hasMouse) {
-                        dx = n.x - mx; dy = n.y - my;
-                        d  = Math.sqrt(dx*dx + dy*dy);
-                        if (d < REPEL_R && d > 0.5) {
-                            /* strong flee */
-                            var f = Math.pow(1 - d/REPEL_R, 2) * 5.0;
-                            n.vx += (dx/d)*f; n.vy += (dy/d)*f;
-                        } else if (d < ATTRACT_R && d > REPEL_R) {
-                            /* gentle drift toward cursor — creates visible wave/wake */
-                            var t2 = (d - REPEL_R) / (ATTRACT_R - REPEL_R);
-                            var af = (1 - t2) * 0.45;
-                            n.vx -= (dx/d)*af; n.vy -= (dy/d)*af;
-                        }
-                    }
-                    for (k = 0; k < ripples.length; k++) {
-                        rip = ripples[k];
-                        dx = n.x-rip.x; dy = n.y-rip.y;
-                        d  = Math.sqrt(dx*dx+dy*dy);
-                        var band = Math.abs(d - rip.r);
-                        if (band < 40 && d > 0.5) {
-                            var rf = (1-band/40)*3.2*rip.a;
-                            n.vx += (dx/d)*rf; n.vy += (dy/d)*rf;
-                        }
-                    }
-                    n.vx *= 0.96; n.vy *= 0.96;
-                    n.x  += n.vx;  n.y  += n.vy;
+            /* ── MOUSE COMET TRAIL ── */
+            if (hm && !reduced) {
+                trail.push({ x:mx, y:my });
+                if (trail.length > TRAIL_LEN) trail.shift();
+                for (i = 0; i < trail.length; i++) {
+                    var age = (i+1) / trail.length;          // 0=oldest 1=newest
+                    ctx.beginPath();
+                    ctx.arc(trail[i].x, trail[i].y, age*3.2, 0, Math.PI*2);
+                    ctx.fillStyle = 'rgba(167,139,250,'+(age*0.38)+')';
+                    ctx.fill();
                 }
             }
 
-            /* ── 4. Wrap edges + pulse radius ── */
-            for (i = 0; i < nodes.length; i++) {
-                n = nodes[i];
-                n.r = n.br + Math.sin(t*1.6 + n.ph) * 0.65;
-                if (n.x < -30) n.x = W+30; else if (n.x > W+30) n.x = -30;
-                if (n.y < -30) n.y = H+30; else if (n.y > H+30) n.y = -30;
+            /* ── CURSOR AURA ── */
+            if (hm) {
+                var aura = ctx.createRadialGradient(mx,my,0, mx,my,270);
+                aura.addColorStop(0,   'rgba(99,102,241,0.14)');
+                aura.addColorStop(0.38,'rgba(59,130,246,0.06)');
+                aura.addColorStop(1,   'rgba(99,102,241,0)');
+                ctx.beginPath(); ctx.arc(mx,my,270,0,Math.PI*2);
+                ctx.fillStyle=aura; ctx.fill();
+                ctx.shadowBlur=18; ctx.shadowColor='#8b5cf6';
+                ctx.beginPath(); ctx.arc(mx,my,3.5,0,Math.PI*2);
+                ctx.fillStyle='rgba(167,139,250,0.92)'; ctx.fill();
+                ctx.shadowBlur=0;
             }
 
-            /* ── 5. Node-to-node connections ── */
-            ctx.lineWidth = 0.85;
-            for (i = 0; i < nodes.length; i++) {
-                a = nodes[i]; var ra = hex(a.c);
-                for (j = i+1; j < nodes.length; j++) {
-                    b = nodes[j];
-                    dx = a.x-b.x; dy = a.y-b.y; d = Math.sqrt(dx*dx+dy*dy);
-                    if (d >= CONNECT_DIST) continue;
-                    al = (1 - d/CONNECT_DIST) * 0.28;
-                    if (hasMouse) {
-                        var mda = Math.hypot(a.x-mx, a.y-my);
-                        var mdb = Math.hypot(b.x-mx, b.y-my);
-                        if (mda < 160 || mdb < 160) al = Math.min(al * 3.8, 0.88);
+            /* ── RIPPLES ── */
+            for (i=ripples.length-1; i>=0; i--) {
+                rip=ripples[i]; rip.r+=5.2;
+                rip.a=Math.max(0, 1-rip.r/255);
+                if (rip.a<=0) { ripples.splice(i,1); continue; }
+                ctx.beginPath(); ctx.arc(rip.x,rip.y,rip.r,0,Math.PI*2);
+                ctx.strokeStyle='rgba(99,102,241,'+(rip.a*0.5)+')';
+                ctx.lineWidth=1.6; ctx.stroke();
+                ctx.beginPath(); ctx.arc(rip.x,rip.y,rip.r*0.55,0,Math.PI*2);
+                ctx.strokeStyle='rgba(139,92,246,'+(rip.a*0.22)+')';
+                ctx.lineWidth=3; ctx.stroke();
+            }
+
+            /* ── PHYSICS ── */
+            if (!reduced) {
+                for (i=0; i<nodes.length; i++) {
+                    n=nodes[i];
+                    /* organic noise drift — every node wanders differently */
+                    n.vx += Math.sin(t*0.38 + n.ph       ) * 0.013;
+                    n.vy += Math.cos(t*0.38 + n.ph * 1.37) * 0.013;
+
+                    if (hm) {
+                        dx=n.x-mx; dy=n.y-my; d=Math.sqrt(dx*dx+dy*dy);
+                        if (d < REPEL_R && d > 0.5) {
+                            var f=Math.pow(1-d/REPEL_R,2)*5.2;
+                            n.vx+=(dx/d)*f; n.vy+=(dy/d)*f;
+                        } else if (d < ATTRACT_R) {
+                            var t2=(d-REPEL_R)/(ATTRACT_R-REPEL_R);
+                            var af=(1-t2)*0.46;
+                            n.vx-=(dx/d)*af; n.vy-=(dy/d)*af;
+                        }
                     }
-                    var rb = hex(b.c);
-                    g = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+                    for (k=0; k<ripples.length; k++) {
+                        rip=ripples[k];
+                        dx=n.x-rip.x; dy=n.y-rip.y; d=Math.sqrt(dx*dx+dy*dy);
+                        var band=Math.abs(d-rip.r);
+                        if (band<42 && d>0.5) { var rf=(1-band/42)*3.3*rip.a; n.vx+=(dx/d)*rf; n.vy+=(dy/d)*rf; }
+                    }
+                    /* deeper nodes damp faster (feels further away) */
+                    var drag = 0.952 + n.z*0.012;
+                    n.vx*=drag; n.vy*=drag;
+                    n.x+=n.vx; n.y+=n.vy;
+                }
+            }
+
+            /* ── WRAP + PULSE ── */
+            for (i=0; i<nodes.length; i++) {
+                n=nodes[i];
+                n.r = n.br + Math.sin(t*1.65+n.ph)*0.7;
+                if (n.x<-30) n.x=W+30; else if (n.x>W+30) n.x=-30;
+                if (n.y<-30) n.y=H+30; else if (n.y>H+30) n.y=-30;
+            }
+
+            /* ── CONNECTIONS + spawn ENERGY PACKETS ── */
+            for (i=0; i<nodes.length; i++) {
+                a=nodes[i]; var ra=hex(a.c);
+                for (j=i+1; j<nodes.length; j++) {
+                    b=nodes[j];
+                    /* depth culling: don't connect very-far to very-near nodes */
+                    if (Math.abs(a.z-b.z) > 0.55) continue;
+                    dx=a.x-b.x; dy=a.y-b.y; d=Math.sqrt(dx*dx+dy*dy);
+                    var cd = CONNECT_D*(0.65+(a.z+b.z)*0.28);
+                    if (d>=cd) continue;
+                    al=(1-d/cd)*0.26*((a.op+b.op)*0.5);
+                    if (hm) {
+                        var mda=Math.hypot(a.x-mx,a.y-my);
+                        var mdb=Math.hypot(b.x-mx,b.y-my);
+                        if (mda<170||mdb<170) {
+                            al=Math.min(al*4.2,0.9);
+                            /* spawn energy packet along this lit edge */
+                            if (packets.length<MAX_PACKETS && Math.random()<0.004)
+                                packets.push({ ax:a.x,ay:a.y, bx:b.x,by:b.y, t:0, c:a.c, spd:0.012+Math.random()*0.022 });
+                        }
+                    }
+                    var rb=hex(b.c);
+                    g=ctx.createLinearGradient(a.x,a.y,b.x,b.y);
                     g.addColorStop(0,'rgba('+ra.r+','+ra.g+','+ra.b+','+al+')');
                     g.addColorStop(1,'rgba('+rb.r+','+rb.g+','+rb.b+','+al+')');
                     ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-                    ctx.strokeStyle = g; ctx.stroke();
+                    ctx.strokeStyle=g; ctx.lineWidth=0.6+(a.z+b.z)*0.22; ctx.stroke();
                 }
             }
 
-            /* ── 6. Cursor web — direct lines from cursor to close nodes ── */
-            if (hasMouse) {
-                for (i = 0; i < nodes.length; i++) {
-                    n = nodes[i];
-                    d = Math.hypot(n.x-mx, n.y-my);
-                    if (d >= WEB_R) continue;
-                    al = Math.pow(1 - d/WEB_R, 1.5) * 0.55;
-                    rgb = hex(n.c);
-                    g = ctx.createLinearGradient(mx, my, n.x, n.y);
-                    g.addColorStop(0, 'rgba(167,139,250,'+al+')');
-                    g.addColorStop(1, 'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+(al*0.4)+')');
-                    ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(n.x, n.y);
-                    ctx.strokeStyle = g;
-                    ctx.lineWidth = (1 - d/WEB_R) * 1.4;
-                    ctx.stroke();
-                }
-                ctx.lineWidth = 0.85;
+            /* ── ENERGY PACKETS traveling along edges ── */
+            for (i=packets.length-1; i>=0; i--) {
+                pk=packets[i]; pk.t+=pk.spd;
+                if (pk.t>1) { packets.splice(i,1); continue; }
+                var px=pk.ax+(pk.bx-pk.ax)*pk.t;
+                var py=pk.ay+(pk.by-pk.ay)*pk.t;
+                var pa=Math.sin(pk.t*Math.PI)*0.95;
+                var pRgb=hex(pk.c);
+                ctx.shadowBlur=12; ctx.shadowColor=pk.c;
+                ctx.beginPath(); ctx.arc(px,py,2.8,0,Math.PI*2);
+                ctx.fillStyle='rgba('+pRgb.r+','+pRgb.g+','+pRgb.b+','+pa+')'; ctx.fill();
+                ctx.shadowBlur=0;
             }
 
-            /* ── 7. Draw nodes ── */
-            for (i = 0; i < nodes.length; i++) {
-                n = nodes[i]; rgb = hex(n.c);
-                var near = hasMouse && Math.hypot(n.x-mx, n.y-my) < WEB_R;
-                /* glow */
-                ctx.shadowBlur = near ? 28 : (n.hub ? 18 : 10);
+            /* ── CURSOR WEB LINES ── */
+            if (hm) {
+                for (i=0; i<nodes.length; i++) {
+                    n=nodes[i]; d=Math.hypot(n.x-mx,n.y-my);
+                    if (d>=WEB_R) continue;
+                    al=Math.pow(1-d/WEB_R,1.6)*0.58*n.op;
+                    rgb=hex(n.c);
+                    g=ctx.createLinearGradient(mx,my,n.x,n.y);
+                    g.addColorStop(0,'rgba(167,139,250,'+al+')');
+                    g.addColorStop(1,'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+(al*0.35)+')');
+                    ctx.beginPath(); ctx.moveTo(mx,my); ctx.lineTo(n.x,n.y);
+                    ctx.strokeStyle=g; ctx.lineWidth=(1-d/WEB_R)*1.5; ctx.stroke();
+                }
+            }
+
+            /* ── NODES ── */
+            for (i=0; i<nodes.length; i++) {
+                n=nodes[i]; rgb=hex(n.c);
+                var near = hm && Math.hypot(n.x-mx,n.y-my)<WEB_R;
+                ctx.shadowBlur = near ? 30 : (n.hub ? 20 : 8);
                 ctx.shadowColor = n.c;
-                /* outer halo */
-                g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r*(near ? 4 : 3));
-                g.addColorStop(0,'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+(near?0.4:0.2)+')');
+                /* depth-scaled halo */
+                var haloR = n.r*(near?4.5:2.5+n.z);
+                g=ctx.createRadialGradient(n.x,n.y,0, n.x,n.y,haloR);
+                g.addColorStop(0,'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+(near?0.45:0.18*n.op)+')');
                 g.addColorStop(1,'rgba('+rgb.r+','+rgb.g+','+rgb.b+',0)');
-                ctx.beginPath(); ctx.arc(n.x, n.y, n.r*(near?4:3), 0, Math.PI*2);
-                ctx.fillStyle = g; ctx.fill();
-                /* core */
-                ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
-                ctx.fillStyle = n.c; ctx.fill();
+                ctx.beginPath(); ctx.arc(n.x,n.y,haloR,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+                /* core with depth opacity */
+                ctx.globalAlpha = n.op;
+                ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fillStyle=n.c; ctx.fill();
                 /* specular */
-                ctx.beginPath(); ctx.arc(n.x-n.r*0.3, n.y-n.r*0.3, n.r*0.45, 0, Math.PI*2);
-                ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fill();
-                ctx.shadowBlur = 0;
+                ctx.beginPath(); ctx.arc(n.x-n.r*0.3,n.y-n.r*0.3,n.r*0.42,0,Math.PI*2);
+                ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.fill();
+                ctx.globalAlpha=1; ctx.shadowBlur=0;
             }
         }
 
