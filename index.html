@@ -876,7 +876,7 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=42"></script>
+    <script src="main.js?v=43"></script>
 
     <!-- Hero: Interactive Network Canvas v3 -->
     <script>
@@ -1284,7 +1284,7 @@ html.dark .logo-dark { display: block; }
 
 /* ── Slot-machine stat badge ── */
 (function () {
-    var DIGITS = ['2','5','0','0'];   /* spells 2,500 */
+    var DIGITS = ['2','5','0','0'];   /* target: 2,500 */
 
     function getSuffix() {
         return (window.currentLanguage === 'fr')
@@ -1292,19 +1292,32 @@ html.dark .logo-dark { display: block; }
             : '+ students matched';
     }
 
-    /* Build individual digit drums inside the badge span */
-    function buildSlots(badge) {
+    /* Show plain "0+ students matched" on load */
+    window.addEventListener('load', function () {
+        var badge = document.querySelector('.hero-stat-badge span[data-translate]');
+        if (badge) badge.textContent = '0' + getSuffix();
+    });
+
+    /* Build digit drums and immediately kick off animation */
+    var fired = false;
+
+    window.__heroCountUp = function () {
+        if (fired) return;
+        fired = true;
+
+        var badge = document.querySelector('.hero-stat-badge span[data-translate]');
+        if (!badge) return;
+
+        /* Replace text with drum structure */
         badge.innerHTML = '';
 
         var numWrap = document.createElement('span');
         numWrap.style.cssText =
-            'display:inline-flex;align-items:flex-end;' +
-            'gap:0;font-variant-numeric:tabular-nums;';
+            'display:inline-flex;align-items:flex-end;gap:0;font-variant-numeric:tabular-nums;';
 
-        var drms = [];
+        var strips = [];
 
         DIGITS.forEach(function (d, i) {
-            /* thousands comma between digit 0 and 1 */
             if (i === 1) {
                 var comma = document.createElement('span');
                 comma.textContent = ',';
@@ -1313,13 +1326,11 @@ html.dark .logo-dark { display: block; }
 
             var drum = document.createElement('span');
             drum.style.cssText =
-                'display:inline-block;height:1.2em;' +
-                'overflow:hidden;vertical-align:bottom;';
+                'display:inline-block;height:1.2em;overflow:hidden;vertical-align:bottom;';
 
             var strip = document.createElement('span');
             strip.style.cssText =
-                'display:flex;flex-direction:column;' +
-                'transform:translateY(0);will-change:transform;';
+                'display:flex;flex-direction:column;transform:translateY(0);will-change:transform;';
 
             for (var n = 0; n <= 9; n++) {
                 var cell = document.createElement('span');
@@ -1331,7 +1342,7 @@ html.dark .logo-dark { display: block; }
 
             drum.appendChild(strip);
             numWrap.appendChild(drum);
-            drms.push(strip);
+            strips.push(strip);
         });
 
         var sfx = document.createElement('span');
@@ -1340,45 +1351,24 @@ html.dark .logo-dark { display: block; }
 
         badge.appendChild(numWrap);
         badge.appendChild(sfx);
-        return drms;
-    }
 
-    var drums = null;
-    var fired = false;
-
-    /* Replace badge text with drums on load — shows 0,000 immediately */
-    window.addEventListener('load', function () {
-        var badge = document.querySelector('.hero-stat-badge span[data-translate]');
-        if (!badge) return;
-        drums = buildSlots(badge);
-    });
-
-    /* Called by initializeTypewriter() after typing completes */
-    window.__heroCountUp = function () {
-        if (!drums || fired) return;
-        fired = true;
-
-        drums.forEach(function (strip, idx) {
+        /* Spin each drum then settle right→left */
+        strips.forEach(function (strip, idx) {
             var target = parseInt(DIGITS[idx]);
-            var cur    = 0;
+            var cur = 0;
 
-            /* spin fast */
             var iv = setInterval(function () {
                 cur = (cur + 1) % 10;
                 strip.style.transition = 'none';
-                strip.style.transform  =
-                    'translateY(calc(-' + cur + ' * 1.2em))';
+                strip.style.transform  = 'translateY(calc(-' + cur + ' * 1.2em))';
             }, 55);
 
-            /* settle right→left: ones (idx 3) at 700 ms, thousands (idx 0) at 1300 ms */
             var settleMs = 700 + (DIGITS.length - 1 - idx) * 200;
 
             setTimeout(function () {
                 clearInterval(iv);
-                strip.style.transition =
-                    'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
-                strip.style.transform  =
-                    'translateY(calc(-' + target + ' * 1.2em))';
+                strip.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
+                strip.style.transform  = 'translateY(calc(-' + target + ' * 1.2em))';
             }, settleMs);
         });
     };
