@@ -876,7 +876,7 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=24"></script>
+    <script src="main.js?v=25"></script>
 
     <!-- Hero: Interactive Network Canvas v3 -->
     <script>
@@ -1044,7 +1044,8 @@
             /* ── WRAP + PULSE ── */
             for (i=0; i<nodes.length; i++) {
                 n=nodes[i];
-                n.r = n.br + Math.sin(t*1.65+n.ph)*0.7;
+                /* pulse amplitude scales with node size — tiny nodes never shrink to 0 */
+                n.r = n.br + Math.sin(t*1.65+n.ph) * (n.br * 0.22);
                 if (n.x<-30) n.x=W+30; else if (n.x>W+30) n.x=-30;
                 if (n.y<-30) n.y=H+30; else if (n.y>H+30) n.y=-30;
             }
