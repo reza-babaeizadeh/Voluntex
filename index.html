@@ -876,7 +876,7 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=37"></script>
+    <script src="main.js?v=38"></script>
 
     <!-- Hero: Interactive Network Canvas v3 -->
     <script>
@@ -1383,6 +1383,91 @@ html.dark .logo-dark { display: block; }
             'rotateY(' + rotY.toFixed(2) + 'deg) ' +
             'rotateX(' + rotX.toFixed(2) + 'deg)';
     })();
+})();
+</script>
+
+<script>
+/* ── Magnetic "Get Started" Button ── */
+(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var btn = document.getElementById('startMatching');
+    if (!btn) return;
+
+    /* Wrap button in a neutral div so Tailwind hover CSS stays untouched
+       and only the wrapper receives the magnetic translate                */
+    var mag = document.createElement('div');
+    mag.style.cssText = 'display:inline-block;position:relative;';
+    btn.parentNode.insertBefore(mag, btn);
+    mag.appendChild(btn);
+
+    var RADIUS   = 90;    /* px — magnetic field radius */
+    var PULL     = 0.42;  /* fraction of offset applied at closest point */
+    var section  = document.querySelector('section.relative.min-h-screen');
+
+    var tx = 0, ty = 0;   /* target translate */
+    var cx = 0, cy = 0;   /* current translate (lerped) */
+    var inside = false;
+    var rafId;
+
+    function tick() {
+        rafId = requestAnimationFrame(tick);
+        var lp = inside ? 0.18 : 0.10;
+        cx += (tx - cx) * lp;
+        cy += (ty - cy) * lp;
+
+        /* once snapped back, stop the loop to save CPU */
+        if (!inside && Math.abs(cx) < 0.05 && Math.abs(ty) < 0.05) {
+            cx = cy = 0;
+            mag.style.transform = '';
+            cancelAnimationFrame(rafId);
+            rafId = null;
+            return;
+        }
+
+        /* subtle scale-up proportional to displacement */
+        var disp   = Math.sqrt(cx * cx + cy * cy);
+        var scaleV = 1 + (disp / RADIUS) * 0.10;
+        mag.style.transform =
+            'translate(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px)' +
+            ' scale(' + scaleV.toFixed(4) + ')';
+    }
+
+    section.addEventListener('mousemove', function (e) {
+        var r   = btn.getBoundingClientRect();
+        var bx  = r.left + r.width  * 0.5;
+        var by  = r.top  + r.height * 0.5;
+        var dx  = e.clientX - bx;
+        var dy  = e.clientY - by;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < RADIUS) {
+            var factor = (1 - dist / RADIUS) * PULL;
+            tx = dx * factor;
+            ty = dy * factor;
+            if (!inside) {
+                inside = true;
+                /* remove spring transition while tracking live */
+                mag.style.transition = 'none';
+            }
+            if (!rafId) tick();
+        } else if (inside) {
+            inside = false;
+            tx = 0; ty = 0;
+            /* spring snap-back via CSS for the elastic feel */
+            mag.style.transition = 'transform 0.55s cubic-bezier(0.175,0.885,0.32,1.275)';
+            mag.style.transform  = 'translate(0px,0px) scale(1)';
+            cx = cx; /* keep current so lerp doesn't jump */
+        }
+    });
+
+    section.addEventListener('mouseleave', function () {
+        if (!inside) return;
+        inside = false;
+        tx = 0; ty = 0;
+        mag.style.transition = 'transform 0.55s cubic-bezier(0.175,0.885,0.32,1.275)';
+        mag.style.transform  = 'translate(0px,0px) scale(1)';
+    });
 })();
 </script>
 </html>
