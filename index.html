@@ -876,7 +876,7 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=36"></script>
+    <script src="main.js?v=37"></script>
 
     <!-- Hero: Interactive Network Canvas v3 -->
     <script>
@@ -1320,49 +1320,68 @@ html.dark .logo-dark { display: block; }
 </script>
 
 <script>
-/* ── Hero 3D mouse parallax ── */
+/* ── Hero 3D Perspective Card Tilt ── */
 (function () {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var section = document.querySelector('section.relative.min-h-screen');
     if (!section) return;
 
-    var layers = [];   // filled after Anime.js entrance is done
+    var content = section.querySelector('.hero-content');
+    var card    = section.querySelector('.max-w-4xl');
+    if (!card || !content) return;
+
+    /* ── Perspective on the wrapper so rotateX/Y create true 3D ── */
+    content.style.perspective       = '900px';
+    content.style.perspectiveOrigin = '50% 50%';
+
+    /* ── Card is the tilting plane ── */
+    card.style.transformStyle = 'preserve-3d';
+    card.style.willChange     = 'transform';
+
+    /* ── Smooth mouse tracking ── */
     var tx = 0, ty = 0, cx = 0, cy = 0;
 
-    /* Track mouse across the whole hero including text/button areas */
     section.addEventListener('mousemove', function (e) {
         var r = section.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width  - 0.5) * 2;  /* -1 to 1 */
-        ty = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+        tx =  ((e.clientX - r.left) / r.width  - 0.5) * 2;   /* -1 → 1 */
+        ty =  ((e.clientY - r.top)  / r.height - 0.5) * 2;
     });
     section.addEventListener('mouseleave', function () { tx = 0; ty = 0; });
 
-    /* Wait 2.5s so Anime.js entrance animations are fully done,
-       then register each text layer with its own parallax depth */
+    /* ── After all Anime.js entrances are done, add Z-depth to children ── */
     setTimeout(function () {
         var h1  = section.querySelector('h1');
         var sub = document.getElementById('subtitle');
         var cta = section.querySelector('.flex.flex-col');
-        /* depth  = how many px it shifts at full mouse offset
-           closer to 0 = closer to viewer (moves least) */
-        if (h1)  layers.push({ el: h1,  depth: 10 });
-        if (sub) layers.push({ el: sub, depth: 18 });
-        if (cta) layers.push({ el: cta, depth: 24 });
-    }, 2500);
 
+        /* Anime.js finished; append translateZ to whatever transform is set */
+        function pushZ(el, z) {
+            if (!el) return;
+            el.style.transformStyle = 'preserve-3d';
+            var cur = el.style.transform || '';
+            /* strip any translateZ already present to avoid accumulation */
+            cur = cur.replace(/\s*translateZ\([^)]*\)/g, '').trim();
+            el.style.transform = cur ? cur + ' translateZ(' + z + 'px)' : 'translateZ(' + z + 'px)';
+        }
+
+        pushZ(h1,  70);   /* h1 closest to viewer */
+        pushZ(sub, 40);
+        pushZ(cta, 20);
+    }, 4000);   /* 4s → safely after typewriter + subtitle Anime.js */
+
+    /* ── RAF loop: tilt the card ── */
     (function tick() {
         requestAnimationFrame(tick);
         cx += (tx - cx) * 0.07;
         cy += (ty - cy) * 0.07;
 
-        for (var i = 0; i < layers.length; i++) {
-            var l = layers[i];
-            l.el.style.transform =
-                'translate(' +
-                (-cx * l.depth).toFixed(1) + 'px,' +
-                (-cy * l.depth).toFixed(1) + 'px)';
-        }
+        var rotY =  cx * 16;    /* ±16 deg left/right */
+        var rotX = -cy * 11;    /* ±11 deg up/down  */
+
+        card.style.transform =
+            'rotateY(' + rotY.toFixed(2) + 'deg) ' +
+            'rotateX(' + rotX.toFixed(2) + 'deg)';
     })();
 })();
 </script>
