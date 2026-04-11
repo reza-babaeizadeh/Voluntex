@@ -876,7 +876,7 @@
     </script>
 
     <!-- Main JavaScript -->
-    <script src="main.js?v=34"></script>
+    <script src="main.js?v=35"></script>
 
     <!-- Hero: Interactive Network Canvas v3 -->
     <script>
@@ -1316,6 +1316,58 @@ html.dark .logo-dark { display: block; }
         }
         requestAnimationFrame(step);
     };
+})();
+</script>
+
+<script>
+/* ── Hero 3D card tilt ── */
+(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var section = document.querySelector('section.min-h-screen');
+    if (!section) return;
+
+    /* The card is the inner max-w-4xl wrapper */
+    var card    = section.querySelector('.max-w-4xl');
+    var h1El    = section.querySelector('h1');
+    var subEl   = document.getElementById('subtitle');
+    var ctaEl   = section.querySelector('.flex.flex-col.sm\\:flex-row');
+
+    if (!card) return;
+
+    /* Add preserve-3d so children can have depth */
+    card.style.transformStyle = 'preserve-3d';
+    card.style.willChange     = 'transform';
+
+    /* Static z-depth per layer — h1 closest, CTA furthest */
+    function setLayerDepth() {
+        if (h1El)  { h1El.style.transform  = 'translateZ(28px)';  h1El.style.willChange  = 'transform'; }
+        if (subEl) { subEl.style.transform = 'translateZ(16px)';  subEl.style.willChange = 'transform'; }
+        if (ctaEl) { ctaEl.style.transform = 'translateZ(8px)';   ctaEl.style.willChange = 'transform'; }
+    }
+    /* Wait for Anime.js entrance animations to finish before locking z-depth */
+    setTimeout(setLayerDepth, 3000);
+
+    var tx = 0, ty = 0, cx = 0, cy = 0;
+
+    section.addEventListener('mousemove', function (e) {
+        var r = section.getBoundingClientRect();
+        tx = ((e.clientX - r.left) / r.width  - 0.5) * 2; /* -1 → 1 */
+        ty = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+    });
+    section.addEventListener('mouseleave', function () { tx = 0; ty = 0; });
+
+    (function tick() {
+        requestAnimationFrame(tick);
+        /* Smooth lerp — card lags behind cursor for a fluid feel */
+        cx += (tx - cx) * 0.06;
+        cy += (ty - cy) * 0.06;
+
+        card.style.transform =
+            'perspective(1000px) ' +
+            'rotateY(' + (cx * 6).toFixed(2) + 'deg) ' +
+            'rotateX(' + (-cy * 5).toFixed(2) + 'deg)';
+    })();
 })();
 </script>
 </html>
