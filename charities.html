@@ -57,31 +57,31 @@
         .filter-card-wrap {
             position: relative;
             border-radius: 20px;
-            padding: 2px;
-            background: rgba(209,213,219,0.6); /* light: subtle gray border */
+            padding: 1px;
+            background: rgba(209,213,219,0.4);
             box-shadow: 0 8px 32px rgba(0,0,0,0.08);
             opacity: 0;
             transform: translateY(18px);
         }
         .dark .filter-card-wrap {
-            background: rgba(55,65,81,0.7); /* dark: original slate border tone */
-            box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+            background: rgba(55,65,81,0.45);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
         }
-        /* animated gradient border — only visible on hover */
+        /* animated gradient border — faint, only on hover */
         .filter-card-wrap::before {
             content: '';
             position: absolute;
             inset: 0;
             border-radius: 20px;
-            padding: 2px;
+            padding: 1px;
             background: conic-gradient(from var(--angle, 0deg), #6366f1, #3b82f6, #8b5cf6, #60a5fa, #6366f1);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             opacity: 0;
-            transition: opacity 0.4s;
+            transition: opacity 0.5s;
         }
-        .filter-card-wrap:hover::before { opacity: 1; }
+        .filter-card-wrap:hover::before { opacity: 0.5; }
         @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
         @keyframes borderSpin { to { --angle: 360deg; } }
         .filter-card-wrap:hover { animation: borderSpin 4s linear infinite; }
@@ -100,32 +100,13 @@
 
         /* ── 2. Search input focus glow ── */
         .search-input-wrap { position: relative; }
-        .search-input-wrap::after {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #6366f1, #3b82f6);
-            opacity: 0;
-            z-index: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-        .search-input-wrap:focus-within::after { opacity: 1; }
-        .search-input-wrap input,
-        .search-input-wrap i {
-            position: relative;
-            z-index: 1;
-        }
         .search-input-wrap input {
-            box-shadow: none;
             transition: box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .search-input-wrap:focus-within input {
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.18), 0 0 20px rgba(59,130,246,0.15);
-            border-color: transparent !important;
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.35), 0 0 16px rgba(59,130,246,0.12);
+            border-color: rgba(99,102,241,0.5) !important;
         }
-        /* search icon colour cycle on focus */
         .search-input-wrap:focus-within .fa-search {
             animation: iconGlow 2.5s ease-in-out infinite;
         }
