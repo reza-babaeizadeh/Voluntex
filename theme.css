@@ -1,0 +1,966 @@
+/* VoluntEx Theme — Modern Design System (Light + Dark) */
+
+/* ============================================================
+   ABOUT PAGE — VX DESIGN TOKENS
+   ============================================================ */
+
+/* Section backgrounds */
+.vx-hero-sec {
+    background: linear-gradient(135deg, #dbeafe 0%, #ede9fe 60%, #d1fae5 100%);
+}
+html.dark .vx-hero-sec {
+    background: linear-gradient(135deg, #0f172a 0%, #1a1040 60%, #0f2027 100%) !important;
+}
+
+/* Hero blobs — hide in light mode */
+html:not(.dark) .hero-dot {
+    display: none;
+}
+
+.vx-section-a {
+    background: #f8fafc;
+}
+html.dark .vx-section-a {
+    background: #0f172a !important;
+}
+
+.vx-section-b {
+    background: linear-gradient(180deg, #eff6ff 0%, #f5f3ff 100%);
+}
+html.dark .vx-section-b {
+    background: linear-gradient(180deg, #0f172a 0%, #1a1040 100%) !important;
+}
+
+/* Typography */
+.vx-heading {
+    color: #0f172a;
+}
+html.dark .vx-heading {
+    color: #f1f5f9 !important;
+}
+
+.vx-body {
+    color: #374151;
+}
+html.dark .vx-body {
+    color: #cbd5e1 !important;
+}
+
+.vx-body-muted {
+    color: #6b7280;
+}
+html.dark .vx-body-muted {
+    color: #94a3b8 !important;
+}
+
+/* Section pill label */
+.section-pill {
+    background: rgba(99, 102, 241, 0.1);
+    color: #4f46e5;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+}
+html.dark .section-pill {
+    background: rgba(99, 102, 241, 0.15) !important;
+    color: #818cf8 !important;
+    border-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+/* Accent line */
+.accent-line {
+    background: linear-gradient(90deg, #3b82f6, #6366f1);
+}
+
+/* Cards */
+.vx-card-blue {
+    background: rgba(59, 130, 246, 0.06);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.vx-card-blue:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+}
+html.dark .vx-card-blue {
+    background: rgba(59, 130, 246, 0.07) !important;
+    border-color: rgba(59, 130, 246, 0.2) !important;
+}
+html.dark .vx-card-blue:hover {
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.18) !important;
+}
+
+.vx-card-green {
+    background: rgba(16, 185, 129, 0.06);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.vx-card-green:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
+}
+html.dark .vx-card-green {
+    background: rgba(16, 185, 129, 0.07) !important;
+    border-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Icon circles */
+.vx-icon-blue {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+}
+.vx-icon-green {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+}
+.vx-icon-purple {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(167, 139, 250, 0.12);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    display: flex; align-items: center; justify-content: center;
+}
+.vx-icon-orange {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(251, 146, 60, 0.12);
+    border: 1px solid rgba(251, 146, 60, 0.3);
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Value cards */
+.vx-value-card {
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.vx-value-card:hover { transform: translateY(-6px); }
+
+.vx-value-blue  { background: rgba(59,130,246,0.06);  border: 1px solid rgba(59,130,246,0.18); }
+.vx-value-green { background: rgba(16,185,129,0.06);  border: 1px solid rgba(16,185,129,0.18); }
+.vx-value-purple{ background: rgba(167,139,250,0.06); border: 1px solid rgba(167,139,250,0.18);}
+.vx-value-orange{ background: rgba(251,146,60,0.06);  border: 1px solid rgba(251,146,60,0.18); }
+
+.vx-value-blue:hover  { box-shadow: 0 10px 30px rgba(59,130,246,0.15); }
+.vx-value-green:hover { box-shadow: 0 10px 30px rgba(16,185,129,0.15); }
+.vx-value-purple:hover{ box-shadow: 0 10px 30px rgba(167,139,250,0.15);}
+.vx-value-orange:hover{ box-shadow: 0 10px 30px rgba(251,146,60,0.15); }
+
+/* Team cards */
+.vx-team-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+html.dark .vx-team-card {
+    background: rgba(255,255,255,0.04) !important;
+    border-color: rgba(255,255,255,0.08) !important;
+    box-shadow: none !important;
+}
+
+/* Team photo border adapts to bg */
+.vx-team-photo {
+    width: 112px; height: 112px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+    border: 3px solid #f8fafc;
+}
+html.dark .vx-team-photo {
+    border-color: #0f172a !important;
+}
+
+/* Impact cards */
+.vx-impact-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 1.25rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.vx-impact-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(99,102,241,0.3);
+    box-shadow: 0 8px 32px rgba(99,102,241,0.12);
+}
+html.dark .vx-impact-card {
+    background: rgba(255,255,255,0.04) !important;
+    border-color: rgba(255,255,255,0.08) !important;
+    box-shadow: none !important;
+}
+html.dark .vx-impact-card:hover {
+    border-color: rgba(99,102,241,0.3) !important;
+    box-shadow: 0 8px 32px rgba(99,102,241,0.15) !important;
+}
+
+/* ============================================================
+   NAVIGATION — frosted glass + scroll glow
+   ============================================================ */
+html:not(.dark) nav {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.12) !important;
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease !important;
+}
+html:not(.dark) nav.scrolled {
+    border-bottom: 1px solid rgba(99, 102, 241, 0.6) !important;
+    box-shadow:
+        0 1px 0px rgba(99, 102, 241, 0.5),
+        0 4px 30px rgba(99, 102, 241, 0.25),
+        0 8px 60px rgba(59, 130, 246, 0.12) !important;
+}
+html.dark nav {
+    transition: border-color 0.4s ease, box-shadow 0.4s ease !important;
+}
+html.dark nav.scrolled {
+    border-bottom: 1px solid rgba(99, 102, 241, 0.55) !important;
+    box-shadow:
+        0 1px 0px rgba(99, 102, 241, 0.6),
+        0 4px 40px rgba(99, 102, 241, 0.35),
+        0 8px 80px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* ============================================================
+   FOOTER — light mode
+   ============================================================ */
+html:not(.dark) footer {
+    background: linear-gradient(to bottom, #1e293b, #0f172a) !important;
+}
+
+/* ============================================================
+   SCROLLBAR — light mode
+   ============================================================ */
+html:not(.dark) ::-webkit-scrollbar-track { background: #f1f5f9; }
+
+/* ============================================================
+   #2 NAVBAR SCROLL GLOW — .scrolled class toggled by scroll listener
+   ============================================================ */
+
+
+
+/* ============================================================
+   NAVIGATION — refined frosted glass
+   ============================================================ */
+html.dark nav {
+    background: rgba(10, 14, 28, 0.88) !important;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.18) !important;
+    box-shadow: 0 1px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   HERO SECTIONS — consistent deep gradient in dark mode
+   (HTML class fix handles most, this is a fallback)
+   ============================================================ */
+html.dark section.pt-24 {
+    background: linear-gradient(135deg, #0f172a 0%, #1a1040 100%) !important;
+}
+
+/* ============================================================
+   SECTION BACKGROUNDS — seamless dark flow
+   ============================================================ */
+html.dark section.py-20.bg-white,
+html.dark section.py-16.bg-white {
+    background: #0f172a !important;
+}
+
+/* ============================================================
+   GRADIENT BUTTONS
+   ============================================================ */
+.bg-blue-600 {
+    background: linear-gradient(135deg, #3b82f6, #6366f1) !important;
+    border: none !important;
+    transition: box-shadow 0.25s ease, transform 0.2s ease !important;
+}
+.bg-blue-600:hover {
+    background: linear-gradient(135deg, #2563eb, #4f46e5) !important;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.45) !important;
+}
+
+/* Step number circles */
+.bg-blue-600.rounded-full {
+    background: linear-gradient(135deg, #3b82f6, #6366f1) !important;
+    box-shadow: 0 4px 18px rgba(99, 102, 241, 0.5) !important;
+}
+
+/* ============================================================
+   GLASSMORPHISM CARDS — dark mode
+   ============================================================ */
+
+/* Named card classes */
+html.dark .team-card {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+html.dark .team-card:hover {
+    background: rgba(99, 102, 241, 0.08) !important;
+    border-color: rgba(99, 102, 241, 0.3) !important;
+    box-shadow: 0 8px 36px rgba(99, 102, 241, 0.2) !important;
+    transform: translateY(-6px);
+}
+
+html.dark .faq-item {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.3s ease !important;
+}
+html.dark .faq-item:hover {
+    background: rgba(99, 102, 241, 0.07) !important;
+    border-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+html.dark .filter-card {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(16px) !important;
+}
+
+/* Mission / Vision / Values / Contact form cards (bg-white + rounded) */
+html.dark .bg-white.rounded-2xl,
+html.dark .bg-white.rounded-xl {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3) !important;
+}
+html.dark .bg-white.rounded-2xl:hover,
+html.dark .bg-white.rounded-xl:hover {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+/* About / Featured org carousel cards (bg-gray-50 + rounded) */
+html.dark .bg-gray-50.rounded-2xl,
+html.dark .bg-gray-50.rounded-xl {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Featured org splide slides */
+html.dark .splide__slide .rounded-xl {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Contact info cards */
+html.dark .general-inquiries {
+    background: rgba(99, 102, 241, 0.1) !important;
+    border: 1px solid rgba(99, 102, 241, 0.22) !important;
+}
+html.dark .bg-green-50.rounded-2xl {
+    background: rgba(16, 185, 129, 0.07) !important;
+    border: 1px solid rgba(16, 185, 129, 0.2) !important;
+}
+html.dark .partnership-card {
+    background: rgba(167, 139, 250, 0.08) !important;
+    border: 1px solid rgba(167, 139, 250, 0.2) !important;
+}
+
+/* ============================================================
+   STAT COUNTERS — gradient text in dark
+   ============================================================ */
+html.dark .stat-counter {
+    background: linear-gradient(135deg, #60a5fa, #a78bfa) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+/* Stat icon circles */
+html.dark .bg-blue-100.rounded-full {
+    background: rgba(99, 102, 241, 0.14) !important;
+    border: 1px solid rgba(99, 102, 241, 0.28);
+}
+html.dark .bg-green-100.rounded-full {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+html.dark .bg-purple-100.rounded-full {
+    background: rgba(167, 139, 250, 0.12) !important;
+    border: 1px solid rgba(167, 139, 250, 0.25);
+}
+html.dark .bg-orange-100.rounded-full {
+    background: rgba(251, 146, 60, 0.12) !important;
+    border: 1px solid rgba(251, 146, 60, 0.25);
+}
+
+/* ============================================================
+   FORM INPUTS — glass style in dark
+   ============================================================ */
+html.dark input,
+html.dark select,
+html.dark textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #f1f5f9 !important;
+}
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(99, 102, 241, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+    outline: none !important;
+}
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+    color: rgba(148, 163, 184, 0.6) !important;
+}
+
+/* ============================================================
+   SELECT DROPDOWN OPTIONS — dark background + readable text
+   ============================================================ */
+html.dark select option,
+select option {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+html.dark select option:hover,
+html.dark select option:checked {
+    background: #334155 !important;
+    color: #ffffff !important;
+}
+
+/* ============================================================
+   QUICK FILTER PILLS — dark mode
+   ============================================================ */
+html.dark button[onclick^="quickFilter"] {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #cbd5e1 !important;
+    transition: all 0.2s ease !important;
+}
+html.dark button[onclick^="quickFilter"]:hover {
+    background: rgba(99, 102, 241, 0.18) !important;
+    border-color: rgba(99, 102, 241, 0.4) !important;
+    color: #fff !important;
+}
+
+/* ============================================================
+   CTA SECTION — vibrant gradient
+   ============================================================ */
+section.bg-blue-600,
+.bg-blue-600.dark\:bg-blue-800 {
+    background: linear-gradient(135deg, #1d4ed8 0%, #4338ca 100%) !important;
+}
+
+/* ============================================================
+   FOOTER — deep dark gradient
+   ============================================================ */
+footer {
+    background: linear-gradient(to bottom, #0c1120, #060c18) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   SCROLLBAR — refined
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0f1e; }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #3b82f6, #6366f1);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #2563eb, #4f46e5);
+}
+
+/* ============================================================
+   ORG CARDS — dark mode base (default)
+   ============================================================ */
+.vx-org-card-theme {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+}
+.vx-card-img-overlay {
+    background: linear-gradient(to top, rgba(15,23,42,0.85) 0%, transparent 60%);
+}
+.vx-card-title  { color: #ffffff; }
+.vx-card-desc   { color: #e2e8f0; }
+.vx-card-pill   {
+    background: rgba(255,255,255,0.07);
+    color: #e2e8f0;
+}
+.vx-card-view-btn {
+    border: 1px solid rgba(99,102,241,0.5);
+    background: rgba(99,102,241,0.15);
+    color: #a5b4fc;
+    transition: background 0.2s, color 0.2s;
+}
+.vx-card-view-btn:hover {
+    background: rgba(99,102,241,0.35);
+    color: #ffffff;
+}
+
+/* ============================================================
+   ORG CARDS — light mode overrides
+   ============================================================ */
+html:not(.dark) .vx-org-card-theme {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.09);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    backdrop-filter: none;
+}
+html:not(.dark) .vx-card-img-overlay {
+    background: linear-gradient(to top, rgba(15,23,42,0.7) 0%, transparent 55%);
+}
+html:not(.dark) .vx-card-title  { color: #1e293b; }
+html:not(.dark) .vx-card-desc   { color: #475569; }
+html:not(.dark) .vx-card-pill   {
+    background: rgba(0,0,0,0.05);
+    color: #374151;
+}
+html:not(.dark) .vx-card-view-btn {
+    border: 1px solid rgba(79,70,229,0.35);
+    background: rgba(79,70,229,0.07);
+    color: #4f46e5;
+}
+html:not(.dark) .vx-card-view-btn:hover {
+    background: rgba(79,70,229,0.18);
+    color: #3730a3;
+}
+
+/* ============================================================
+   LIGHT MODE — MATCHING RESULTS SECTION
+   ============================================================ */
+.vx-matching-section {
+    background: linear-gradient(to bottom, #0f172a, #1e293b);
+}
+html:not(.dark) .vx-matching-section {
+    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+}
+.vx-match-badge {
+    background: rgba(59,130,246,0.2);
+    color: #3b82f6;
+}
+html:not(.dark) .vx-match-badge {
+    background: rgba(59,130,246,0.12);
+    color: #1d4ed8;
+}
+.vx-match-heading {
+    color: #ffffff;
+}
+html:not(.dark) .vx-match-heading {
+    color: #0f172a;
+}
+
+/* ============================================================
+   LIGHT MODE — CONTACT SIDEBAR INFO CARDS
+   ============================================================ */
+html:not(.dark) .vx-info-card a,
+html:not(.dark) .vx-info-card span.detail,
+html:not(.dark) .vx-info-card li.detail {
+    color: #475569 !important;
+}
+html:not(.dark) .vx-info-card a:hover { color: #2563eb !important; }
+
+/* ============================================================
+   GET STARTED BUTTON — text colour per mode
+   ============================================================ */
+#startMatching {
+    color: #ffffff !important; /* light mode */
+}
+html.dark #startMatching {
+    color: #000000 !important; /* dark mode */
+}
+
+/* ============================================================
+   CONTACT PAGE — GLASSMORPHISM FORM CARD
+   ============================================================ */
+.vx-contact-form-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+}
+html:not(.dark) .vx-contact-form-card {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* ============================================================
+   CONTACT PAGE — INPUT FOCUS GLOW
+   ============================================================ */
+.vx-contact-form-card input:focus,
+.vx-contact-form-card select:focus,
+.vx-contact-form-card textarea:focus {
+    outline: none !important;
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.25) !important;
+}
+/* Ensure select arrow has breathing room */
+.vx-contact-form-card select {
+    padding-right: 3rem !important;
+    background-position: right 1rem center !important;
+    overflow: visible;
+}
+
+/* ============================================================
+   CONTACT PAGE — SIDEBAR INFO CARDS
+   ============================================================ */
+.vx-info-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.vx-info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+}
+html:not(.dark) .vx-info-card {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(0,0,0,0.07);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+.vx-info-card-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+.vx-info-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
+html.dark .vx-info-card h3 { color: #f1f5f9; }
+html:not(.dark) .vx-info-card h3 { color: #1e293b; }
+.vx-info-card a, .vx-info-card span.detail {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    transition: color 0.2s;
+}
+.vx-info-card a:hover { color: #3b82f6; }
+
+/* ============================================================
+   CONTACT PAGE — SMOOTH FAQ ACCORDION
+   ============================================================ */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 0 !important;
+    transition: max-height 0.4s ease, margin-top 0.3s ease;
+}
+.faq-answer.faq-open {
+    max-height: 400px;
+    margin-top: 1rem !important;
+}
+
+/* ============================================================
+   CONTACT PAGE — HOURS TRACKER GLOW
+   ============================================================ */
+.vx-hours-tracker-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+html:not(.dark) .vx-hours-tracker-card {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+/* SVG must overflow visible so glow doesn't get clipped to a square */
+.vx-hours-tracker-card svg {
+    overflow: visible;
+}
+#progressCircle {
+    filter: drop-shadow(0 0 6px rgba(59,130,246,0.65));
+    transition: stroke-dashoffset 0.6s ease, stroke 0.4s ease, filter 0.4s ease;
+}
+.vx-ring-complete #progressCircle {
+    animation: ringPulse 1.5s ease-in-out infinite;
+    stroke: #10b981;
+}
+@keyframes ringPulse {
+    0%,100% { filter: drop-shadow(0 0 6px rgba(16,185,129,0.6)); }
+    50%      { filter: drop-shadow(0 0 16px rgba(16,185,129,0.95)); }
+}
+
+/* ============================================================
+   CONTACT PAGE — SCROLL REVEAL
+   ============================================================ */
+.vx-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.vx-reveal.revealed { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   CONTACT PAGE — SEND MESSAGE BUTTON
+   ============================================================ */
+.vx-send-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 18px rgba(99,102,241,0.4);
+}
+.vx-send-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+    box-shadow: 0 6px 24px rgba(99,102,241,0.6);
+}
+
+/* ============================================================
+   CONTACT PAGE — HERO
+   ============================================================ */
+.vx-contact-hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+html.dark .vx-contact-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    background-size: 400% 400%;
+    animation: heroGradientShift 10s ease infinite;
+}
+html.dark .vx-contact-hero::before,
+html.dark .vx-contact-hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    pointer-events: none;
+}
+html.dark .vx-contact-hero::before {
+    width: 350px; height: 350px;
+    background: #6366f1;
+    top: -80px; right: -60px;
+}
+html.dark .vx-contact-hero::after {
+    width: 280px; height: 280px;
+    background: #3b82f6;
+    bottom: -60px; left: -40px;
+}
+
+/* ============================================================
+   CHARITIES PAGE — HERO
+   ============================================================ */
+.vx-charities-hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+html.dark .vx-charities-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    background-size: 400% 400%;
+    animation: heroGradientShift 10s ease infinite;
+}
+@keyframes heroGradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* floating glow orbs behind hero in dark mode */
+html.dark .vx-charities-hero::before,
+html.dark .vx-charities-hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    pointer-events: none;
+}
+html.dark .vx-charities-hero::before {
+    width: 400px; height: 400px;
+    background: #6366f1;
+    top: -100px; left: -80px;
+}
+html.dark .vx-charities-hero::after {
+    width: 300px; height: 300px;
+    background: #3b82f6;
+    bottom: -80px; right: -60px;
+}
+
+/* ============================================================
+   CHARITIES PAGE — QUICK FILTER ACTIVE PILL
+   ============================================================ */
+.quick-filter-btn {
+    transition: all 0.2s ease !important;
+    cursor: pointer;
+}
+.quick-filter-btn.active {
+    background: linear-gradient(135deg, #3b82f6, #6366f1) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow: 0 0 14px rgba(99, 102, 241, 0.45) !important;
+    transform: scale(1.05);
+}
+
+/* ============================================================
+   CHARITIES PAGE — CONTACT BUTTON (always visible)
+   ============================================================ */
+.vx-charity-card .vx-contact-reveal {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+/* ============================================================
+   CHARITIES PAGE — EMPTY STATE
+   ============================================================ */
+.vx-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+.vx-empty-state-icon {
+    width: 72px; height: 72px;
+    margin: 0 auto 1.5rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+.vx-empty-state h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 0.5rem;
+}
+.vx-empty-state p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+.vx-empty-state-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: #fff !important;
+    border-radius: 99px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.vx-empty-state-btn:hover {
+    opacity: 0.85;
+    transform: scale(1.03);
+}
+html:not(.dark) .vx-empty-state h3 { color: #1e293b !important; }
+html:not(.dark) .vx-empty-state p   { color: #64748b !important; }
+html:not(.dark) .vx-empty-state-icon {
+    background: rgba(99,102,241,0.08);
+    border-color: rgba(99,102,241,0.15);
+}
+
+/* ============================================================
+   CHARITIES PAGE — RESULTS HEADER
+   ============================================================ */
+.vx-results-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+html.dark .vx-results-title {
+    color: #f1f5f9;
+}
+
+.vx-results-count {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #3b82f6;
+    margin-top: 2px;
+    transition: opacity 0.25s ease;
+    display: inline-block;
+}
+
+/* ============================================================
+   CHARITIES PAGE — RESULT COUNT FADE
+   ============================================================ */
+#resultsCount {
+    transition: opacity 0.25s ease;
+    display: inline-block;
+}
+
+/* ============================================================
+   VX-FOOTER — redesigned footer component
+   ============================================================ */
+.vx-footer {
+    background: linear-gradient(to bottom, #0c1120, #060c18) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    color: #94a3b8;
+}
+
+.vx-footer-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-left: 0;
+}
+
+.vx-footer-logo {
+    height: 96px !important;
+    width: auto !important;
+    flex-shrink: 0;
+    display: block !important;
+    filter: brightness(1.1);
+    margin-left: -0.5rem;
+}
+
+.vx-footer-text {
+    text-align: left;
+}
+
+.vx-footer-tagline {
+    font-size: 0.95rem;
+    color: #3b82f6;
+    margin-bottom: 0.4rem;
+    line-height: 1.6;
+}
+
+.vx-footer-copy {
+    font-size: 0.8rem;
+    color: #ffffff;
+}
+
+/* Light mode footer */
+html:not(.dark) .vx-footer {
+    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+    color: #475569;
+}
+html:not(.dark) .vx-footer-tagline { color: #2563eb; }
+html:not(.dark) .vx-footer-copy    { color: #1e293b; }

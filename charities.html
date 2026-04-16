@@ -23,6 +23,7 @@
     <!-- Dark Mode CSS -->
     <link rel="stylesheet" href="dark-mode.css">
     <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="theme.css">
 
 <style>
     <!-- Custom Styles -->
@@ -164,17 +165,17 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-white dark:to-white">
+    <section class="pt-24 pb-16 vx-charities-hero">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-black
- 
+
  dark:text-white
- mb-6">
+ mb-6" data-translate="charitiesHeroTitle">
                     Find Your Perfect Match
                 </h1>
-                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    Discover amazing non-profit organizations in York Region that align with your passions and interests. 
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" data-translate="charitiesHeroSubtitle">
+                    Discover amazing non-profit organizations in York Region that align with your passions and interests.
                     Each organization offers unique opportunities to make a real difference in your community.
                 </p>
             </div>
@@ -188,10 +189,10 @@
                 <div class="grid md:grid-cols-4 gap-4">
                     <!-- Search Input -->
                     <div class="md:col-span-2">
-                        <label for="searchInput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search Organizations</label>
+                        <label for="searchInput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="searchOrganizations">Search Organizations</label>
                         <div class="relative">
-                            <input type="text" id="searchInput" placeholder="Search by name or description..." 
-                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 
+                            <input type="text" id="searchInput" placeholder="Search by name or description..." data-translate-placeholder="searchPlaceholder"
+                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700
  dark:text-white
  transition-all">
                             <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600"></i>
@@ -200,30 +201,30 @@
                     
                     <!-- Cause Area Filter -->
                     <div>
-                        <label for="causeFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cause Area</label>
+                        <label for="causeFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="causeArea">Cause Area</label>
                         <select id="causeFilter" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 
  dark:text-white
  transition-all">
-                            <option value="">All Causes</option>
-                            <option value="Youth Services">Youth Services</option>
-                            <option value="Youth Mentorship">Youth Mentorship</option>
-                            <option value="Food Security">Food Security</option>
-                            <option value="Animal Welfare">Animal Welfare</option>
-                            <option value="Mental Health">Mental Health</option>
-                            <option value="Senior Support">Senior Support</option>
-                            <option value="Environmental">Environmental</option>
-                            <option value="Healthcare">Healthcare</option>
-                            <option value="Women & Children's Shelter">Women & Children's Shelter</option>
+                            <option value="" data-translate="allCauses">All Causes</option>
+                            <option value="Youth Services" data-translate="causeYouthServices">Youth Services</option>
+                            <option value="Youth Mentorship" data-translate="causeYouthMentorship">Youth Mentorship</option>
+                            <option value="Food Security" data-translate="causeFoodSecurity">Food Security</option>
+                            <option value="Animal Welfare" data-translate="causeAnimalWelfare">Animal Welfare</option>
+                            <option value="Mental Health" data-translate="causeMentalHealth">Mental Health</option>
+                            <option value="Senior Support" data-translate="causeSeniorSupport">Senior Support</option>
+                            <option value="Environmental" data-translate="causeEnvironmental">Environmental</option>
+                            <option value="Healthcare" data-translate="causeHealthcare">Healthcare</option>
+                            <option value="Women & Children's Shelter" data-translate="causeWomens">Women &amp; Children's Shelter</option>
                         </select>
                     </div>
                     
                     <!-- Location Filter -->
                     <div>
-                        <label for="locationFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Location</label>
+                        <label for="locationFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="locationLabel">Location</label>
                         <select id="locationFilter" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 
  dark:text-white
  transition-all">
-                            <option value="">All Locations</option>
+                            <option value="" data-translate="allLocations">All Locations</option>
                             <option value="Richmond Hill">Richmond Hill</option>
                             <option value="Markham">Markham</option>
                             <option value="Vaughan">Vaughan</option>
@@ -236,18 +237,18 @@
                     </div>
                 </div>
                 
-                <div class="flex flex-wrap gap-2 mt-4">
-                    <span class="text-sm text-gray-600 dark:text-gray-300">Quick filters:</span>
-                    <button onclick="quickFilter('Food Security')" class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-white rounded-full text-sm hover:bg-green-200 dark:hover:bg-green-800/50 transition-colors">
+                <div class="flex flex-wrap gap-2 mt-4 items-center">
+                    <span class="text-sm text-gray-600 dark:text-gray-300" data-translate="quickFilters">Quick filters:</span>
+                    <button data-cause="Food Security" onclick="quickFilter('Food Security', this)" class="quick-filter-btn px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-white rounded-full text-sm" data-translate="foodSecurity">
                         Food Security
                     </button>
-                    <button onclick="quickFilter('Animal Welfare')" class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-white rounded-full text-sm hover:bg-orange-200 dark:hover:bg-orange-800/50 transition-colors">
+                    <button data-cause="Animal Welfare" onclick="quickFilter('Animal Welfare', this)" class="quick-filter-btn px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-white rounded-full text-sm" data-translate="animalWelfare">
                         Animal Welfare
                     </button>
-                    <button onclick="quickFilter('Youth Services')" class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-white rounded-full text-sm hover:bg-blue-200 dark:hover:bg-blue-800/50 transition-colors">
+                    <button data-cause="Youth Services" onclick="quickFilter('Youth Services', this)" class="quick-filter-btn px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-white rounded-full text-sm" data-translate="youthServices">
                         Youth Services
                     </button>
-                    <button onclick="quickFilter('Mental Health')" class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-white rounded-full text-sm hover:bg-purple-200 dark:hover:bg-purple-800/50 transition-colors">
+                    <button data-cause="Mental Health" onclick="quickFilter('Mental Health', this)" class="quick-filter-btn px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-white rounded-full text-sm" data-translate="mentalHealth">
                         Mental Health
                     </button>
                 </div>
@@ -260,22 +261,16 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Results Header -->
-            <div class="flex justify-between items-center mb-8">
+            <div class="flex justify-between items-center mb-8 vx-results-header">
                 <div>
-                    <h2 class="text-2xl font-bold text-black
- 
- dark:text-white
-">Organizations</h2>
-                    <p class="text-gray-600 dark:text-gray-300" id="resultsCount">Showing all organizations</p>
+                    <h2 class="vx-results-title" data-translate="organizationsTitle">Organizations</h2>
+                    <p class="vx-results-count" id="resultsCount" data-translate="showingAllOrgs">Showing all organizations</p>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <span class="text-sm text-gray-600 dark:text-gray-300">Sort by:</span>
-                    <select id="sortBy" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 
- dark:text-white
- text-sm">
-                        <option value="name">Name (A-Z)</option>
-                        <option value="cause">Cause Area</option>
-                        <option value="location">Location</option>
+                    <span class="text-sm text-gray-500 dark:text-gray-400" data-translate="sortByLabel">Sort by:</span>
+                    <select id="sortBy" class="vx-sort-select px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white text-sm">
+                        <option value="name" data-translate="sortNameAZ">Name (A-Z)</option>
+                        <option value="location" data-translate="sortLocation">Location</option>
                     </select>
                 </div>
             </div>
@@ -289,7 +284,7 @@
             <div class="text-center mt-12">
                 <button id="loadMoreBtn" class="bg-blue-600 hover:bg-blue-700 text-black
  dark:text-white
- font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105" style="display: none;">
+ font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105" style="display: none;" data-translate="loadMoreOrgs">
                     Load More Organizations
                 </button>
             </div>
@@ -297,57 +292,316 @@
     </section>
 
     <!-- Add Your Organization CTA -->
-    <section class="py-16 bg-blue-600 dark:bg-blue-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold mb-4" style="color: #ffffff !important;">
-    Are you a non-profit organization?
-</h2>
+    <section class="vx-nonprofit-cta" id="nonprofitCTA">
+        <!-- Animated background orbs -->
+        <div class="vx-cta-orb vx-cta-orb-1"></div>
+        <div class="vx-cta-orb vx-cta-orb-2"></div>
+        <div class="vx-cta-orb vx-cta-orb-3"></div>
 
+        <!-- Floating stat chip -->
+        <div class="vx-cta-chip vx-cta-chip-left vx-reveal-chip">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            <span>500+ Students</span>
+        </div>
 
-            <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+        <div class="vx-cta-inner">
+            <!-- Icon badge -->
+            <div class="vx-cta-icon-badge vx-reveal-up">
+                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+
+            <!-- Heading -->
+            <h2 class="vx-cta-heading vx-reveal-up" data-translate="nonprofitCTA">
+                Are you a non-profit organization?
+            </h2>
+
+            <!-- Subtext -->
+            <p class="vx-cta-desc vx-reveal-up" data-translate="nonprofitCTADesc">
                 Join our network of organizations and connect with passionate, dedicated student volunteers who want to make a real difference.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="contact.html" class="bg-white text-gray-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+
+            <!-- Value props row -->
+            <div class="vx-cta-props vx-reveal-up">
+                <div class="vx-cta-prop">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Free to join</span>
+                </div>
+                <div class="vx-cta-prop">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Verified students only</span>
+                </div>
+                <div class="vx-cta-prop">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>York Region network</span>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="vx-cta-buttons vx-reveal-up">
+                <a href="contact.html" class="vx-cta-btn-primary" data-translate="addYourOrg">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
                     Add Your Organization
                 </a>
-                <a href="about.html" class="border-2 border-white text-black
- dark:text-white
- font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-gray-600 transition-colors">
+                <a href="about.html" class="vx-cta-btn-secondary" data-translate="learnMoreAboutUs">
                     Learn More About Us
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-black
- dark:text-white
- py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-             <div class="flex items-center justify-center mb-4">
+    <style>
+    /* ── Nonprofit CTA Section ── */
+    .vx-nonprofit-cta {
+        position: relative;
+        overflow: hidden;
+        padding: 5rem 1.5rem;
+        background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 45%, #4f46e5 100%);
+        text-align: center;
+    }
+    html.dark .vx-nonprofit-cta {
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 45%, #312e81 100%);
+    }
 
-                <p class="text-gray-600 mb-4">
-                    Connecting students with meaningful volunteer opportunities across York Region, Ontario
-                </p>
-                <p class="text-gray-500 text-sm">
-                    © 2024 VoluntEx. All rights reserved. | Empowering the next generation of volunteers.
-                </p>
+    /* Animated orbs */
+    .vx-cta-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.25;
+        animation: vxOrbFloat 8s ease-in-out infinite;
+        pointer-events: none;
+    }
+    .vx-cta-orb-1 { width: 340px; height: 340px; background: #60a5fa; top: -80px; left: -80px; animation-delay: 0s; }
+    .vx-cta-orb-2 { width: 260px; height: 260px; background: #818cf8; bottom: -60px; right: -40px; animation-delay: 2.5s; }
+    .vx-cta-orb-3 { width: 180px; height: 180px; background: #34d399; top: 40%; left: 55%; animation-delay: 5s; opacity: 0.15; }
+    @keyframes vxOrbFloat {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-20px) scale(1.06); }
+    }
+
+    /* Floating stat chips */
+    .vx-cta-chip {
+        position: absolute;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: rgba(255,255,255,0.95);
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 6px 14px 6px 10px;
+        border-radius: 999px;
+        letter-spacing: 0.03em;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+        animation: vxChipBob 6s ease-in-out infinite;
+        pointer-events: none;
+        white-space: nowrap;
+    }
+    .vx-cta-chip svg { opacity: 0.75; flex-shrink: 0; }
+    .vx-cta-chip-left  { top: 20px; left: 24px; animation-delay: 0s; }
+    .vx-cta-chip-right { bottom: 22%; right: 5%; animation-delay: 3s; }
+    @media (max-width: 640px) { .vx-cta-chip { display: none; } }
+    @keyframes vxChipBob {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+
+    /* Content container */
+    .vx-cta-inner {
+        position: relative;
+        z-index: 2;
+        max-width: 680px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.4rem;
+    }
+
+    /* Icon badge */
+    .vx-cta-icon-badge {
+        width: 72px; height: 72px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        border: 1.5px solid rgba(255,255,255,0.3);
+        border-radius: 1.25rem;
+        display: flex; align-items: center; justify-content: center;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        animation: vxIconPulse 4s ease-in-out infinite;
+    }
+    @keyframes vxIconPulse {
+        0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 0 0 rgba(255,255,255,0.15); }
+        50% { box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 0 10px rgba(255,255,255,0); }
+    }
+
+    /* Heading */
+    .vx-cta-heading {
+        font-size: clamp(1.7rem, 4vw, 2.4rem);
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin: 0;
+    }
+
+    /* Description */
+    .vx-cta-desc {
+        font-size: 1.05rem;
+        color: rgba(255,255,255,0.82);
+        line-height: 1.65;
+        margin: 0;
+        max-width: 560px;
+    }
+
+    /* Value props */
+    .vx-cta-props {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.6rem 1.4rem;
+    }
+    .vx-cta-prop {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: rgba(255,255,255,0.9);
+        font-size: 0.88rem;
+        font-weight: 500;
+    }
+    .vx-cta-prop svg { color: #86efac; flex-shrink: 0; }
+
+    /* Buttons */
+    .vx-cta-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        justify-content: center;
+        margin-top: 0.4rem;
+    }
+    .vx-cta-btn-primary {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: #ffffff;
+        color: #1e3a8a;
+        font-weight: 700;
+        font-size: 0.95rem;
+        padding: 13px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .vx-cta-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+        background: #f0f9ff;
+    }
+    .vx-cta-btn-secondary {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(8px);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 13px 28px;
+        border-radius: 12px;
+        border: 1.5px solid rgba(255,255,255,0.35);
+        text-decoration: none;
+        transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .vx-cta-btn-secondary:hover {
+        transform: translateY(-2px);
+        background: rgba(255,255,255,0.18);
+        border-color: rgba(255,255,255,0.6);
+    }
+
+    /* Entrance animations */
+    .vx-reveal-up {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .vx-reveal-up.vx-visible { opacity: 1; transform: translateY(0); }
+    .vx-reveal-chip {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
+    }
+    .vx-reveal-chip.vx-visible { opacity: 1; transform: translateY(0); }
+
+    /* Stagger children */
+    .vx-cta-inner .vx-reveal-up:nth-child(1) { transition-delay: 0.05s; }
+    .vx-cta-inner .vx-reveal-up:nth-child(2) { transition-delay: 0.15s; }
+    .vx-cta-inner .vx-reveal-up:nth-child(3) { transition-delay: 0.25s; }
+    .vx-cta-inner .vx-reveal-up:nth-child(4) { transition-delay: 0.35s; }
+    .vx-cta-inner .vx-reveal-up:nth-child(5) { transition-delay: 0.45s; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .vx-cta-orb, .vx-cta-chip, .vx-cta-icon-badge { animation: none; }
+        .vx-reveal-up, .vx-reveal-chip { opacity: 1; transform: none; transition: none; }
+    }
+    </style>
+
+    <script>
+    (function() {
+        var ctaSection = document.getElementById('nonprofitCTA');
+        if (!ctaSection) return;
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    ctaSection.querySelectorAll('.vx-reveal-up, .vx-reveal-chip').forEach(function(el) {
+                        el.classList.add('vx-visible');
+                    });
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.15 });
+        observer.observe(ctaSection);
+    })();
+    </script>
+
+    <!-- Footer -->
+    <footer class="vx-footer">
+        <div class="max-w-4xl mx-auto px-6 py-12 vx-footer-inner">
+            <img src="images/no-background-logo.png" alt="VoluntEx Logo" class="vx-footer-logo">
+            <div class="vx-footer-text">
+                <p class="vx-footer-tagline" data-translate="footerTagline">Connecting students with meaningful volunteer opportunities across York Region, Ontario</p>
+                <p class="vx-footer-copy" data-translate="footerCopy">© 2024 VoluntEx. All rights reserved. | Empowering the next generation of volunteers.</p>
             </div>
         </div>
     </footer>
 
     <!-- Main JavaScript -->
-    <script src="main.js"></script>
+    <script src="main.js?v=36"></script>
     
     <!-- Quick Filter Function -->
     <script>
-        function quickFilter(cause) {
-            document.getElementById('causeFilter').value = cause;
-            // Trigger the change event to filter results
-            document.getElementById('causeFilter').dispatchEvent(new Event('change'));
+        function quickFilter(cause, btn) {
+            const pills = document.querySelectorAll('.quick-filter-btn');
+            const causeSelect = document.getElementById('causeFilter');
+            // Toggle off if already active
+            if (btn && btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                causeSelect.value = '';
+            } else {
+                pills.forEach(p => p.classList.remove('active'));
+                if (btn) btn.classList.add('active');
+                causeSelect.value = cause;
+            }
+            causeSelect.dispatchEvent(new Event('change'));
         }
+        // Clear active pill when dropdown is changed manually
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('causeFilter')?.addEventListener('change', function() {
+                if (!this._fromPill) {
+                    document.querySelectorAll('.quick-filter-btn').forEach(p => p.classList.remove('active'));
+                }
+            });
+        });
     </script>
 </body>
 
