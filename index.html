@@ -885,9 +885,8 @@
 
         var canvas, ctx, W, H;
         var mouse = { x: -9999, y: -9999 };
-        var nodes = [], ripples = [], packets = [], trail = [];
+        var nodes = [], packets = [], trail = [];
         var reduced   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var lastPulse = 0;
 
         var NODE_COUNT  = 130;
         var CONNECT_D   = 165;
@@ -944,11 +943,6 @@
                 mouse.x = e.clientX-r.left; mouse.y = e.clientY-r.top;
             });
             hero.addEventListener('mouseleave', function() { mouse.x=-9999; mouse.y=-9999; trail.length=0; });
-            hero.addEventListener('click', function(e) {
-                if (reduced) return;
-                var r = canvas.getBoundingClientRect();
-                ripples.push({ x:e.clientX-r.left, y:e.clientY-r.top, r:0, a:1 });
-            });
             requestAnimationFrame(draw);
         }
 
@@ -966,13 +960,7 @@
             var t  = ts * 0.001;
             var mx = mouse.x, my = mouse.y;
             var hm = mx > -100;
-            var i, j, n, a, b, dx, dy, d, al, rgb, g, rip, k, pk;
-
-            /* ── AUTO-PULSE every 3s from cursor ── */
-            if (hm && !reduced && t - lastPulse > 3) {
-                ripples.push({ x:mx, y:my, r:0, a:0.5 });
-                lastPulse = t;
-            }
+            var i, j, n, a, b, dx, dy, d, al, rgb, g, pk;
 
             /* ── MOUSE COMET TRAIL ── */
             if (hm && !reduced) {
@@ -1005,19 +993,6 @@
                 ctx.fillStyle='rgba(200,180,255,0.95)'; ctx.fill();
             }
 
-            /* ── RIPPLES ── */
-            for (i=ripples.length-1; i>=0; i--) {
-                rip=ripples[i]; rip.r+=5.2;
-                rip.a=Math.max(0, 1-rip.r/255);
-                if (rip.a<=0) { ripples.splice(i,1); continue; }
-                ctx.beginPath(); ctx.arc(rip.x,rip.y,rip.r,0,Math.PI*2);
-                ctx.strokeStyle='rgba(99,102,241,'+(rip.a*0.5)+')';
-                ctx.lineWidth=1.6; ctx.stroke();
-                ctx.beginPath(); ctx.arc(rip.x,rip.y,rip.r*0.55,0,Math.PI*2);
-                ctx.strokeStyle='rgba(139,92,246,'+(rip.a*0.22)+')';
-                ctx.lineWidth=3; ctx.stroke();
-            }
-
             /* ── PHYSICS ── */
             if (!reduced) {
                 for (i=0; i<nodes.length; i++) {
@@ -1036,12 +1011,6 @@
                             var af=(1-t2)*0.025;
                             n.vx-=(dx/d)*af; n.vy-=(dy/d)*af;
                         }
-                    }
-                    for (k=0; k<ripples.length; k++) {
-                        rip=ripples[k];
-                        dx=n.x-rip.x; dy=n.y-rip.y; d=Math.sqrt(dx*dx+dy*dy);
-                        var band=Math.abs(d-rip.r);
-                        if (band<42 && d>0.5) { var rf=(1-band/42)*0.8*rip.a; n.vx+=(dx/d)*rf; n.vy+=(dy/d)*rf; }
                     }
                     /* heavy drag so any disturbance bleeds off quickly */
                     var drag = 0.85 + n.z*0.008;
