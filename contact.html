@@ -59,17 +59,88 @@
         }
         
         @keyframes slideUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-        
 
+        /* ── Contact Page Custom Dropdowns ── */
+        .vx-select-wrap { position: relative; }
+        .vx-select-trigger {
+            display: flex; align-items: center; gap: 8px;
+            width: 100%; padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: #fff;
+            color: #374151;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            user-select: none;
+        }
+        .dark .vx-select-trigger {
+            background: #334155; border-color: #475569; color: #e2e8f0;
+        }
+        .vx-select-trigger:hover,
+        .vx-select-wrap.open .vx-select-trigger {
+            border-color: rgba(99,102,241,0.6);
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.15);
+        }
+        .vx-select-trigger .vx-t-icon { font-size: 14px; color: #6366f1; flex-shrink: 0; width: 16px; text-align: center; }
+        .vx-select-trigger .vx-t-label { flex: 1; font-size: 15px; }
+        .vx-select-chevron {
+            font-size: 11px; color: #9ca3af; flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+        .vx-select-wrap.open .vx-select-chevron { transform: rotate(180deg); }
+
+        .vx-select-panel {
+            position: absolute;
+            background: #fff;
+            border: 1px solid rgba(209,213,219,0.8);
+            border-radius: 10px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(-6px) scale(0.98);
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            min-width: 200px;
+        }
+        html.dark .vx-select-panel {
+            background: #1e293b; border-color: rgba(71,85,105,0.6);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+        }
+        .vx-select-panel.open {
+            opacity: 1; transform: translateY(0) scale(1); pointer-events: all;
+        }
+        .vx-select-options { padding: 6px; display: flex; flex-direction: column; gap: 2px; }
+        .vx-option {
+            display: flex; align-items: center; gap: 8px;
+            padding: 9px 12px;
+            border-radius: 6px;
+            border: none; background: none;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            transition: background 0.15s;
+        }
+        html.dark .vx-option { color: #e2e8f0; }
+        .vx-option:hover { background: rgba(99,102,241,0.08); }
+        .vx-option.selected {
+            background: rgba(99,102,241,0.12);
+            color: #6366f1;
+            font-weight: 600;
+        }
+        html.dark .vx-option.selected { color: #a5b4fc; }
+        .vx-option .opt-icon { width: 18px; text-align: center; font-size: 13px; flex-shrink: 0; color: #6366f1; }
+        html.dark .vx-option .opt-icon { color: #a5b4fc; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 text-gray-600 dark:text-gray-200 transition-colors duration-300">
@@ -222,21 +293,31 @@
                             </div>
                             
                             <div class="grid md:grid-cols-2 gap-6">
-  <div>
-    <label for="studentGrade" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Grade</label>
-    <select
-      id="studentGrade"
-      name="student_grade"
-      required
-      class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white transition-all"
-    >
-      <option value="" data-translate="selectGrade">Select your grade</option>
-      <option value="9" data-translate="grade9">Grade 9</option>
-      <option value="10" data-translate="grade10">Grade 10</option>
-      <option value="11" data-translate="grade11">Grade 11</option>
-      <option value="12" data-translate="grade12">Grade 12</option>
-      <option value="other" data-translate="gradeOther">Other</option>
+  <div class="vx-select-wrap" id="contactGradeWrap">
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Grade</label>
+    <!-- Hidden select keeps name for Netlify form submission -->
+    <select id="studentGrade" name="student_grade" required style="display:none;">
+      <option value=""></option>
+      <option value="9">Grade 9</option>
+      <option value="10">Grade 10</option>
+      <option value="11">Grade 11</option>
+      <option value="12">Grade 12</option>
+      <option value="other">Other</option>
     </select>
+    <div class="vx-select-trigger" id="contactGradeTrigger">
+      <i class="fa-solid fa-graduation-cap vx-t-icon"></i>
+      <span class="vx-t-label" id="contactGradeLabel" data-translate="selectGrade">Select your grade</span>
+      <i class="fa-solid fa-chevron-down vx-select-chevron"></i>
+    </div>
+    <div class="vx-select-panel" id="contactGradePanel">
+      <div class="vx-select-options">
+        <button class="vx-option" data-value="9"><span class="opt-icon"><i class="fa-solid fa-graduation-cap"></i></span>Grade 9</button>
+        <button class="vx-option" data-value="10"><span class="opt-icon"><i class="fa-solid fa-graduation-cap"></i></span>Grade 10</button>
+        <button class="vx-option" data-value="11"><span class="opt-icon"><i class="fa-solid fa-graduation-cap"></i></span>Grade 11</button>
+        <button class="vx-option" data-value="12"><span class="opt-icon"><i class="fa-solid fa-graduation-cap"></i></span>Grade 12</button>
+        <button class="vx-option" data-value="other"><span class="opt-icon"><i class="fa-solid fa-user"></i></span>Other</button>
+      </div>
+    </div>
   </div>
                                 <div>
     <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="phoneNumber">Phone Number</label>
@@ -252,20 +333,33 @@
     <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" data-translate="phoneOptional">Optional, but helps charities contact you faster.</p>
   </div>
 </div>
-                            <div>
-                                <label for="inquiry_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="subjectLabel">Subject</label>
-                                <select id="inquiry_type" name="inquiry_type" required 
-                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 
- dark:text-white
- transition-all">
-                                    <option value="" data-translate="selectTopic">Select a topic</option>
-                                    <option value="student-inquiry" data-translate="optStudentInquiry">Student Inquiry</option>
-                                    <option value="parent-inquiry" data-translate="optParentInquiry">Parent Inquiry</option>
-                                    <option value="organization-partnership" data-translate="optOrgPartnership">Organization Partnership</option>
-                                    <option value="technical-support" data-translate="optTechSupport">Technical Support</option>
-                                    <option value="general-question" data-translate="optGeneralQuestion">General Question</option>
-                                    <option value="feedback" data-translate="optFeedback">Feedback & Suggestions</option>
+                            <div class="vx-select-wrap" id="contactSubjectWrap">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="subjectLabel">Subject</label>
+                                <!-- Hidden select keeps name for Netlify form submission -->
+                                <select id="inquiry_type" name="inquiry_type" required style="display:none;">
+                                    <option value=""></option>
+                                    <option value="student-inquiry">Student Inquiry</option>
+                                    <option value="parent-inquiry">Parent Inquiry</option>
+                                    <option value="organization-partnership">Organization Partnership</option>
+                                    <option value="technical-support">Technical Support</option>
+                                    <option value="general-question">General Question</option>
+                                    <option value="feedback">Feedback &amp; Suggestions</option>
                                 </select>
+                                <div class="vx-select-trigger" id="contactSubjectTrigger">
+                                    <i class="fa-solid fa-tag vx-t-icon"></i>
+                                    <span class="vx-t-label" id="contactSubjectLabel" data-translate="selectTopic">Select a topic</span>
+                                    <i class="fa-solid fa-chevron-down vx-select-chevron"></i>
+                                </div>
+                                <div class="vx-select-panel" id="contactSubjectPanel">
+                                    <div class="vx-select-options">
+                                        <button class="vx-option" data-value="student-inquiry"><span class="opt-icon"><i class="fa-solid fa-user-graduate"></i></span>Student Inquiry</button>
+                                        <button class="vx-option" data-value="parent-inquiry"><span class="opt-icon"><i class="fa-solid fa-users"></i></span>Parent Inquiry</button>
+                                        <button class="vx-option" data-value="organization-partnership"><span class="opt-icon"><i class="fa-solid fa-handshake"></i></span>Organization Partnership</button>
+                                        <button class="vx-option" data-value="technical-support"><span class="opt-icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>Technical Support</button>
+                                        <button class="vx-option" data-value="general-question"><span class="opt-icon"><i class="fa-solid fa-circle-question"></i></span>General Question</button>
+                                        <button class="vx-option" data-value="feedback"><span class="opt-icon"><i class="fa-solid fa-comment-dots"></i></span>Feedback &amp; Suggestions</button>
+                                    </div>
+                                </div>
                             </div>
                             
                             <div>
@@ -629,6 +723,97 @@
 
     <!-- Main JavaScript -->
     <script src="main.js?v=36"></script>
+
+    <!-- Custom Dropdown Portal JS -->
+    <script>
+    (function() {
+        function positionPanel(trigger, panel) {
+            var r = trigger.getBoundingClientRect();
+            panel.style.top   = (r.bottom + window.scrollY + 6) + 'px';
+            panel.style.left  = r.left + 'px';
+            panel.style.width = r.width + 'px';
+        }
+
+        function setupVxSelect(wrapId, panelId, nativeId, labelId) {
+            var wrap    = document.getElementById(wrapId);
+            var panel   = document.getElementById(panelId);
+            var native  = document.getElementById(nativeId);
+            var label   = document.getElementById(labelId);
+            var trigger = wrap ? wrap.querySelector('.vx-select-trigger') : null;
+            if (!wrap || !panel || !native || !trigger) return;
+
+            document.body.appendChild(panel);
+
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var isOpen = wrap.classList.contains('open');
+                closeAll();
+                if (!isOpen) {
+                    positionPanel(trigger, panel);
+                    wrap.classList.add('open');
+                    panel.classList.add('open');
+                }
+            });
+
+            panel.querySelectorAll('.vx-option').forEach(function(opt) {
+                opt.addEventListener('click', function() {
+                    var val = opt.dataset.value;
+                    native.value = val;
+                    label.textContent = opt.textContent.trim();
+                    var tIcon = trigger.querySelector('.vx-t-icon');
+                    var optIcon = opt.querySelector('.opt-icon i');
+                    if (tIcon && optIcon) {
+                        tIcon.className = optIcon.className + ' vx-t-icon';
+                    }
+                    panel.querySelectorAll('.vx-option').forEach(function(o) { o.classList.remove('selected'); });
+                    opt.classList.add('selected');
+                    /* dispatch change so main.js contact pre-fill logic still fires */
+                    native.dispatchEvent(new Event('change'));
+                    closeAll();
+                });
+            });
+
+            window.addEventListener('resize', function() {
+                if (wrap.classList.contains('open')) positionPanel(trigger, panel);
+            });
+            window.addEventListener('scroll', function() {
+                if (wrap.classList.contains('open')) positionPanel(trigger, panel);
+            }, { passive: true });
+        }
+
+        function closeAll() {
+            document.querySelectorAll('.vx-select-wrap.open').forEach(function(w) { w.classList.remove('open'); });
+            document.querySelectorAll('.vx-select-panel.open').forEach(function(p) { p.classList.remove('open'); });
+        }
+
+        document.addEventListener('click', closeAll);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupVxSelect('contactGradeWrap',   'contactGradePanel',   'studentGrade',  'contactGradeLabel');
+            setupVxSelect('contactSubjectWrap',  'contactSubjectPanel', 'inquiry_type',  'contactSubjectLabel');
+
+            /* If page loaded with ?from=charity, pre-select the subject dropdown label too */
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('from') === 'charity') {
+                var panel = document.getElementById('contactSubjectPanel');
+                var label = document.getElementById('contactSubjectLabel');
+                var trigger = document.getElementById('contactSubjectWrap')
+                                      ?.querySelector('.vx-select-trigger');
+                if (panel && label) {
+                    var opt = panel.querySelector('[data-value="student-inquiry"]');
+                    if (opt) {
+                        label.textContent = opt.textContent.trim();
+                        panel.querySelectorAll('.vx-option').forEach(function(o) { o.classList.remove('selected'); });
+                        opt.classList.add('selected');
+                        var tIcon = trigger?.querySelector('.vx-t-icon');
+                        var oIcon = opt.querySelector('.opt-icon i');
+                        if (tIcon && oIcon) tIcon.className = oIcon.className + ' vx-t-icon';
+                    }
+                }
+            }
+        });
+    })();
+    </script>
 
     <!-- Scroll Reveal -->
     <script>
