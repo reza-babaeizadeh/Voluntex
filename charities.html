@@ -53,14 +53,161 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         
+        /* ── 1. Container: neutral border, no colour fill ── */
+        .filter-card-wrap {
+            position: relative;
+            border-radius: 20px;
+            padding: 1px;
+            background: rgba(148,163,184,0.55);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(18px);
+        }
+        .dark .filter-card-wrap {
+            background: rgba(55,65,81,0.75);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+        }
+        /* animated gradient border — subtle on hover */
+        .filter-card-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: conic-gradient(from var(--angle, 0deg), #6366f1, #3b82f6, #8b5cf6, #60a5fa, #6366f1);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .filter-card-wrap:hover::before { opacity: 0.6; }
+        @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+        @keyframes borderSpin { to { --angle: 360deg; } }
+        .filter-card-wrap:hover { animation: borderSpin 4s linear infinite; }
+
+        /* ── Custom dropdown ── */
+        .custom-select-wrap { position: relative; }
+        .custom-select-trigger {
+            display: flex; align-items: center; gap: 8px;
+            width: 100%; padding: 11px 14px;
+            border: 1px solid rgb(209,213,219);
+            border-radius: 8px;
+            background: #fff;
+            color: #374151;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            user-select: none;
+        }
+        .dark .custom-select-trigger {
+            background: #0f172a; border-color: #334155; color: #e2e8f0;
+        }
+        .custom-select-trigger:hover,
+        .custom-select-wrap.open .custom-select-trigger {
+            border-color: rgba(99,102,241,0.6);
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.15);
+        }
+        .custom-select-trigger .trigger-icon { font-size: 14px; color: #6366f1; flex-shrink: 0; width: 16px; text-align: center; }
+        .custom-select-trigger .trigger-label { flex: 1; font-size: 14px; }
+        .custom-select-chevron {
+            font-size: 11px; color: #9ca3af; flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+        .custom-select-wrap.open .custom-select-chevron { transform: rotate(180deg); }
+
+        .custom-select-panel {
+            position: absolute;
+            background: #fff;
+            border: 1px solid rgba(148,163,184,0.5);
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.06);
+            z-index: 9999;
+            overflow: hidden;
+            opacity: 0; transform: translateY(-6px) scale(0.98);
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+        .dark .custom-select-panel,
+        html.dark .custom-select-panel {
+            background: #1e293b; border-color: rgba(71,85,105,0.6);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+        }
+        .custom-select-panel.open {
+            opacity: 1; transform: translateY(0) scale(1); pointer-events: all;
+        }
+        .custom-select-options { padding: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+        .custom-option {
+            display: flex; align-items: center; gap: 6px;
+            padding: 7px 11px; border-radius: 7px; border: none;
+            background: transparent; color: #374151;
+            font-size: 13px; cursor: pointer; white-space: nowrap;
+            transition: background 0.15s, color 0.15s, transform 0.12s;
+            width: 100%;
+        }
+        .dark .custom-option { color: #cbd5e1; }
+        .custom-option:hover { background: rgba(99,102,241,0.08); color: #6366f1; transform: translateX(2px); }
+        .dark .custom-option:hover { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+        .custom-option.selected {
+            background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(59,130,246,0.12));
+            color: #6366f1; font-weight: 500;
+        }
+        .dark .custom-option.selected { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+        .custom-option .opt-icon { width: 18px; text-align: center; font-size: 13px; flex-shrink: 0; }
+        /* location panel: single column */
+        .location-panel .custom-select-options { flex-direction: column; flex-wrap: nowrap; }
+
         .filter-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: none;
         }
-        
         .dark .filter-card {
-            background: rgba(30, 41, 59, 0.95);
+            background: #050a12 !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
         }
+
+        /* ── 2. Search input focus glow ── */
+        .search-input-wrap { position: relative; }
+        .search-input-wrap input {
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .search-input-wrap:focus-within input {
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.35), 0 0 16px rgba(59,130,246,0.12);
+            border-color: rgba(99,102,241,0.5) !important;
+        }
+        .search-input-wrap:focus-within .fa-search {
+            animation: iconGlow 2.5s ease-in-out infinite;
+        }
+        @keyframes iconGlow {
+            0%,100% { color: #6366f1; }
+            50%      { color: #3b82f6; }
+        }
+
+        /* ── 4. Quick filter pills – 3D press & lift ── */
+        .quick-filter-btn {
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, color 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            will-change: transform;
+        }
+        .quick-filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.14);
+        }
+        .quick-filter-btn:active {
+            transform: translateY(2px) scale(0.96);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .quick-filter-btn.active {
+            background: linear-gradient(135deg, #6366f1, #3b82f6) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 14px rgba(99,102,241,0.4);
+            transform: translateY(-1px);
+        }
+
+        /* ── 5. Staggered entrance – applied via JS ── */
+        .filter-entrance { opacity: 0; transform: translateY(14px); }
         
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -185,46 +332,79 @@
     <!-- Search and Filter Section -->
     <section class="py-8 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="filter-card rounded-2xl p-6 shadow-lg">
+            <div class="filter-card-wrap">
+            <div class="filter-card p-6">
                 <div class="grid md:grid-cols-4 gap-4">
                     <!-- Search Input -->
-                    <div class="md:col-span-2">
+                    <div class="md:col-span-2 filter-entrance">
                         <label for="searchInput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="searchOrganizations">Search Organizations</label>
-                        <div class="relative">
+                        <div class="search-input-wrap relative">
                             <input type="text" id="searchInput" placeholder="Search by name or description..." data-translate-placeholder="searchPlaceholder"
-                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700
- dark:text-white
- transition-all">
-                            <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600"></i>
+                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-slate-900 dark:text-white transition-all">
+                            <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
                     </div>
-                    
+
                     <!-- Cause Area Filter -->
-                    <div>
-                        <label for="causeFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="causeArea">Cause Area</label>
-                        <select id="causeFilter" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 
- dark:text-white
- transition-all">
-                            <option value="" data-translate="allCauses">All Causes</option>
-                            <option value="Youth Services" data-translate="causeYouthServices">Youth Services</option>
-                            <option value="Youth Mentorship" data-translate="causeYouthMentorship">Youth Mentorship</option>
-                            <option value="Food Security" data-translate="causeFoodSecurity">Food Security</option>
-                            <option value="Animal Welfare" data-translate="causeAnimalWelfare">Animal Welfare</option>
-                            <option value="Mental Health" data-translate="causeMentalHealth">Mental Health</option>
-                            <option value="Senior Support" data-translate="causeSeniorSupport">Senior Support</option>
-                            <option value="Environmental" data-translate="causeEnvironmental">Environmental</option>
-                            <option value="Healthcare" data-translate="causeHealthcare">Healthcare</option>
-                            <option value="Women & Children's Shelter" data-translate="causeWomens">Women &amp; Children's Shelter</option>
+                    <div class="filter-entrance custom-select-wrap" id="causeWrap">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="causeArea">Cause Area</label>
+                        <div class="custom-select-trigger" id="causeTrigger">
+                            <i class="fa-solid fa-border-all trigger-icon"></i>
+                            <span class="trigger-label" id="causeLabel">All Causes</span>
+                            <i class="fa-solid fa-chevron-down custom-select-chevron"></i>
+                        </div>
+                        <div class="custom-select-panel" id="causePanel">
+                            <div class="custom-select-options">
+                                <button class="custom-option selected" data-value=""><span class="opt-icon"><i class="fa-solid fa-border-all"></i></span>All Causes</button>
+                                <button class="custom-option" data-value="Youth Services"><span class="opt-icon"><i class="fa-solid fa-graduation-cap"></i></span>Youth Services</button>
+                                <button class="custom-option" data-value="Youth Mentorship"><span class="opt-icon"><i class="fa-solid fa-handshake"></i></span>Youth Mentorship</button>
+                                <button class="custom-option" data-value="Food Security"><span class="opt-icon"><i class="fa-solid fa-wheat-awn"></i></span>Food Security</button>
+                                <button class="custom-option" data-value="Animal Welfare"><span class="opt-icon"><i class="fa-solid fa-paw"></i></span>Animal Welfare</button>
+                                <button class="custom-option" data-value="Mental Health"><span class="opt-icon"><i class="fa-solid fa-brain"></i></span>Mental Health</button>
+                                <button class="custom-option" data-value="Senior Support"><span class="opt-icon"><i class="fa-solid fa-person-cane"></i></span>Senior Support</button>
+                                <button class="custom-option" data-value="Environmental"><span class="opt-icon"><i class="fa-solid fa-leaf"></i></span>Environmental</button>
+                                <button class="custom-option" data-value="Healthcare"><span class="opt-icon"><i class="fa-solid fa-heart-pulse"></i></span>Healthcare</button>
+                                <button class="custom-option" data-value="Women &amp; Children's Shelter"><span class="opt-icon"><i class="fa-solid fa-shield-heart"></i></span>Women &amp; Children's</button>
+                            </div>
+                        </div>
+                        <select id="causeFilter" class="hidden">
+                            <option value=""></option>
+                            <option value="Youth Services">Youth Services</option>
+                            <option value="Youth Mentorship">Youth Mentorship</option>
+                            <option value="Food Security">Food Security</option>
+                            <option value="Animal Welfare">Animal Welfare</option>
+                            <option value="Mental Health">Mental Health</option>
+                            <option value="Senior Support">Senior Support</option>
+                            <option value="Environmental">Environmental</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Women &amp; Children's Shelter">Women &amp; Children's Shelter</option>
                         </select>
                     </div>
-                    
+
                     <!-- Location Filter -->
-                    <div>
-                        <label for="locationFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="locationLabel">Location</label>
-                        <select id="locationFilter" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 
- dark:text-white
- transition-all">
-                            <option value="" data-translate="allLocations">All Locations</option>
+                    <div class="filter-entrance custom-select-wrap" id="locationWrap">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="locationLabel">Location</label>
+                        <div class="custom-select-trigger" id="locationTrigger">
+                            <i class="fa-solid fa-map trigger-icon"></i>
+                            <span class="trigger-label" id="locationLabel">All Locations</span>
+                            <i class="fa-solid fa-chevron-down custom-select-chevron"></i>
+                        </div>
+                        <div class="custom-select-panel location-panel" id="locationPanel">
+                            <div class="custom-select-options">
+                                <button class="custom-option selected" data-value=""><span class="opt-icon"><i class="fa-solid fa-map"></i></span>All Locations</button>
+                                <button class="custom-option" data-value="Richmond Hill"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>Richmond Hill</button>
+                                <button class="custom-option" data-value="Markham"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>Markham</button>
+                                <button class="custom-option" data-value="Vaughan"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>Vaughan</button>
+                                <button class="custom-option" data-value="Aurora"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>Aurora</button>
+                                <button class="custom-option" data-value="Newmarket"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>Newmarket</button>
+                                <button class="custom-option" data-value="Keswick"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>Keswick</button>
+                                <button class="custom-option" data-value="Stouffville"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>Stouffville</button>
+                                <button class="custom-option" data-value="East Gwillimbury"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>East Gwillimbury</button>
+                                <button class="custom-option" data-value="Georgina"><span class="opt-icon"><i class="fa-solid fa-location-dot"></i></span>Georgina</button>
+                            </div>
+                        </div>
+                        <select id="locationFilter" class="hidden">
+                            <option value=""></option>
                             <option value="Richmond Hill">Richmond Hill</option>
                             <option value="Markham">Markham</option>
                             <option value="Vaughan">Vaughan</option>
@@ -233,11 +413,12 @@
                             <option value="Keswick">Keswick</option>
                             <option value="Stouffville">Stouffville</option>
                             <option value="East Gwillimbury">East Gwillimbury</option>
+                            <option value="Georgina">Georgina</option>
                         </select>
                     </div>
                 </div>
                 
-                <div class="flex flex-wrap gap-2 mt-4 items-center">
+                <div class="flex flex-wrap gap-2 mt-4 items-center filter-entrance">
                     <span class="text-sm text-gray-600 dark:text-gray-300" data-translate="quickFilters">Quick filters:</span>
                     <button data-cause="Food Security" onclick="quickFilter('Food Security', this)" class="quick-filter-btn px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-white rounded-full text-sm" data-translate="foodSecurity">
                         Food Security
@@ -253,6 +434,7 @@
                     </button>
                 </div>
             </div>
+            </div><!-- /filter-card-wrap -->
         </div>
     </section>
 
@@ -600,6 +782,96 @@
                 if (!this._fromPill) {
                     document.querySelectorAll('.quick-filter-btn').forEach(p => p.classList.remove('active'));
                 }
+            });
+
+            /* ── Custom dropdowns (fixed-position panels to avoid clipping) ── */
+            function positionPanel(trigger, panel) {
+                var r = trigger.getBoundingClientRect();
+                panel.style.top    = (r.bottom + window.scrollY + 6) + 'px';
+                panel.style.left   = r.left + 'px';
+                panel.style.width  = r.width + 'px';
+                panel.style.right  = 'auto';
+            }
+
+            function initCustomSelect(wrapperId, triggerLabelId, panelId, nativeSelectId) {
+                var wrap    = document.getElementById(wrapperId);
+                var label   = document.getElementById(triggerLabelId);
+                var panel   = document.getElementById(panelId);
+                var native  = document.getElementById(nativeSelectId);
+                var trigger = wrap ? wrap.querySelector('.custom-select-trigger') : null;
+                if (!wrap) return;
+
+                // move panel to body so it isn't clipped by any ancestor overflow
+                document.body.appendChild(panel);
+
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var isOpen = wrap.classList.contains('open');
+                    closeAll();
+                    if (!isOpen) {
+                        positionPanel(trigger, panel);
+                        wrap.classList.add('open');
+                        panel.classList.add('open');
+                    }
+                });
+
+                panel.querySelectorAll('.custom-option').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var val = this.dataset.value;
+                        panel.querySelectorAll('.custom-option').forEach(function(b) { b.classList.remove('selected'); });
+                        this.classList.add('selected');
+                        label.textContent = this.textContent.trim();
+                        native.value = val;
+                        native.dispatchEvent(new Event('change'));
+                        closeAll();
+                    });
+                });
+
+                window.addEventListener('resize', function() {
+                    if (wrap.classList.contains('open')) positionPanel(trigger, panel);
+                });
+                window.addEventListener('scroll', function() {
+                    if (wrap.classList.contains('open')) positionPanel(trigger, panel);
+                }, { passive: true });
+            }
+
+            function closeAll() {
+                document.querySelectorAll('.custom-select-wrap.open').forEach(function(w) { w.classList.remove('open'); });
+                document.querySelectorAll('.custom-select-panel.open').forEach(function(p) { p.classList.remove('open'); });
+            }
+
+            initCustomSelect('causeWrap',    'causeLabel',    'causePanel',    'causeFilter');
+            initCustomSelect('locationWrap', 'locationLabel', 'locationPanel', 'locationFilter');
+
+            document.addEventListener('click', closeAll);
+
+            /* ── 5. Staggered entrance animation ── */
+            var wrap = document.querySelector('.filter-card-wrap');
+            var items = document.querySelectorAll('.filter-entrance');
+
+            /* Animate the card wrapper in first */
+            anime({ targets: wrap, opacity: [0,1], translateY: [18,0], duration: 600, easing: 'easeOutExpo', delay: 80 });
+
+            /* Then stagger each field/pill row */
+            anime({
+                targets: items,
+                opacity: [0, 1],
+                translateY: [14, 0],
+                duration: 500,
+                easing: 'easeOutExpo',
+                delay: anime.stagger(90, { start: 200 })
+            });
+
+            /* Stagger the individual pill buttons */
+            anime({
+                targets: '.quick-filter-btn',
+                opacity: [0, 1],
+                translateY: [8, 0],
+                scale: [0.9, 1],
+                duration: 380,
+                easing: 'easeOutBack',
+                delay: anime.stagger(70, { start: 500 })
             });
         });
     </script>
