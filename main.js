@@ -994,20 +994,7 @@ function displayMatchedOrganizations(matchedOrgs, studentData) {
 }
 
 function createOrganizationCard(org, index) {
-    // Cause-area badge colour map
-    const causeBadgeColors = {
-        'Youth Services':             'linear-gradient(135deg,#3b82f6,#2563eb)',
-        'Youth Mentorship':           'linear-gradient(135deg,#06b6d4,#0891b2)',
-        'Youth Programs':             'linear-gradient(135deg,#60a5fa,#3b82f6)',
-        'Food Security':              'linear-gradient(135deg,#22c55e,#16a34a)',
-        'Animal Welfare':             'linear-gradient(135deg,#f97316,#ea580c)',
-        'Mental Health':              'linear-gradient(135deg,#a855f7,#7c3aed)',
-        'Senior Support':             'linear-gradient(135deg,#f59e0b,#d97706)',
-        'Environmental':              'linear-gradient(135deg,#10b981,#059669)',
-        'Healthcare':                 'linear-gradient(135deg,#ef4444,#dc2626)',
-        "Women & Children's Shelter": 'linear-gradient(135deg,#ec4899,#db2777)',
-    };
-    const badgeBg = causeBadgeColors[org.causeArea] || 'linear-gradient(135deg,#3b82f6,#6366f1)';
+    const badgeBg = 'linear-gradient(135deg,#4f46e5,#6366f1)';
     const displayName = (currentLanguage === 'fr' && org.nameFr) ? org.nameFr : org.name;
     const displayCauseArea = (currentLanguage === 'fr' && org.causeAreaFr) ? org.causeAreaFr : org.causeArea;
     const displayDescription = (currentLanguage === 'fr' && org.descriptionFr) ? org.descriptionFr : org.description;
@@ -1021,11 +1008,9 @@ function createOrganizationCard(org, index) {
         <div class="relative overflow-hidden" style="height:200px;">
             <img src="${org.image}" alt="${org.name}" class="w-full h-full object-cover" style="transition:transform 0.5s ease;">
             <div class="vx-card-img-overlay absolute inset-0"></div>
-            <div class="vx-card-badge" style="position:absolute;top:14px;right:14px;background:${badgeBg};font-size:0.72rem;font-weight:700;padding:5px 13px;border-radius:999px;letter-spacing:0.06em;text-transform:uppercase;color:#fff;border:1.5px solid rgba(255,255,255,0.55);box-shadow:0 2px 8px rgba(0,0,0,0.45),0 1px 3px rgba(0,0,0,0.3);text-shadow:0 1px 3px rgba(0,0,0,0.4);">
-                ${displayCauseArea}
-            </div>
         </div>
         <div class="vx-card-body" style="padding:1.5rem;display:flex;flex-direction:column;flex:1;gap:0.75rem;">
+            <div style="display:inline-flex;width:fit-content;background:${badgeBg};font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:0.07em;text-transform:uppercase;color:#fff;box-shadow:0 2px 6px rgba(79,70,229,0.35);">${displayCauseArea}</div>
             <h3 class="vx-card-title" style="font-size:1.2rem;font-weight:700;margin:0;">${displayName}</h3>
             <p class="vx-card-desc" style="font-size:0.92rem;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${displayDescription}</p>
             <div style="display:flex;margin-top:auto;padding-top:0.5rem;">
