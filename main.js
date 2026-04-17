@@ -1208,6 +1208,23 @@ function clearAllFilters() {
     if (searchInput) searchInput.value = '';
     if (causeFilter) causeFilter.value = '';
     if (locationFilter) locationFilter.value = '';
+
+    // Reset custom dropdown trigger labels to their default text
+    const causeLabel = document.getElementById('causeLabel');
+    const locationLabel = document.getElementById('locationLabel');
+    if (causeLabel) causeLabel.textContent = 'All Causes';
+    if (locationLabel) locationLabel.textContent = 'All Locations';
+
+    // Reset selected state on all options — mark the "All" option (data-value="") as selected
+    ['causePanel', 'locationPanel'].forEach(function(panelId) {
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+        panel.querySelectorAll('.custom-option').forEach(function(opt) {
+            opt.classList.remove('selected');
+            if (opt.dataset.value === '') opt.classList.add('selected');
+        });
+    });
+
     document.querySelectorAll('.quick-filter-btn').forEach(p => p.classList.remove('active'));
     displayOrganizations(organizations);
 }
