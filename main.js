@@ -1021,9 +1021,9 @@ function createOrganizationCard(org, index) {
         <div class="relative overflow-hidden" style="height:200px;">
             <img src="${org.image}" alt="${org.name}" class="w-full h-full object-cover" style="transition:transform 0.5s ease;">
             <div class="vx-card-img-overlay absolute inset-0"></div>
-            <span class="vx-card-badge" style="position:absolute;top:14px;right:14px;background:${badgeBg};font-size:0.72rem;font-weight:700;padding:5px 13px;border-radius:999px;letter-spacing:0.06em;text-transform:uppercase;color:#fff;border:1.5px solid rgba(255,255,255,0.55);box-shadow:0 2px 8px rgba(0,0,0,0.45),0 1px 3px rgba(0,0,0,0.3);text-shadow:0 1px 3px rgba(0,0,0,0.4);">
+            <div class="vx-card-badge" style="position:absolute;top:14px;right:14px;background:${badgeBg};font-size:0.72rem;font-weight:700;padding:5px 13px;border-radius:999px;letter-spacing:0.06em;text-transform:uppercase;color:#fff;border:1.5px solid rgba(255,255,255,0.55);box-shadow:0 2px 8px rgba(0,0,0,0.45),0 1px 3px rgba(0,0,0,0.3);text-shadow:0 1px 3px rgba(0,0,0,0.4);">
                 ${displayCauseArea}
-            </span>
+            </div>
         </div>
         <div class="vx-card-body" style="padding:1.5rem;display:flex;flex-direction:column;flex:1;gap:0.75rem;">
             <h3 class="vx-card-title" style="font-size:1.2rem;font-weight:700;margin:0;">${displayName}</h3>
