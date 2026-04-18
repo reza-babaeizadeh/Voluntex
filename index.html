@@ -1081,6 +1081,7 @@
         function lerp(a, b, t) { return a + (b - a) * t; }
 
         function isDark() { return document.documentElement.classList.contains('dark'); }
+        function modeAlpha(darkVal, lightVal) { return isDark() ? darkVal : lightVal; }
         function hex(h)   { return { r:parseInt(h.slice(1,3),16), g:parseInt(h.slice(3,5),16), b:parseInt(h.slice(5,7),16) }; }
 
         function mkNode(xBias) {
@@ -1139,7 +1140,6 @@
         function draw(ts) {
             requestAnimationFrame(draw);
             ctx.clearRect(0,0,W,H);
-            if (!isDark()) return;
 
             var t  = ts * 0.001;
             var mx = mouse.x, my = mouse.y;
@@ -1154,7 +1154,7 @@
                     var age = (i+1) / trail.length;          // 0=oldest 1=newest
                     ctx.beginPath();
                     ctx.arc(trail[i].x, trail[i].y, age*3.2, 0, Math.PI*2);
-                    ctx.fillStyle = 'rgba(167,139,250,'+(age*0.38)+')';
+                    ctx.fillStyle = 'rgba(99,102,241,'+(age*modeAlpha(0.38,0.55))+')';
                     ctx.fill();
                 }
             }
@@ -1162,8 +1162,8 @@
             /* ── CURSOR AURA ── */
             if (hm) {
                 var aura = ctx.createRadialGradient(mx,my,0, mx,my,270);
-                aura.addColorStop(0,   'rgba(99,102,241,0.14)');
-                aura.addColorStop(0.38,'rgba(59,130,246,0.06)');
+                aura.addColorStop(0,   'rgba(99,102,241,'+modeAlpha(0.14,0.22)+')');
+                aura.addColorStop(0.38,'rgba(59,130,246,'+modeAlpha(0.06,0.10)+')');
                 aura.addColorStop(1,   'rgba(99,102,241,0)');
                 ctx.beginPath(); ctx.arc(mx,my,270,0,Math.PI*2);
                 ctx.fillStyle=aura; ctx.fill();
@@ -1224,7 +1224,7 @@
                     dx=a.x-b.x; dy=a.y-b.y; d=Math.sqrt(dx*dx+dy*dy);
                     var cd = CONNECT_D*(0.65+(a.z+b.z)*0.28);
                     if (d>=cd) continue;
-                    al=(1-d/cd)*0.26*((a.op+b.op)*0.5)*zFade;
+                    al=(1-d/cd)*modeAlpha(0.26,0.42)*((a.op+b.op)*0.5)*zFade;
                     if (hm) {
                         var mda=Math.hypot(a.x-mx,a.y-my);
                         var mdb=Math.hypot(b.x-mx,b.y-my);
@@ -1288,7 +1288,7 @@
                 /* halo: two radial gradient layers for richness */
                 var baseHalo = n.r * (2.5 + n.z * 1.2);
                 var haloR    = baseHalo + nf * n.r * 3.5;
-                var haloA    = lerp(0.15 * n.op, 0.42, nf);
+                var haloA    = lerp(modeAlpha(0.15,0.20) * n.op, modeAlpha(0.42,0.55), nf);
 
                 g = ctx.createRadialGradient(n.x,n.y,0, n.x,n.y,haloR);
                 g.addColorStop(0, 'rgba('+rgb.r+','+rgb.g+','+rgb.b+','+haloA.toFixed(3)+')');
